@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>emoji on Clarity</title>
-    <link>https://speja969.github.io/tags/emoji/</link>
+    <link>https://debian-openbox.github.io/tags/emoji/</link>
     <description>Recent content in emoji on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2020, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 03 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://speja969.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>APT - Advanced Package Tool</title>
-      <link>https://speja969.github.io/post/apt/</link>
+      <link>https://debian-openbox.github.io/post/apt/</link>
       <pubDate>Wed, 03 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://speja969.github.io/post/apt/</guid>
+      <guid>https://debian-openbox.github.io/post/apt/</guid>
       <description>
         
           &lt;hr&gt;
@@ -40,7 +40,7 @@ Prva &lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em
 &lt;p&gt;Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma (neki ih zovu riznice, ja ne mogu - asocira me na 3 ćemera blaga):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install vlc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ili u grafičkom okruženju preko &lt;em&gt;Synaptica&lt;/em&gt;:&lt;br&gt;
-&lt;img src=&#34;https://speja969.github.io/img/apt/apt.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 
         
       </description>
@@ -48,10 +48,10 @@ Prva &lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em
     
     <item>
       <title>Emoji Support</title>
-      <link>https://speja969.github.io/post/emoji-support/</link>
+      <link>https://debian-openbox.github.io/post/emoji-support/</link>
       <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://speja969.github.io/post/emoji-support/</guid>
+      <guid>https://debian-openbox.github.io/post/emoji-support/</guid>
       <description>
         
           &lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;
