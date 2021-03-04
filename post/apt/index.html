@@ -173,31 +173,125 @@
 
     
     <hr>
-<p><a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a>  (Advanced Package Tool) je softver koji služi za instalaciju i uklanjanje programa kod Debiana i njegovih derivata (Ubuntu, Mint, MX Linux, Antix i drugi).<br>
-Prva <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a> funkcija koju početnici prvo nauče je ažuriranje baze programa i operativnog sisteme:</p>
+<ul>
+<li><a href="https://debian-openbox.io/post/apt/#a%C5%BEuriranje-sistema">Ažuriranje sistema preko zvaničnih repozitorijuma</a></li>
+<li><a href="https://debian-openbox.io/post/apt/#instaliranje-preko-repozitorijuma">Instaliranje preko zvaničnih repozitorijuma</a></li>
+<li><a href="https://debian-openbox.io/post/apt/#itra%C5%BEenje-detalja-o-paketima">Traženje detalja o paketima</a>
+<ul>
+<li><a href="https://debian-openbox.io/post/apt/#apt-search">apt search</a> - pretražuje zadati string</li>
+<li><a href="https://debian-openbox.io/post/apt/#apt-show">apt show</a> - daje sažeti prikaz podataka o paketu</li>
+<li><a href="https://debian-openbox.io/post/apt/#apt-cache-depends">apt-cache depends</a> - daje listu dipendensija i preporuka</li>
+<li><a href="https://debian-openbox.io/post/apt/#apt-cache--i-depends">apt-cache -i depends</a> - daje samo listu važnih dipendensija (<em>important</em>)</li>
+<li><a href="https://debian-openbox.io/post/apt/#grep-status-">grep-status​ ...</a> - daje dipendensije instaliranih programa</li>
+<li><a href="https://debian-openbox.io/post/apt/#dpkg-deb-">dpkg-deb​ ...</a> - proverava dipendensije <strong>.deb</strong> fajla pre instalacije</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="ažuriranje-sistema"><em><strong>Ažuriranje sistema</strong></em></h5>
+<hr>
+<p><img src="/img/apt/apt-logo.jpg" alt=":left"> <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a>  (Advanced Package Tool) je softver koji služi za instalaciju i uklanjanje programa kod Debiana i njegovih derivata (Ubuntu, Mint, MX Linux, Antix i drugi).</p>
+<p>Prva <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a> funkcija koju početnici nauče je ažuriranje baze programa i operativnog sisteme:</p>
+<blockquote>
 <ol>
-<li>
-<p>Ažuriranje baze programa, odnosno pretraživanje novih verzija softvera dostupnih za nadogradnju.</p>
+<li>Ažuriranje baze programa, odnosno pretraživanje novih verzija softvera dostupnih za nadogradnju.</li>
+</ol>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt update
-</code></pre></div></li>
-<li>
-<p>Ažuriranje trenutno instaliranih <a href="https://www.lifewire.com/guide-to-linux-packages-2202801">paketa</a>:</p>
+</code></pre></div><ol start="2">
+<li>Ažuriranje trenutno instaliranih <a href="https://www.lifewire.com/guide-to-linux-packages-2202801">paketa</a>:</li>
+</ol>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt-get upgrade
-</code></pre></div></li>
-<li>
-<p>Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja</p>
+</code></pre></div><ol start="3">
+<li>Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja</li>
+</ol>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt upgrade
-</code></pre></div></li>
-<li>
-<p>Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja kao i uklanjanje paketa koji su pri tome &quot;slomljeni&quot; (<em>'Broken packages' are packages that have unsatisfied dependencies</em>):</p>
+</code></pre></div><ol start="4">
+<li>Ažuriranje trenutno instaliranih paketa, instaliranje novih paketa u procesu ažuriranja kao i uklanjanje paketa koji su pri tome &quot;slomljeni&quot;.<br>
+(<em>'Broken packages' are packages that have unsatisfied dependencies</em>)<br>
+U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipendensima</em>:</li>
+</ol>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt-get dist-upgrade
 <span class="ln">2</span>sudo apt full-upgrade
-</code></pre></div></li>
-</ol>
-<p>Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma (neki ih zovu riznice, ja ne mogu - asocira me na 3 ćemera blaga):</p>
+<span class="ln">3</span><span class="c1"># dovoljna je jedna od ove 2 komande</span>
+</code></pre></div></blockquote>
+<hr>
+<h5 id="instaliranje-preko-repozitorijuma"><em><strong>Instaliranje preko repozitorijuma</strong></em></h5>
+<hr>
+<ul>
+<li>Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma i tada ne razmišljamo o dipendensima jer <em>Apt</em> sam povuče šta mu treba:</li>
+</ul>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install vlc
 </code></pre></div><p>ili u grafičkom okruženju preko <em>Synaptica</em>:<br>
 <img src="/img/apt/apt.png" alt=""></p>
+<hr>
+<h5 id="traženje-detalja-o-paketima"><em><strong>Traženje detalja o paketima</strong></em>:</h5>
+<hr>
+<hr>
+<ul>
+<li>
+<h5 id="apt-search">apt search</h5>
+</li>
+</ul>
+<blockquote>
+<p>Komanda <em>apt search</em> traži zadati <em>string</em> u nazivima i opisima paketa (među rezultatima može da bude dosta stavki koje nemaju očigledne veze sa traženim pojmom):</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt search xpdf  <span class="c1"># primer pretraživanja: xpdf</span>
+</code></pre></div></blockquote>
+<hr>
+<ul>
+<li>
+<h5 id="apt-show">apt show</h5>
+</li>
+</ul>
+<blockquote>
+<p>Komanda <em>apt show</em> je mnogo korisnija i daje sažeto podatke o paketu:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt show xpdf  <span class="c1"># primer pretraživanja: xpdf</span>
+</code></pre></div><p><img src="/img/apt/apt_show.png" alt=""></p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h5 id="apt-cache-depends">apt-cache depends</h5>
+</li>
+</ul>
+<blockquote>
+<p>Ova komanda daje sve dipendensije:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-cache depends xpdf
+</code></pre></div><p><img src="/img/apt/apt-cache.png" alt=""></p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h5 id="apt-cache--i-depends">apt-cache -i depends</h5>
+</li>
+</ul>
+<blockquote>
+<p>Ova komanda daje sažetu listu dipendensija (<em>important</em>):</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-cache depends -i xpdf
+</code></pre></div><p><img src="/img/apt/apt-cache-v.png" alt=""></p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h5 id="grep-status-">grep-status​ ...</h5>
+</li>
+</ul>
+<blockquote>
+<p>Sledeća komanda  daje samo dipendensije sa verzijama <strong>instaliranih programa</strong> i traži prethodno instaliran <em><strong>dctrl-tools</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>grep-status -F package -s Depends wps-office
+</code></pre></div><p><img src="/img/apt/grep-status.png" alt=""></p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h5 id="dpkg-deb-">dpkg-deb​ ...</h5>
+</li>
+</ul>
+<blockquote>
+<p>Daunlodovali smo instalacioni fajl skypeforlinux_8.69.76.76_amd64.deb koga nema u zvaničnim repozitorijumima, a izvor je relativno validan.Treba samo ispitati dipendensije pre nego što ga instaliramo. Evo kako:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>dpkg-deb -f Downloads/skypeforlinux_8.69.76.76_amd64.deb Depends
+</code></pre></div><p><img src="/img/apt/dpkg-deb.png" alt=""></p>
+</blockquote>
+<hr>
 
 
   </article>
@@ -231,12 +325,6 @@ Prva <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</str
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/emoji-support/" class="nav-link" title="Emoji Support">Emoji Support</a>
-      </li>
-      <li>
-        <a href="https://debian-openbox.github.io/post/untitled-1/" class="nav-link" title=""></a>
-      </li>
-      <li>
-        <a href="https://debian-openbox.github.io/post/untitled/" class="nav-link" title=""></a>
       </li>
     </ul>
     <div>

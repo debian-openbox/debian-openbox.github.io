@@ -16,31 +16,125 @@
       <description>
         
           &lt;hr&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em&gt;&lt;strong&gt;APT&lt;/strong&gt;&lt;/em&gt; &lt;/a&gt;  (Advanced Package Tool) je softver koji služi za instalaciju i uklanjanje programa kod Debiana i njegovih derivata (Ubuntu, Mint, MX Linux, Antix i drugi).&lt;br&gt;
-Prva &lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em&gt;&lt;strong&gt;APT&lt;/strong&gt;&lt;/em&gt; &lt;/a&gt; funkcija koju početnici prvo nauče je ažuriranje baze programa i operativnog sisteme:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#a%C5%BEuriranje-sistema&#34;&gt;Ažuriranje sistema preko zvaničnih repozitorijuma&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#instaliranje-preko-repozitorijuma&#34;&gt;Instaliranje preko zvaničnih repozitorijuma&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#itra%C5%BEenje-detalja-o-paketima&#34;&gt;Traženje detalja o paketima&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#apt-search&#34;&gt;apt search&lt;/a&gt; - pretražuje zadati string&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#apt-show&#34;&gt;apt show&lt;/a&gt; - daje sažeti prikaz podataka o paketu&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#apt-cache-depends&#34;&gt;apt-cache depends&lt;/a&gt; - daje listu dipendensija i preporuka&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#apt-cache--i-depends&#34;&gt;apt-cache -i depends&lt;/a&gt; - daje samo listu važnih dipendensija (&lt;em&gt;important&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#grep-status-&#34;&gt;grep-status​ ...&lt;/a&gt; - daje dipendensije instaliranih programa&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.io/post/apt/#dpkg-deb-&#34;&gt;dpkg-deb​ ...&lt;/a&gt; - proverava dipendensije &lt;strong&gt;.deb&lt;/strong&gt; fajla pre instalacije&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;ažuriranje-sistema&#34;&gt;&lt;em&gt;&lt;strong&gt;Ažuriranje sistema&lt;/strong&gt;&lt;/em&gt;&lt;/h5&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt-logo.jpg&#34; alt=&#34;:left&#34;&gt; &lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em&gt;&lt;strong&gt;APT&lt;/strong&gt;&lt;/em&gt; &lt;/a&gt;  (Advanced Package Tool) je softver koji služi za instalaciju i uklanjanje programa kod Debiana i njegovih derivata (Ubuntu, Mint, MX Linux, Antix i drugi).&lt;/p&gt;
+&lt;p&gt;Prva &lt;a href=&#34;https://en.wikipedia.org/wiki/APT_(software)&#34;&gt;&lt;em&gt;&lt;strong&gt;APT&lt;/strong&gt;&lt;/em&gt; &lt;/a&gt; funkcija koju početnici nauče je ažuriranje baze programa i operativnog sisteme:&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Ažuriranje baze programa, odnosno pretraživanje novih verzija softvera dostupnih za nadogradnju.&lt;/p&gt;
+&lt;li&gt;Ažuriranje baze programa, odnosno pretraživanje novih verzija softvera dostupnih za nadogradnju.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Ažuriranje trenutno instaliranih &lt;a href=&#34;https://www.lifewire.com/guide-to-linux-packages-2202801&#34;&gt;paketa&lt;/a&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Ažuriranje trenutno instaliranih &lt;a href=&#34;https://www.lifewire.com/guide-to-linux-packages-2202801&#34;&gt;paketa&lt;/a&gt;:&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja kao i uklanjanje paketa koji su pri tome &amp;quot;slomljeni&amp;quot; (&lt;em&gt;&#39;Broken packages&#39; are packages that have unsatisfied dependencies&lt;/em&gt;):&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Ažuriranje trenutno instaliranih paketa, instaliranje novih paketa u procesu ažuriranja kao i uklanjanje paketa koji su pri tome &amp;quot;slomljeni&amp;quot;.&lt;br&gt;
+(&lt;em&gt;&#39;Broken packages&#39; are packages that have unsatisfied dependencies&lt;/em&gt;)&lt;br&gt;
+U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo &lt;em&gt;dipendensima&lt;/em&gt;:&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get dist-upgrade
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt full-upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma (neki ih zovu riznice, ja ne mogu - asocira me na 3 ćemera blaga):&lt;/p&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# dovoljna je jedna od ove 2 komande&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;instaliranje-preko-repozitorijuma&#34;&gt;&lt;em&gt;&lt;strong&gt;Instaliranje preko repozitorijuma&lt;/strong&gt;&lt;/em&gt;&lt;/h5&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma i tada ne razmišljamo o dipendensima jer &lt;em&gt;Apt&lt;/em&gt; sam povuče šta mu treba:&lt;/li&gt;
+&lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install vlc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ili u grafičkom okruženju preko &lt;em&gt;Synaptica&lt;/em&gt;:&lt;br&gt;
 &lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;traženje-detalja-o-paketima&#34;&gt;&lt;em&gt;&lt;strong&gt;Traženje detalja o paketima&lt;/strong&gt;&lt;/em&gt;:&lt;/h5&gt;
+&lt;hr&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;apt-search&#34;&gt;apt search&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Komanda &lt;em&gt;apt search&lt;/em&gt; traži zadati &lt;em&gt;string&lt;/em&gt; u nazivima i opisima paketa (među rezultatima može da bude dosta stavki koje nemaju očigledne veze sa traženim pojmom):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt search xpdf  &lt;span class=&#34;c1&#34;&gt;# primer pretraživanja: xpdf&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;apt-show&#34;&gt;apt show&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Komanda &lt;em&gt;apt show&lt;/em&gt; je mnogo korisnija i daje sažeto podatke o paketu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt show xpdf  &lt;span class=&#34;c1&#34;&gt;# primer pretraživanja: xpdf&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt_show.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;apt-cache-depends&#34;&gt;apt-cache depends&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ova komanda daje sve dipendensije:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt-cache depends xpdf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt-cache.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;apt-cache--i-depends&#34;&gt;apt-cache -i depends&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ova komanda daje sažetu listu dipendensija (&lt;em&gt;important&lt;/em&gt;):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt-cache depends -i xpdf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/apt-cache-v.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;grep-status-&#34;&gt;grep-status​ ...&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sledeća komanda  daje samo dipendensije sa verzijama &lt;strong&gt;instaliranih programa&lt;/strong&gt; i traži prethodno instaliran &lt;em&gt;&lt;strong&gt;dctrl-tools&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;grep-status -F package -s Depends wps-office
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/grep-status.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h5 id=&#34;dpkg-deb-&#34;&gt;dpkg-deb​ ...&lt;/h5&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Daunlodovali smo instalacioni fajl skypeforlinux_8.69.76.76_amd64.deb koga nema u zvaničnim repozitorijumima, a izvor je relativno validan.Treba samo ispitati dipendensije pre nego što ga instaliramo. Evo kako:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;dpkg-deb -f Downloads/skypeforlinux_8.69.76.76_amd64.deb Depends
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/apt/dpkg-deb.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
 
         
       </description>
