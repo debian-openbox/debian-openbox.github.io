@@ -176,16 +176,20 @@
 <ul>
 <li><a href="https://debian-openbox.github.io/post/apt/#a%C5%BEuriranje-sistema">Ažuriranje sistema preko zvaničnih repozitorijuma</a></li>
 <li><a href="https://debian-openbox.github.io/post/apt/#instaliranje-preko-repozitorijuma">Instaliranje preko zvaničnih repozitorijuma</a></li>
-<li><a href="https://debian-openbox.github.io/post/apt/#itra%C5%BEenje-detalja-o-paketima">Traženje detalja o paketima</a>
+<li><a href="https://debian-openbox.github.io/post/apt/#itra%C5%BEenje-detalja-o-paketima">Traženje detalja o zavisnostima paketa</a>
 <ul>
 <li><a href="https://debian-openbox.github.io/post/apt/#apt-search">apt search</a> - pretražuje zadati string</li>
 <li><a href="https://debian-openbox.github.io/post/apt/#apt-show">apt show</a> - daje sažeti prikaz podataka o paketu</li>
 <li><a href="https://debian-openbox.github.io/post/apt/#apt-cache-depends">apt-cache depends</a> - daje listu dipendensija i preporuka</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#apt-cache--i-depends">apt-cache -i depends</a> - daje samo listu važnih dipendensija (<em>important</em>)</li>
+<li><a href="https://debian-openbox.github.io/post/apt/#apt-cache-depends--i">apt-cache depends -i </a> - daje samo listu važnih dipendensija (<em>important</em>)</li>
 <li><a href="https://debian-openbox.github.io/post/apt/#grep-status-">grep-status​ ...</a> - daje dipendensije instaliranih programa</li>
 <li><a href="https://debian-openbox.github.io/post/apt/#dpkg-deb-">dpkg-deb​ ...</a> - proverava dipendensije <strong>.deb</strong> fajla pre instalacije</li>
+<li><a href="https://debian-openbox.github.io/post/apt/#documentTop#reverzna-i-rekurzivna-zavisnost-paketa">reverzna i rekurzivna zavisnost</a> - značenje i primeri</li>
 </ul>
 </li>
+<li><a href="https://debian-openbox.github.io/post/apt/#documentTop#mark-stylebackground-color-lightbluepopis-ru%C4%8Dno-instaliranih-paketamark">popis ručno instaliranih paketa</a></li>
+<li><a href="https://debian-openbox.github.io/post/apt/#documentTop#mark-stylebackground-color-lightbluezadr%C5%BEavanje-paketa-u-trenutnoj-verzijimark">zadržavanje paketa u trenutnoj verziji</a></li>
+<li><a href="https://debian-openbox.github.io/post/apt/#documentTop#mark-stylebackground-color-lightbluelista-paketa-kojima-je-zamrznuta-verzijamark">izlistavanje paketa sa &quot;zamrznutom&quot; verzijom</a></li>
 </ul>
 <hr>
 <h5 id="ažuriranje-sistema"><em><strong>Ažuriranje sistema</strong></em></h5>
@@ -224,12 +228,12 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
 </code></pre></div><p>ili u grafičkom okruženju preko <em>Synaptica</em>:<br>
 <img src="/img/apt/apt.png" alt=""></p>
 <hr>
-<h5 id="traženje-detalja-o-paketima"><em><strong>Traženje detalja o paketima</strong></em>:</h5>
+<h4 id="traženje-detalja-o-paketima"><em><strong>Traženje detalja o paketima</strong></em>:</h4>
 <hr>
 <hr>
 <ul>
 <li>
-<h5 id="apt-search">apt search</h5>
+<h5 id="mark-stylebackground-color-lightblueapt-searchmark"><mark style="background-color: lightblue"><strong>apt search</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
@@ -239,7 +243,7 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
 <hr>
 <ul>
 <li>
-<h5 id="apt-show">apt show</h5>
+<h5 id="mark-stylebackground-color-lightblueapt-showmark"><mark style="background-color: lightblue"><strong>apt show</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
@@ -250,7 +254,7 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
 <hr>
 <ul>
 <li>
-<h5 id="apt-cache-depends">apt-cache depends</h5>
+<h5 id="mark-stylebackground-color-lightblueapt-cache-dependsmark"><mark style="background-color: lightblue"><strong>apt-cache depends</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
@@ -261,7 +265,7 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
 <hr>
 <ul>
 <li>
-<h5 id="apt-cache--i-depends">apt-cache -i depends</h5>
+<h5 id="mark-stylebackground-color-lightblueapt-cache-depends--imark"><mark style="background-color: lightblue"><strong>apt-cache depends -i</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
@@ -272,26 +276,66 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
 <hr>
 <ul>
 <li>
-<h5 id="grep-status-">grep-status​ ...</h5>
+<h5 id="mark-stylebackground-color-lightbluegrep-status-mark"><mark style="background-color: lightblue"><strong>grep-status​ ...</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
-<p>Sledeća komanda  daje samo dipendensije sa verzijama <strong>instaliranih programa</strong> i traži prethodno instaliran <em><strong>dctrl-tools</strong></em>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>grep-status -F package -s Depends wps-office
+<p>Sledeća komanda  daje samo dipendensije sa verzijama <mark style="background-color: #BCC6CC"><strong>instaliranih paketa</strong></mark> i traži prethodno instaliran <mark style="background-color: #BCC6CC"><em><strong>dctrl-tools</strong></em></mark>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install dctrl-tools
+<span class="ln">2</span>grep-status -F package -s Depends wps-office
 </code></pre></div><p><img src="/img/apt/grep-status.png" alt=""></p>
 </blockquote>
 <hr>
 <ul>
 <li>
-<h5 id="dpkg-deb-">dpkg-deb​ ...</h5>
+<h5 id="mark-stylebackground-color-lightbluedpkg-deb-mark"><mark style="background-color: lightblue"><strong>dpkg-deb​ ...</strong></mark></h5>
 </li>
 </ul>
 <blockquote>
-<p>Daunlodovali smo instalacioni fajl skypeforlinux_8.69.76.76_amd64.deb koga nema u zvaničnim repozitorijumima, a izvor je relativno validan.Treba samo ispitati dipendensije pre nego što ga instaliramo. Evo kako:</p>
+<p>Daunlodovali smo instalacioni fajl <mark style="background-color: #BCC6CC">skypeforlinux_8.69.76.76_amd64.deb</mark> koga nema u zvaničnim repozitorijumima, a izvor je relativno validan.Treba samo ispitati dipendensije pre nego što ga instaliramo. Evo kako:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>dpkg-deb -f Downloads/skypeforlinux_8.69.76.76_amd64.deb Depends
 </code></pre></div><p><img src="/img/apt/dpkg-deb.png" alt=""></p>
 </blockquote>
 <hr>
+<h3 id="reverzna-i-rekurzivna-zavisnost-paketa"><em><strong>Reverzna i rekurzivna zavisnost paketa</strong></em>:</h3>
+<hr>
+<ul>
+<li>
+<h5 id="mark-stylebackground-color-lightbluereverzna-zavisnostmark"><mark style="background-color: lightblue"><strong>reverzna zavisnost</strong></mark></h5>
+</li>
+</ul>
+<p>Tražiti reverznu zavisnost paketa znači tražiti listu paketa koji zavise od zadatog paketa:<br>
+&quot;Pajpom&quot; ispred naziva su označeni oni paketi koji zavise od drugih paketa.Nije potrebno da se instaliraju ali treba da su navedeni u bazi podataka paketa.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>apt-cache rdepends xpdf
+</code></pre></div><p><img src="/img/apt/reverzna.png" alt=""></p>
+<hr>
+<ul>
+<li>
+<h5 id="mark-stylebackground-color-lightbluerekurzivna-zavisnostmark"><mark style="background-color: lightblue"><strong>rekurzivna zavisnost</strong></mark></h5>
+<p>Komanda kao što je <mark style="background-color: lightblue">apt-rdepends</mark> pokazuje listu dipendensija za zadati paket, ali i pakete koji su dipendensiji ovim dipendensijima i tako rekurzivno dok se zavisnost ne iscrpi.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-rdepends xpdf <span class="p">|</span> head -15  <span class="c1"># ograničeno na 15 linija s vrha</span>
+</code></pre></div><p><img src="/img/apt/apt-rdepends.png" alt=""></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<h5 id="mark-stylebackground-color-lightbluepopis-ručno-instaliranih-paketamark"><mark style="background-color: lightblue"><strong>popis ručno instaliranih paketa</strong></mark></h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark showmanual
+</code></pre></div><p><img src="/img/apt/showmanual.png" alt=""></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<h5 id="mark-stylebackground-color-lightbluezadržavanje-paketa-u-trenutnoj-verzijimark"><mark style="background-color: lightblue"><strong>zadržavanje paketa u trenutnoj verziji</strong></mark></h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark hold xpdf
+</code></pre></div></li>
+<li>
+<h5 id="mark-stylebackground-color-lightbluelista-paketa-kojima-je-zamrznuta-verzijamark"><mark style="background-color: lightblue"><strong>lista paketa kojima je &quot;zamrznuta&quot; verzija</strong></mark></h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark showhold
+</code></pre></div></li>
+</ul>
 
 
   </article>
