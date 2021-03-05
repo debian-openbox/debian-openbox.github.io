@@ -180,7 +180,7 @@ Kreiraćemo sistemski nalog (novog &lt;em&gt;user&lt;/em&gt;-a) koji će imati p
 &lt;/ol&gt;
 &lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/smbclient.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Ovim smo završili podešavanje Samba servera  &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;javni &lt;em&gt;Public Share&lt;/em&gt;&lt;/strong&gt;&lt;/mark&gt; (sa pravom pristupa bez ograničenja).&lt;/li&gt;
+&lt;li&gt;Ovim smo završili podešavanje Samba servera za  &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;javni &lt;em&gt;Public Share&lt;/em&gt;&lt;/strong&gt;&lt;/mark&gt; (sa pravom pristupa bez ograničenja).&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;podešavanje-klijenta-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Podešavanje klijenta: Debian 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
@@ -192,7 +192,7 @@ Kreiraćemo sistemski nalog (novog &lt;em&gt;user&lt;/em&gt;-a) koji će imati p
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Mauntujemo &lt;em&gt;&lt;strong&gt;Samba Share&lt;/strong&gt;&lt;/em&gt; pomoću komande:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo mount -t cifs //192.168.178.35/public /mnt -o &lt;span class=&#34;nv&#34;&gt;uid&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;peja1
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo mount -t cifs //192.168.178.35/public /mnt -o &lt;span class=&#34;nv&#34;&gt;uid&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pejadebian
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Kada nam zatraži lozinku samo pritisnemo ENTER:&lt;/p&gt;
@@ -206,12 +206,12 @@ Kreiraćemo sistemski nalog (novog &lt;em&gt;user&lt;/em&gt;-a) koji će imati p
 &lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;/mnt&lt;/strong&gt;&lt;/mark&gt;  je lokacija šerovanog foldera na klijentskom računaru&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;peja1&lt;/strong&gt;&lt;/mark&gt; je &lt;em&gt;username&lt;/em&gt; pod kojim smo ulogovani na klijentskom računaru&lt;/p&gt;
+&lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;pejadebian&lt;/strong&gt;&lt;/mark&gt; je &lt;em&gt;username&lt;/em&gt; pod kojim smo ulogovani na klijentskom računaru (sa istim imenom smo otvorili i nalog na serveru)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Nako ovoga bi trebalo da pristupimo &lt;em&gt;Samba Share&lt;/em&gt; folderu:&lt;/p&gt;
+&lt;p&gt;Nakon ovoga bi trebalo da pristupimo &lt;em&gt;Samba Share&lt;/em&gt; folderu:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /mnt
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ls -la
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;

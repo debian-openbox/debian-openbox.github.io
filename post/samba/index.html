@@ -284,7 +284,7 @@ Kreiraćemo sistemski nalog (novog <em>user</em>-a) koji će imati puno pravo ko
 </ol>
 <p><img src="/img/samba/smbclient.png" alt=""></p>
 <ol>
-<li>Ovim smo završili podešavanje Samba servera  <mark style="background-color: lightblue"><strong>javni <em>Public Share</em></strong></mark> (sa pravom pristupa bez ograničenja).</li>
+<li>Ovim smo završili podešavanje Samba servera za  <mark style="background-color: lightblue"><strong>javni <em>Public Share</em></strong></mark> (sa pravom pristupa bez ograničenja).</li>
 </ol>
 <hr>
 <h3 id="podešavanje-klijenta-debian-10"><em><strong>Podešavanje klijenta: Debian 10</strong></em></h3>
@@ -296,7 +296,7 @@ Kreiraćemo sistemski nalog (novog <em>user</em>-a) koji će imati puno pravo ko
 </code></pre></div></li>
 <li>
 <p>Mauntujemo <em><strong>Samba Share</strong></em> pomoću komande:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo mount -t cifs //192.168.178.35/public /mnt -o <span class="nv">uid</span><span class="o">=</span>peja1
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo mount -t cifs //192.168.178.35/public /mnt -o <span class="nv">uid</span><span class="o">=</span>pejadebian
 </code></pre></div><ul>
 <li>
 <p>Kada nam zatraži lozinku samo pritisnemo ENTER:</p>
@@ -310,12 +310,12 @@ Kreiraćemo sistemski nalog (novog <em>user</em>-a) koji će imati puno pravo ko
 <p><mark style="background-color: lightblue"><strong>/mnt</strong></mark>  je lokacija šerovanog foldera na klijentskom računaru</p>
 </li>
 <li>
-<p><mark style="background-color: lightblue"><strong>peja1</strong></mark> je <em>username</em> pod kojim smo ulogovani na klijentskom računaru</p>
+<p><mark style="background-color: lightblue"><strong>pejadebian</strong></mark> je <em>username</em> pod kojim smo ulogovani na klijentskom računaru (sa istim imenom smo otvorili i nalog na serveru)</p>
 </li>
 </ul>
 </li>
 <li>
-<p>Nako ovoga bi trebalo da pristupimo <em>Samba Share</em> folderu:</p>
+<p>Nakon ovoga bi trebalo da pristupimo <em>Samba Share</em> folderu:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="nb">cd</span> /mnt
 <span class="ln">2</span>ls -la
 </code></pre></div></li>
