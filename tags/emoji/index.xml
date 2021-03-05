@@ -61,6 +61,183 @@
     </item>
     
     <item>
+      <title>SAMBA</title>
+      <link>https://debian-openbox.github.io/post/samba/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/samba/</guid>
+      <description>
+        
+          &lt;p&gt;Samba je popularni besplatni softver kojimse povezuju u mrežu kako Linux sistemi između sebe, tako i sa Windows sistemima. Windows 10 je doneo znatno unapređenje u pogledu umrežavanja sa Linuxom.&lt;br&gt;
+Ovde će biti obrađen sledeći scenario: Samba server instaliran na Debian 10 računaru, povezujemo sa klijentima takođe pod Debianom 10 i Windows-om 10 Pro.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Najpre proveravamo da li je aktivni korisnik član grupe SUDO (da li ima SUDO ovlašćenja).&lt;br&gt;
+Ako na komandu &lt;em&gt;&lt;strong&gt;groups&lt;/strong&gt;&lt;/em&gt; u terminalu, dobijemo kao odgovor listu na kojoj je i &lt;em&gt;&lt;strong&gt;sudo&lt;/strong&gt;&lt;/em&gt;, onda nema potrebe za dodavanje aktivnog usera sudo grupi:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo adduser username sudo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Instaliranje Sambe:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install samba
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/samba1.png&#34; alt=&#34;odgovoriti sa No&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Verziju Sambe možemo da proverimo ako se ulogujemo kao ROOT:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo su root    &lt;span class=&#34;c1&#34;&gt;# ovako ide kad se Debian instalira bez root password-a&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;samba -V
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/samba-verzija.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Potvrdimo da je Samba aktivna:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;systemctl status smbd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dobijemo ovako nešto:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/samba/samba-radi.png&#34; alt=&#34;ovo znači da je Samba instalirana i da radi&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako postoji firewall (pod Debianom i Ubuntu-om obično &lt;em&gt;&lt;strong&gt;ufw&lt;/strong&gt;&lt;/em&gt;), potrebno je da se osigura da portovi 139 i 445 budu otvoreni:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo ufw allow &lt;span class=&#34;m&#34;&gt;139&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo ufw allow &lt;span class=&#34;m&#34;&gt;445&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/ufw.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DA BI MOGLO DA SE PRISTUPI SAMBA SHARE-u , POTREBNO JE DA SAMBA KLIJENTI BUDU REGISTROVANI KAO STANDARDNI LINUX USER-i, pa tek onda da se registruju kao SAMBA USER-i:&lt;/p&gt;
+&lt;p&gt;U našem scenariju Samba Server je na Debianu 10, a pristupa mu se sa WINDOWS-a 10 i Debiana 10&lt;/p&gt;
+&lt;p&gt;SAMBA SERVER __________________super user: peja&lt;br&gt;
+SAMBA KLIJENT WINDOWS 10________user: pejawin10&lt;br&gt;
+SAMBA KLIJENT DEBIAN 10 __________user: pejadebian&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo adduser pejawin10  &lt;span class=&#34;c1&#34;&gt;# dodavanje naloga za pristupanje sa Windowsa 10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo adduser pejadebian  &lt;span class=&#34;c1&#34;&gt;# dodavanje naloga za pristupanje sa Debiana 10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/nalog.png&#34; alt=&#34;primer otvaranja naloga lazawin10&#34;&gt;
+&lt;ins&gt;Svaki od naloga (pejawin10 i pejadebian), pri otvaranju istih, dobio je svoju Linux lozinku koju ne treba mešati sa Samba lozinkom (o tome kasnije)&lt;/ins&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;public-samba-share&#34;&gt;&lt;em&gt;&lt;strong&gt;Public SAMBA Share&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Public Samba Share&lt;/em&gt;  je folder za razmenu podataka bez restrikcija prava korišćenja.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Najpre oformimo folder koji će služiti za razmenu podataka:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo mkdir /example   &lt;span class=&#34;c1&#34;&gt;# u našem primeru je to /example&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Logično bi bilo da se svim korisnicima (user-ima) „SAMBA Share-a“ &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;/example&lt;/strong&gt;&lt;/mark&gt;  dodeli puno pravo korišćenja, ali ovde ćemo primeniti drugi pristup.&lt;br&gt;
+Kreiraćemo sistemski nalog (novog &lt;em&gt;user&lt;/em&gt;-a) koji će imati puno pravo korišćenja tako da nateramo korisnike  da koriste taj nalog kada se loguju u Sambu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#dodajemo usera samba-public&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo useradd -rs /bin/false samba-public  
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#dodeljujemo vlasništvo nad /example novom korisniku samba-public&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;sudo chown samba-public /example 
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#dodeljujemo korisniku (samba-public) sva ovlašćenja (rwx)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;sudo chmod u+rwx /example
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I konačno moramo da unesemo izmene u konfiguracioni fajl &lt;em&gt;&lt;strong&gt;smb.conf&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/samba/smb.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;i na kraju teksta unesemo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;[public]
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;   path = /example
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;   available = yes
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;   browsable = yes
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;   public = yes
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;   writable = yes
+&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;   force user = samba-public
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Ako želimo pristup i iz Windows-a onda treba pronaći naziv &lt;em&gt;Workgroup&lt;/em&gt; u Windows-u 10:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;U start meniju Windowsa ukucamo “Show which workgroup this computer is on”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/workgroup.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/samba/workgroup1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Po &lt;em&gt;default&lt;/em&gt;-u naziv Workgroup je &lt;em&gt;&lt;strong&gt;WORKGROUP&lt;/strong&gt;&lt;/em&gt;, a ako je drugačije treba promeniti u /etc/samba/smb.conf&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/samba/workgroup2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pre nego restartujemo Sambu (&lt;em&gt;smbd service&lt;/em&gt;), proverimo da li je sintaksa komandi ispravna:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo su
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;testparm
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dobićemo ovako nešto:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/samba/testparm.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Restartujemo Sambu i proverimo status još jednom:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl restart smbd
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo systemctl status smbd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za testiranje pristupa &lt;em&gt;Samba Share&lt;/em&gt;-u treba instalirati &lt;em&gt;smbclient&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get install smbclient
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo smbclient -L localhost
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#kada nas pita za password workgroup-e, samo pritisnemo ENTER&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/smbclient.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ovim smo završili podešavanje Samba servera  &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;javni &lt;em&gt;Public Share&lt;/em&gt;&lt;/strong&gt;&lt;/mark&gt; (sa pravom pristupa bez ograničenja).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;podešavanje-klijenta-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Podešavanje klijenta: Debian 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Instaliramo &lt;em&gt;cifs-utils&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get install cifs-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Mauntujemo &lt;em&gt;&lt;strong&gt;Samba Share&lt;/strong&gt;&lt;/em&gt; pomoću komande:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo mount -t cifs //192.168.178.35/public /mnt -o &lt;span class=&#34;nv&#34;&gt;uid&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;peja1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Kada nam zatraži lozinku samo pritisnemo ENTER:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;Password &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; root@//192.168.178.35/public : &amp;lt;no_password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Adresu 192.168.178.35 smo dobili komandom:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ip a  &lt;span class=&#34;c1&#34;&gt;#naravno na Samba serveru kome pristupamo&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;/mnt&lt;/strong&gt;&lt;/mark&gt;  je lokacija šerovanog foldera na klijentskom računaru&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;peja1&lt;/strong&gt;&lt;/mark&gt; je &lt;em&gt;username&lt;/em&gt; pod kojim smo ulogovani na klijentskom računaru&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Nako ovoga bi trebalo da pristupimo &lt;em&gt;Samba Share&lt;/em&gt; folderu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /mnt
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ls -la
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;podešavanje-klijenta-windows-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Podešavanje klijenta: Windows 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;U &lt;em&gt;Windows Explorer&lt;/em&gt;-u (ili Total Commandr-u) u polje za adrese ukucamo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;\\192.168.178.35\public
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;192.168.178.35 je adresa dobijena komandom &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;ip a&lt;/strong&gt;&lt;/mark&gt; na Debian 10 serveru&lt;/li&gt;
+&lt;li&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;public&lt;/strong&gt;&lt;/mark&gt; je naziv Samba Share-a iz konfiguracionog fajla /etc/samba/smb.conf  na serveru&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pojavljuje se sadržaj šerovanog foldera sa svim pravima korišćenja.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
       <title>APT - Advanced Package Tool</title>
       <link>https://debian-openbox.github.io/post/apt/</link>
       <pubDate>Wed, 03 Feb 2021 00:00:00 +0000</pubDate>
