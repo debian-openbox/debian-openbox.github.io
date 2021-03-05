@@ -6,7 +6,60 @@
     <description>Recent content in emoji on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2020, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 03 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Korisnici i Grupe (Users and Groups)</title>
+      <link>https://debian-openbox.github.io/post/usersgroups/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/usersgroups/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;p&gt;Ako se pogledate na ovoj &lt;a href=&#34;https://speja969.github.io/post/min_buster_vbox/&#34;&gt;strani&lt;/a&gt; tačka 28, prilikom instaliranja minimalnog Debiana izostavljen je unos lozinke za ROOT nalog, što je administratorska ovlašćenja prenelo na prvog korisnika (&lt;em&gt;USER&lt;/em&gt;-a).&lt;br&gt;
+Šta ako na sistemu želimo više od jednog korisnika?&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;korisnici-_users_&#34;&gt;&lt;strong&gt;Korisnici (&lt;em&gt;Users&lt;/em&gt;)&lt;/strong&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#otvaranje novog user naloga:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo adduser novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#brisanje user naloga:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo userdel novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#brisanje user naloga uz brisanje njegovih fajlova i HOME foldera:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo userdel -r novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#lista svih “normalnih” usera:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;eval&lt;/span&gt; getent passwd &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;/^UID_MIN/ {print $2}&amp;#39;&lt;/span&gt; /etc/login.defs&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;..&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;/^UID_MAX/ {print $2}&amp;#39;&lt;/span&gt; /etc/login.defs&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; cut -d: -f1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;grupe-_groups_&#34;&gt;&lt;strong&gt;Grupe (&lt;em&gt;Groups&lt;/em&gt;)&lt;/strong&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PRAVLJENJE NOVE GRUPE (dva načina)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo addgroup mygroup
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;sudo groupadd mygroup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#DODAVANJE POSTOJEĆIH USER-a GRUPI&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo usermod -a -G mygroup novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROMENA PRIMARNE GRUPE USER-a&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#(SVAKI USER PRIPADA JEDNOJ PRIMARNOJ GRUPI, ALI MОŽE DA IMA VIŠE SEKUNDARNIH)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;sudo usermod -g groupname novi_user    &lt;span class=&#34;c1&#34;&gt;# malo g označava primarnu grupu&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROVERA KOJIM SVE GRUPAMA PRIPADA AKTIVNI USER&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;groups
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROVERA KOJIM SVE GRUPAMA (sa numeričkom identifikacijom) PRIPADA NEKI USER&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;id
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROVERA KOJIM SVE GRUPAMA PRIPADA POSTOJEĆI NEAKTIVNI (neulogovani) USER&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;groups novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROVERA (sa numeričkom identifikacijom) KOJIM SVE GRUPAMA  PRIPADA POSTOJEĆI NEAKTIVNI USER&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;id novi_user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PRAVLJENJE NOVOG USER-a i DODAVANJE TOG USER-a GRUPI U ISTOJ KOMANDI&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;useradd -G ftp jsmith     &lt;span class=&#34;c1&#34;&gt;# uvođenje user-a jsmith i dodavanje grupi ftp&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;passwd jsmith           &lt;span class=&#34;c1&#34;&gt;# dodeljivanje lozinke novom user-u&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#DODAVANJE PRIPADNOSTI USER-u U VIŠE GRUPA ISTOM KOMANDOM&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo usermod -a -G grupa1 grupa2 grupa3 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#PROVERA KOJE SVE GRUPE POSTOJE U SISTEMU&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;getent group
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        
+      </description>
+    </item>
+    
     <item>
       <title>APT - Advanced Package Tool</title>
       <link>https://debian-openbox.github.io/post/apt/</link>
