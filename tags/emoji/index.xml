@@ -68,9 +68,29 @@
       <guid>https://debian-openbox.github.io/post/samba/</guid>
       <description>
         
-          &lt;p&gt;Samba je popularni besplatni softver kojim se povezuju u mrežu kako Linux sistemi između sebe, tako i sa Windows sistemima. Windows 10 je doneo znatno unapređenje u pogledu umrežavanja sa Linuxom.&lt;br&gt;
-Ovde će biti obrađen sledeći scenario: Samba server instaliran na Debian 10 računaru, povezujemo sa klijentima  pod Debianom 10 i Windows-om 10 Pro.&lt;br&gt;
-Krenimo redom:&lt;/p&gt;
+          &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#instalacija-i-konfigurianje&#34;&gt;INSTALACIJA i KONFIGURISANJE&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mark-stylebackground-color-lightbluepublic-samba-sharemark&#34;&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;Public SAMBA Share:&lt;/strong&gt;&lt;/mark&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#public-samba-share&#34;&gt;Public SAMBA Share - pristup bez ograničenja&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-klijenta-debian-10&#34;&gt;Podešavanje klijenta: Debian 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-klijenta-windows-10&#34;&gt;Podešavanje klijenta: Windows 10&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mark-stylebackground-color-lightbluesecure-samba-sharemark&#34;&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;Secure SAMBA Share:&lt;/strong&gt;&lt;/mark&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#autentifikacija&#34;&gt;Autentifikacija&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-i-pristupanje-secure-samba-share-iz-windows-a&#34;&gt;Podešavanje klijenta: Windows 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-i-pristupanje-secure-samba-share-iz-debian-a&#34;&gt;Podešavanje klijenta: Debian 10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/samba/#napomena&#34;&gt;NAPOMENA - &lt;em&gt;&lt;strong&gt;ufw Firewall&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Samba je popularni besplatni softver kojim se povezuju u mrežu kako Linux sistemi između sebe, tako i sa Windows sistemima. Windows 10 je doneo znatno unapređenje u pogledu umrežavanja sa Linuxom.&lt;br&gt;
+Ovde će biti obrađen sledeći scenario: Samba server instaliran na Debian 10 računaru, povezujemo sa klijentima  pod Debianom 10 i Windows-om 10 Pro.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;instalacija-i-konfigurianje&#34;&gt;&lt;em&gt;&lt;strong&gt;Instalacija i konfigurianje&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Proveravamo da li je aktivni korisnik član grupe &lt;em&gt;SUDO&lt;/em&gt; (da li ima SUDO ovlašćenja).&lt;br&gt;
@@ -238,6 +258,8 @@ Kreiraćemo sistemski nalog (novog &lt;em&gt;user&lt;/em&gt;-a) koji će imati p
 &lt;hr&gt;
 &lt;h2 id=&#34;secure-samba-share&#34;&gt;SECURE SAMBA SHARE&lt;/h2&gt;
 &lt;h6 id=&#34;privatni-folder-za-razmenu-sa-dodeljivanjem-prava-korišćenja&#34;&gt;&lt;em&gt;&lt;strong&gt;(PRIVATNI FOLDER ZA RAZMENU SA DODELJIVANJEM PRAVA KORIŠĆENJA)&lt;/strong&gt;&lt;/em&gt;&lt;/h6&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;autentifikacija&#34;&gt;&lt;em&gt;&lt;strong&gt;Autentifikacija&lt;/strong&gt;&lt;/em&gt;&lt;/h4&gt;
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li&gt;Sambina autentifikacija je nezavisna od Linux-ove što znači da se Linux user-i moraju zasebno registrovati kao Samba user-i i to sa posebnim Samba password-om.&lt;br&gt;
