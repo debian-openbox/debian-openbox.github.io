@@ -429,6 +429,27 @@ unose se <em>username</em> i <em>password</em> registrovanog Samba korisnika koj
 <img src="/img/samba/findmnt.png" alt=""></p>
 </li>
 </ol>
+<h6 id="napomena">NAPOMENA:</h6>
+<hr>
+<p><mark style="background-color: lightblue"><strong>ufw</strong></mark> (<em>Uncomplicated Firewall</em>) i njegova GUI verzija <mark style="background-color: lightblue"><strong>gufw</strong></mark> su uobičajeni Firewall za Debian i njegove derivate.</p>
+<ul>
+<li>
+<p>instalira se standardno:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install ufw
+</code></pre></div></li>
+<li>
+<p>Status proveravamo ovako:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo ufw status
+</code></pre></div><p><img src="/img/samba/ufw-status.png" alt="posle instalacije je neaktiviran"></p>
+</li>
+<li>
+<p>Aktiviranje i deaktiviranje se obavlja komandama:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo ufw <span class="nb">enable</span>
+<span class="ln">2</span>sudo ufw disable
+</code></pre></div><p><img src="/img/samba/ufw-enable.png" alt="aktiviranje"><br>
+<img src="/img/samba/ufw-disable.png" alt="deaktiviranje"></p>
+</li>
+</ul>
 
 
   </article>

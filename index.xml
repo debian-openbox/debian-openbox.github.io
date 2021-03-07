@@ -325,6 +325,27 @@ unose se &lt;em&gt;username&lt;/em&gt; i &lt;em&gt;password&lt;/em&gt; registrov
 &lt;img src=&#34;https://debian-openbox.github.io/img/samba/findmnt.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;h6 id=&#34;napomena&#34;&gt;NAPOMENA:&lt;/h6&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;ufw&lt;/strong&gt;&lt;/mark&gt; (&lt;em&gt;Uncomplicated Firewall&lt;/em&gt;) i njegova GUI verzija &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;gufw&lt;/strong&gt;&lt;/mark&gt; su uobičajeni Firewall za Debian i njegove derivate.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;instalira se standardno:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install ufw
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Status proveravamo ovako:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo ufw status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/ufw-status.png&#34; alt=&#34;posle instalacije je neaktiviran&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Aktiviranje i deaktiviranje se obavlja komandama:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo ufw &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo ufw disable
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/samba/ufw-enable.png&#34; alt=&#34;aktiviranje&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/samba/ufw-disable.png&#34; alt=&#34;deaktiviranje&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 
         
       </description>
