@@ -5,10 +5,207 @@
     <link>https://debian-openbox.github.io/tags/emoji/</link>
     <description>Recent content in emoji on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>Copyright © 2020, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 05 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
+    <lastBuildDate>Tue, 09 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Korisnici i Grupe (Users and Groups)</title>
+      <title>Debian 10 &#39;Backup&#39;</title>
+      <link>https://debian-openbox.github.io/post/backup-clonzilla/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/backup-clonzilla/</guid>
+      <description>
+        
+          &lt;p&gt;&lt;em&gt;Backup&lt;/em&gt; je vitalna radnja koju svako ko se bavi računarima treba u startu da predvidi.&lt;br&gt;
+Pod Linuxom, ima više načina &lt;em&gt;Backup&lt;/em&gt;-a kako za ceo sistem, tako i parcijalni za samo određene podatke.&lt;br&gt;
+Ovde ću obraditi &lt;em&gt;Backup&lt;/em&gt; celog sistema pomoću &lt;em&gt;live&lt;/em&gt; medija sa programom &lt;em&gt;&lt;strong&gt;Clonzilla&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Scenario je sledeći:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pretpostavka je da postoji postavljen &lt;a href=&#34;https://debian-openbox.github.io/post/backup-clonzilla/&#34;&gt;SAMBA server&lt;/a&gt; sa definisanim bar jednim &lt;em&gt;Share&lt;/em&gt;-om sa pravima čitanja i pisanja za korisnika čije &lt;em&gt;username&lt;/em&gt; i &lt;em&gt;password&lt;/em&gt; znamo.&lt;/li&gt;
+&lt;li&gt;Na mašini sa SAMBA serverom ili na nekoj drugoj unutar iste lokalne mreže, u Virtuelnoj mašini sa Debianom 10 postavićemo virtuelni &lt;em&gt;Live&lt;/em&gt; CD sa &lt;em&gt;Clonzillom&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Startovećemo ćemo &lt;em&gt;Live&lt;/em&gt; Clonzillu sa VM-e i uradićemo &lt;em&gt;Full Backup&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Daunlodujmo Clonzillu u .iso formatu sa &lt;a href=&#34;https://clonezilla.org/downloads/download.php?branch=stable&#34;&gt;strane&lt;/a&gt;.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/clonzilla-download.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;U podešavanjima Virtuelnog Debiana postavimo čekiramo &amp;quot;Live CD/DVD&amp;quot; i izaberemo Clonzilla iso fajl:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/clonzilla-live.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Proverimo da li je u redosledu butovanja optički drajv prvi:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/boot.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Startujmo VM Debian 10:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/start-vm.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberimo drugu ociju sa većim fontom i keširanjem u RAM:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/clonzilla-boot.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberimo jezik (ostalimo &lt;em&gt;default&lt;/em&gt; engleski):&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/language.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Ostavimo &lt;em&gt;default&lt;/em&gt; i raspored tastature:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/layout.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Startujemo Clonzillu:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/start-clonzilla.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberemo prvu opciju &lt;em&gt;device-image&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/device-image.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberemo samba-server:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/samba-server.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberemo &lt;em&gt;&lt;strong&gt;dhcp&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/dhcp.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Upišemo ip adresu našeg SAMBA Servera (koju smo u terminalu istog dobili na komandu &lt;em&gt;&lt;strong&gt;ip a&lt;/strong&gt;&lt;/em&gt; ):&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Domain&lt;/em&gt; servera nismo definisali, te ostavimo prazno:&lt;/li&gt;
+&lt;li&gt;U podešavanjima &lt;em&gt;&lt;strong&gt;Samba Share&lt;/strong&gt;&lt;/em&gt;-a definisali smo ko su &lt;em&gt;valid users&lt;/em&gt;. Upišimo &lt;em&gt;username&lt;/em&gt; jednog koji ima ovlašćenje da upisuje podatke (writable permission):&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/account.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Sad upisujemo naziv tog &lt;em&gt;&lt;strong&gt;Samba Share&lt;/strong&gt;&lt;/em&gt;-a (bez putanje):&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/public.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Izaberemo 3.0 verziju SAMBA protokola:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/3.0.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Ostavimo &lt;em&gt;security mode&lt;/em&gt; - &lt;em&gt;default&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/security.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Sad nam se traži Samba &lt;em&gt;password&lt;/em&gt; za nalog koji smo prijavili:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/password.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Još jednom ENTER&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/enter.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Prihvatimo &lt;em&gt;Beginner mode&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/beginner.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Sad pažljivo. bekapujemo samo jednu particiju, dakle opcija 2:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/saveparts.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Unesimo naziv &lt;em&gt;Backup&lt;/em&gt; arhive:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/name.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Sad nam Clonzilla izlistava sve particije koje su dostupne za &lt;em&gt;Backup&lt;/em&gt;.&lt;br&gt;
+Tu je samo jedna jer je &lt;em&gt;Live&lt;/em&gt; Clonzilla podignuta sa VM Debiana 10 koji je sav na 1 particijii.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/sda1.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Biramo vrstu kompresije - ostavimo &lt;em&gt;default&lt;/em&gt;:&lt;/li&gt;
+&lt;li&gt;Možemo da proverimo i eventualno oporavimo greške u fajl sistemu particije koju bekapujemo.Prva ili druga opcija:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/sfsck.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Želimo li da proverimo da li je našim novim &lt;em&gt;Backup&lt;/em&gt;-om moguć oporavak sistema? Da&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/restorable.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Želimo li da Clonzilla izvrši enkripciju &lt;em&gt;Backup&lt;/em&gt;-a (ako da, treba zabeležiti lozinku)? Ne.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/enkripcija.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Šta želimo kad se sve završi? Opcija 1 - da izaberemo.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/choose.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Još jedna rekapitulacija parametara pre glavne radnje. Continue...&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/continue.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Da li sam siguran: yes&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/sure.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Partclone preuzima...&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/partclone.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Još jednom ENTER to continue&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/continue2.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Nakon obavljenog posla, šta dalje - na primer &lt;em&gt;poweroff&lt;/em&gt; da bi Clonzillu isključili iz butovanja sledeći put.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/poweroff.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Debian 10 u VirtualBox-u</title>
+      <link>https://debian-openbox.github.io/post/vbox-debian/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/vbox-debian/</guid>
+      <description>
+        
+          &lt;p&gt;Obzirom da je u postu &lt;a href=&#34;https://speja969.github.io/post/min_buster_vbox/&#34;&gt;Debian 10 u VirtualBox-u&lt;/a&gt; instalacija VirtualBox-a pod Windows-om 10 trivijalna, obradićemo instalaciju istog u Debianu 10.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Najpre proverimo da li je aktivirana podrška za virtuelizaciju:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;za intelove procesore:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;grep --color vmx /proc/cpuinfo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;za AMD-ove procesore:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;grep --color svm /proc/cpuinfo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ako dobijemo odgovor no, procesor možda ipak podržava vitruelizaciju u kom slučaju treba aktivaciju izvršiti u BIOS-u.&lt;br&gt;
+Ako smo dobili odgovor sa obojenim &amp;quot;vmx&amp;quot; (&amp;quot;svm&amp;quot; za AMD), sve je uredu i možemo dalje.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Na &amp;quot;Host&amp;quot; Debianu 10 instalirajmo sledeće:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install dkms module-assistant linux-headers-&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VirtualBox je uklonjen iz zvaničnih repozitorijuma počev od Debiana 10, tako da smo prinuđeni da formiramo &amp;quot;&lt;em&gt;Debian third-party repository&lt;/em&gt;&amp;quot;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Sa &lt;em&gt;Oracle&lt;/em&gt;-ovog servera instalirajmo &amp;quot;GPG public&amp;quot; ključeve:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Komandom &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;em&gt;apt-key list&lt;/em&gt;&lt;/mark&gt; potvrdimo da ključevi VirtualBox arhive odgovaraju:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;B9F8 D658 297A F3EF C18D  5CDF A2F6 83C5 2980 AECF
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;Oracle Corporation (VirtualBox archive signing key) &amp;lt;info@virtualbox.org&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dodajmo &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;em&gt;virtualbox.list&lt;/em&gt;&lt;/mark&gt; u &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;em&gt;/etc/apt/sources.list.d&lt;/em&gt;&lt;/mark&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;echo &amp;#39;deb https://download.virtualbox.org/virtualbox/debian buster contrib&amp;#39; &amp;gt;&amp;gt; /etc/apt/sources.list.d/virtualbox.list&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ažurirajmo liste paketa , instalirajmo VirualBox i dodajmo svoj &lt;em&gt;username&lt;/em&gt; grupi &lt;em&gt;vboxusers&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install virtualbox-6.1
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo adduser foo vboxusers
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako smo instalirali Debian 10 po &lt;a href=&#34;https://speja969.github.io/post/min_buster_vbox/&#34;&gt;proceduri&lt;/a&gt; počev od tačke 19, može se desiti da startovanjem VirtualBoxa-a u terminalu dobijemo:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/vbox-debian/vbox-greska.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Startovanjem iz padajućeg menija će se otvoriti, ali sa kontrastom teksta i pozadine na granici nečitljivosti.Zato je potrebno sledeće:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#instaliramo paket qt5ct&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt install qt5ct 
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#formiramo fajl /usr/local/bin/VirtualBox&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;sudo nano /usr/local/bin/VirtualBox
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#ubacimo u fajl: &amp;#34;QT_STYLE_OVERRIDE=fusion /usr/bin/VirtualBox&amp;#34; bez navodnika&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# dodati izvršni atribut:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;sudo chmod +x /usr/local/bin/VirtualBox
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/vbox-debian/VirtualBox_QT_GTK_problem.png&#34; alt=&#34;CTRL+O --&gt; ENTER --&gt; CTRL+X&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Startovanjem iz terminala će nam i dalje prikazivati istu grešku&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/vbox-debian/qt-critical.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Ali će iz padajućeg menija (Applications --&amp;gt; System --&amp;gt; Oracle VM VirtualBox) sad izgledati normalno:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/vbox-debian/virtualbox.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako već nismo, sada instalirajmo Virtuelnu mašinu Debian 10 kao u &lt;a href=&#34;https://speja969.github.io/post/min_buster_vbox/&#34;&gt;Debian 10 u VirtualBox-u&lt;/a&gt; od tačke 19 do 46, osim poslednje komande koja umesto &lt;em&gt;sudo poweroff&lt;/em&gt; treba da bude &lt;em&gt;sudo reboot&lt;/em&gt;, dakle restartujemo sistem.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U &amp;quot;Guest&amp;quot; Debianu 10 instalirajmo &amp;quot;Guest Additions&amp;quot;, dodatak koji nam omogućava dodatnu funkcionalnost Virtuelnih mašina kao što su promena rezolucije, razmenljivost fajlova sa &amp;quot;Host&amp;quot; operativnim sistemom i drugo.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo su
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install dkms module-assistant linux-headers-&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; m-a prepare   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U prozoru Virtuelne mašine u tabu &lt;em&gt;&lt;strong&gt;Devices&lt;/strong&gt;&lt;/em&gt; kliknemo na &lt;em&gt;&lt;strong&gt;Insert Guest Additions CD image&lt;/strong&gt;&lt;/em&gt;   i pošto najverovatnije neće da se mauntuje automatski, uradimo to ručno:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;mount /media/cdrom0
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /media/cdrom0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Konačno instaliramo &lt;em&gt;VirtualBox Guest Additions&lt;/em&gt; na &lt;em&gt;&lt;strong&gt;Guest&lt;/strong&gt;&lt;/em&gt; Debianu 10:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sh /media/cdrom0/VBoxLinuxAdditions.run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dodamo svoj &lt;em&gt;username&lt;/em&gt; grupi &lt;em&gt;vboxsf&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;adduser &amp;lt;username&amp;gt; vboxsf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;  reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dobili smo Virtuelnu mašinu pod Debianom 10, ali bez &lt;a href=&#34;https://wiki.debian.org/DesktopEnvironment#Desktop_Environment&#34;&gt;grafičkog okruženja&lt;/a&gt;.&lt;br&gt;
+GUI sa dodatnim softverom i osnovnim podešavanjima možemo skinuti sa GitHub repozitorijuma:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install git
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;git clone https://github.com/speja969/Buster_Box_v2.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Korisnici i Grupe</title>
       <link>https://debian-openbox.github.io/post/usersgroups/</link>
       <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
       
@@ -374,7 +571,7 @@ unose se &lt;em&gt;username&lt;/em&gt; i &lt;em&gt;password&lt;/em&gt; registrov
     </item>
     
     <item>
-      <title>APT - Advanced Package Tool</title>
+      <title>APT - paket menadžer</title>
       <link>https://debian-openbox.github.io/post/apt/</link>
       <pubDate>Wed, 03 Feb 2021 00:00:00 +0000</pubDate>
       
