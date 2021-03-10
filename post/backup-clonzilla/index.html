@@ -178,15 +178,20 @@ Ovde ću obraditi <em>Backup</em> celog sistema pomoću <em>live</em> medija sa 
 <blockquote>
 <p>Scenario je sledeći:</p>
 <ul>
-<li>Pretpostavka je da postoji postavljen <a href="https://debian-openbox.github.io/post/backup-clonzilla/">SAMBA server</a> sa definisanim bar jednim <em>Share</em>-om sa pravima čitanja i pisanja za korisnika čije <em>username</em> i <em>password</em> znamo.</li>
+<li>Pretpostavka je da postoji postavljen <a href="https://debian-openbox.github.io/post/samba/">SAMBA server</a> sa definisanim bar jednim <em>Share</em>-om sa pravima čitanja i pisanja za korisnika čije <em>username</em> i <em>password</em> znamo.</li>
 <li>Na mašini sa SAMBA serverom ili na nekoj drugoj unutar iste lokalne mreže, u Virtuelnoj mašini sa Debianom 10 postavićemo virtuelni <em>Live</em> CD sa <em>Clonzillom</em>.</li>
 <li>Startovećemo ćemo <em>Live</em> Clonzillu sa VM-e i uradićemo <em>Full Backup</em>.</li>
 </ul>
 </blockquote>
-<ol>
+<ul>
 <li>Daunlodujmo Clonzillu u .iso formatu sa <a href="https://clonezilla.org/downloads/download.php?branch=stable">strane</a>.<br>
 <img src="/img/backup-clonzilla/clonzilla-download.png" alt=""></li>
-<li>U podešavanjima Virtuelnog Debiana postavimo čekiramo &quot;Live CD/DVD&quot; i izaberemo Clonzilla iso fajl:<br>
+</ul>
+<hr>
+<h3 id="backup"><em><strong>BACKUP</strong></em></h3>
+<hr>
+<ol>
+<li>U podešavanjima Virtuelnog Debiana čekiramo &quot;Live CD/DVD&quot; i izaberemo Clonzilla iso fajl:<br>
 <img src="/img/backup-clonzilla/clonzilla-live.png" alt=""></li>
 <li>Proverimo da li je u redosledu butovanja optički drajv prvi:<br>
 <img src="/img/backup-clonzilla/boot.png" alt=""></li>
@@ -194,7 +199,7 @@ Ovde ću obraditi <em>Backup</em> celog sistema pomoću <em>live</em> medija sa 
 <img src="/img/backup-clonzilla/start-vm.png" alt=""></li>
 <li>Izaberimo drugu ociju sa većim fontom i keširanjem u RAM:<br>
 <img src="/img/backup-clonzilla/clonzilla-boot.png" alt=""></li>
-<li>Izaberimo jezik (ostalimo <em>default</em> engleski):<br>
+<li>Izaberimo jezik (ostavimo <em>default</em> engleski):<br>
 <img src="/img/backup-clonzilla/language.png" alt=""></li>
 <li>Ostavimo <em>default</em> i raspored tastature:<br>
 <img src="/img/backup-clonzilla/layout.png" alt=""></li>
@@ -207,7 +212,7 @@ Ovde ću obraditi <em>Backup</em> celog sistema pomoću <em>live</em> medija sa 
 <li>Izaberemo <em><strong>dhcp</strong></em>:<br>
 <img src="/img/backup-clonzilla/dhcp.png" alt=""></li>
 <li>Upišemo ip adresu našeg SAMBA Servera (koju smo u terminalu istog dobili na komandu <em><strong>ip a</strong></em> ):</li>
-<li><em>Domain</em> servera nismo definisali, te ostavimo prazno:</li>
+<li><em>Domain</em> server nismo definisali, te ostavimo prazno</li>
 <li>U podešavanjima <em><strong>Samba Share</strong></em>-a definisali smo ko su <em>valid users</em>. Upišimo <em>username</em> jednog koji ima ovlašćenje da upisuje podatke (writable permission):<br>
 <img src="/img/backup-clonzilla/account.png" alt=""></li>
 <li>Sad upisujemo naziv tog <em><strong>Samba Share</strong></em>-a (bez putanje):<br>
@@ -248,6 +253,40 @@ Tu je samo jedna jer je <em>Live</em> Clonzilla podignuta sa VM Debiana 10 koji 
 <img src="/img/backup-clonzilla/continue2.png" alt=""></li>
 <li>Nakon obavljenog posla, šta dalje - na primer <em>poweroff</em> da bi Clonzillu isključili iz butovanja sledeći put.<br>
 <img src="/img/backup-clonzilla/poweroff.png" alt=""></li>
+</ol>
+<hr>
+<h3 id="restore"><em><strong>RESTORE</strong></em></h3>
+<hr>
+<ol>
+<li>Da bi demonsracija bila potpuna, uklonićemo Clonzilla .iso iz virtuelnog disk drajva:<br>
+<img src="/img/backup-clonzilla/remove-disk.png" alt=""></li>
+<li>Podići ćemo VM sa Debianom 10 i izbrisati 4 označena foldera i isključimo VM:<br>
+<img src="/img/backup-clonzilla/brisemo.png" alt=""></li>
+<li>Nakon što u virtuelni DVD drajv vratimo Clonzilla .iso, ponovo podignemo VM:<br>
+<img src="/img/backup-clonzilla/opcija2.png" alt=""></li>
+<li>Ponavljamo sve tačke od 6. do 20.</li>
+<li>Sad Biramo opciju &quot;restoreparts&quot;<br>
+<img src="/img/backup-clonzilla/restoreparts.png" alt=""></li>
+<li>Dobijamo listu svih <em>Backup</em>-ova i selektujemo željenu<br>
+<img src="/img/backup-clonzilla/lista-bekapova.png" alt=""></li>
+<li>Postoji samo jedna mogućnost za <em>Restore</em><br>
+<img src="/img/backup-clonzilla/restore.png" alt=""></li>
+<li>Još jedno upozorenje da izborom ove lokacije gubimo sve podatke na istoj<br>
+<img src="/img/backup-clonzilla/restore2.png" alt=""></li>
+<li>Izaberimo proveru <em>Backup</em> arhive pre procedure oporavka sistema<br>
+<img src="/img/backup-clonzilla/provera.png" alt=""></li>
+<li>Izbor na kraju i ENTER<br>
+<img src="/img/backup-clonzilla/izbor-na-kraju.png" alt=""></li>
+<li>Partclone u akciji<br>
+<img src="/img/backup-clonzilla/partclone-u-akciji.png" alt=""></li>
+<li>Konačno upozorenje da će svi podaci na particiji biti &quot;pregaženi&quot;<br>
+<img src="/img/backup-clonzilla/konacno-upozorenje.png" alt=""></li>
+<li>Poweroff<br>
+<img src="/img/backup-clonzilla/poweroff.png" alt=""></li>
+<li>Izbacimo Clonzillu iz virtuelnog DVD-a i startujmo VM<br>
+Naši izbrisani folderi su ponovo tu<br>
+<img src="/img/backup-clonzilla/restore3.png" alt=""></li>
+<li>Mission Accomplished (misija ispunjena)</li>
 </ol>
 
 
