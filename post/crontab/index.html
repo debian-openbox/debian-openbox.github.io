@@ -249,6 +249,55 @@ Mi ćemo postavit sistemski <em>Cron job</em>, pošto sistem i sam izvršava zak
 <li><em><strong>CTRL+O</strong></em> --&gt; <em><strong>ENTER</strong></em> --&gt; <em><strong>CTRL+X</strong></em>  #upamtimo i zatvorimo <em>Crontab</em></li>
 </ul>
 </li>
+<li>
+<p>U zakazano vreme, trebalo bi da se obavi <em>Backup</em> celog sistema, dakle da se u folderu <em><strong>public</strong></em> (Samba Share), formira <em>Backup</em> komprimovani fajl u formatu<br>
+<em><strong>Buster_Box_v2__dd-mm-yyyy.tgz</strong></em>:<br>
+<img src="/img/crontab/Buster_Box_v2.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<h3 id="restore-pomoću-live-medija"><strong>Restore pomoću <em>Live</em> medija</strong></h3>
+<hr>
+<ol>
+<li>
+<p>Najpre daunlodujmo neki <em>Live</em> Linux, na primer Debian:<br>
+<a href="https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.8.0-live+nonfree/amd64/iso-hybrid/debian-live-10.8.0-amd64-lxde+nonfree.iso">debian-live-10.8.0-amd64-lxde+nonfree.iso</a></p>
+</li>
+<li>
+<p>U podešavanjima VM Debiana 10 čekiramo &quot;Live CD/DVD&quot; i izaberemo Live Debian iso fajl, kao što smo uradili sa <a href="https://debian-openbox.github.io/post/backup-clonzilla/#backup">Clonzillom</a></p>
+</li>
+<li>
+<p>Startujemo VM</p>
+</li>
+<li>
+<p><img src="/img/crontab/live-debian.png" alt=""></p>
+</li>
+<li>
+<p>Dobićemo ovako nešto:<br>
+<img src="/img/crontab/live-debian1.png" alt=""></p>
+</li>
+<li>
+<p>Otvorimo LXTerminal: START --&gt; System Tools --&gt; LXTerminal</p>
+</li>
+<li>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span> sudo xedit /usr/local/bin/restore-script
+</code></pre></div></li>
+<li>
+<p>Copy/Paste</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="cp">#!/bin/bash
+</span><span class="ln">2</span><span class="cp"></span><span class="nv">TMP</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span>
+<span class="ln">3</span>mount -t cifs //192.168.0.18/private/Backups <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span> -o <span class="nv">username</span><span class="o">=</span>*********,password<span class="o">=</span>************
+<span class="ln">4</span>tar xvpfz <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>/Buster_Box_v2__13-03-2021.tgz -C /
+<span class="ln">5</span>umount <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>
+<span class="ln">6</span>rmdir <span class="nv">$TMP</span>
+<span class="ln">7</span><span class="c1"># Ako smo u Backup skripti stavili naziv fajla: Buster_Box_v2__$(date +%d-%m-%Y).tgz</span>
+<span class="ln">8</span><span class="c1"># U restore scripti = Buster_Box_v2__13-03-2021.tgz</span>
+<span class="ln">9</span><span class="c1"># datum kad je Backup napravljen 13-03-2021</span>
+</code></pre></div></li>
+<li>
+<p>Dodelimo izvršna ovlašćenja scripti</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo chmod +x /usr/local/bin/restore-script
+</code></pre></div></li>
 </ol>
 <p>korisni linkovi:<br>
 <a href="https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/">Cron Jobs and Crontab on Linux Explained</a><br>

@@ -221,6 +221,55 @@ Mi ćemo postavit sistemski &lt;em&gt;Cron job&lt;/em&gt;, pošto sistem i sam i
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;CTRL+O&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;ENTER&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;CTRL+X&lt;/strong&gt;&lt;/em&gt;  #upamtimo i zatvorimo &lt;em&gt;Crontab&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U zakazano vreme, trebalo bi da se obavi &lt;em&gt;Backup&lt;/em&gt; celog sistema, dakle da se u folderu &lt;em&gt;&lt;strong&gt;public&lt;/strong&gt;&lt;/em&gt; (Samba Share), formira &lt;em&gt;Backup&lt;/em&gt; komprimovani fajl u formatu&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Buster_Box_v2__dd-mm-yyyy.tgz&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/Buster_Box_v2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;restore-pomoću-live-medija&#34;&gt;&lt;strong&gt;Restore pomoću &lt;em&gt;Live&lt;/em&gt; medija&lt;/strong&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Najpre daunlodujmo neki &lt;em&gt;Live&lt;/em&gt; Linux, na primer Debian:&lt;br&gt;
+&lt;a href=&#34;https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.8.0-live+nonfree/amd64/iso-hybrid/debian-live-10.8.0-amd64-lxde+nonfree.iso&#34;&gt;debian-live-10.8.0-amd64-lxde+nonfree.iso&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U podešavanjima VM Debiana 10 čekiramo &amp;quot;Live CD/DVD&amp;quot; i izaberemo Live Debian iso fajl, kao što smo uradili sa &lt;a href=&#34;https://debian-openbox.github.io/post/backup-clonzilla/#backup&#34;&gt;Clonzillom&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Startujemo VM&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dobićemo ovako nešto:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Otvorimo LXTerminal: START --&amp;gt; System Tools --&amp;gt; LXTerminal&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt; sudo xedit /usr/local/bin/restore-script
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy/Paste&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TMP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;mount -t cifs //192.168.0.18/private/Backups &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -o &lt;span class=&#34;nv&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;*********,password&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;************
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;tar xvpfz &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;/Buster_Box_v2__13-03-2021.tgz -C /
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;umount &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;rmdir &lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Ako smo u Backup skripti stavili naziv fajla: Buster_Box_v2__$(date +%d-%m-%Y).tgz&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# U restore scripti = Buster_Box_v2__13-03-2021.tgz&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# datum kad je Backup napravljen 13-03-2021&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dodelimo izvršna ovlašćenja scripti&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo chmod +x /usr/local/bin/restore-script
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;korisni linkovi:&lt;br&gt;
 &lt;a href=&#34;https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/&#34;&gt;Cron Jobs and Crontab on Linux Explained&lt;/a&gt;&lt;br&gt;
