@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en" data-figures="" class="page" data-mode="dim">
   <head>
-<title>Clarity</title>
+<title>Debian 10 &#39;Backup&#39; - 2. deo | Clarity</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.81.0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -14,16 +14,17 @@
   gtag('js', new Date());
   gtag('config', 'XXXXXXXXXX');
 </script>
+  
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="">
+<meta name="description" content="Scheduling tasks with Cron">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@johndoe">
-<meta name="twitter:title" content="" />
-<meta property="og:url" content="https://debian-openbox.github.io/archives/" />
-<meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta name="twitter:title" content="Debian 10 &#39;Backup&#39; - 2. deo" />
+<meta property="og:url" content="https://debian-openbox.github.io/post/crontab/" />
+<meta property="og:title" content="Debian 10 &#39;Backup&#39; - 2. deo" />
+<meta property="og:description" content="Scheduling tasks with Cron" />
 <meta property="og:image" content="https://debian-openbox.github.io/images/thumbnail.png" />
 <link rel="apple-touch-icon" sizes="180x180" href='https://debian-openbox.github.io/icons/apple-touch-icon.png'>
 <link rel="icon" type="image/png" sizes="32x32" href='https://debian-openbox.github.io/icons/favicon-32x32.png'>
@@ -32,7 +33,7 @@
 <meta name="msapplication-TileColor" content="#002538">
 <meta name="theme-color" content="#002538">
 
-<link rel="canonical" href="https://debian-openbox.github.io/archives/">
+<link rel="canonical" href="https://debian-openbox.github.io/post/crontab/">
 
     
 
@@ -134,24 +135,26 @@
   
 <div class="grid-inverse wrap content">
   <article class="post_content">
-    <h1 class="post_title"></h1><div class="post_meta">
+    <h1 class="post_title">Debian 10 &#39;Backup&#39; - 2. deo</h1><div class="post_meta">
   
     <svg class="icon">
   <use xlink:href="#calendar"></use>
 </svg>
     <span class="post_date">
-      28 May 19 00:00 CET</span>
+      09 Feb 21 00:00 CET</span>
+      <a href='https://debian-openbox.github.io/tags/emoji' title="emoji" class="post_tag button button_translucent">emoji
+      </a>
 </div>
 
     
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=&url=https%3a%2f%2fdebian-openbox.github.io%2farchives%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=Debian%2010%20%27Backup%27%20-%202.%20deo&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fcrontab%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#twitter"></use>
 </svg>
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2farchives%2f&t=" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fcrontab%2f&t=Debian%2010%20%27Backup%27%20-%202.%20deo" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#facebook"></use>
 </svg>
@@ -161,7 +164,7 @@
   <use xlink:href="#linkedin"></use>
 </svg>
     </a>
-    <a href="https://debian-openbox.github.io/archives/" title="Copy Link" class="link link_yank">
+    <a href="https://debian-openbox.github.io/post/crontab/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <use xlink:href="#copy"></use>
 </svg>
@@ -169,7 +172,89 @@
   </div>
 
     
-    
+    <hr>
+<h2 id="zakazivanje-backup-a-pomoću-cron-a"><em><strong>Zakazivanje 'Backup'-a pomoću 'Cron'-a</strong></em></h2>
+<hr>
+<p><em>Cron</em> je moćna alatka koja pod Linuxom izvršava komande ili skripte u određeno vreme ili u zadatim vremenskim intervalima.<br>
+Izuzetno korisna za zakazano pokretanje  <em>Backup</em> skripti (što ćemo u drugom postu i demonstrirati)<br>
+Prvo da razjasnimo termine:</p>
+<ul>
+<li><em><strong>Cron</strong></em>: To je ime alata.Sam naziv dolazi od grčkog  <a href="https://en.wikipedia.org/wiki/Chronos">Χρόνος</a> što znači vreme. Cron je <a href="https://en.wikipedia.org/wiki/Daemon_(computing)"><em>daemon</em></a>  koji se startuje sa butovanjem sistema.</li>
+<li><em><strong>Crontab</strong></em> je kovanica (CRON + TABle), a u stvari je fajl koji sadrži raspored  zadataka koje Cron treba da  izvrši u određeno vreme.</li>
+<li><em><strong>Cron job ili Cron schedule</strong></em> je specijalni set izvršnih instrukcija kojima se određuju dan, vreme i komande za izvršavanje. Ukratko Crontan sadrži spisak <em>Cron job</em>-ova.</li>
+</ul>
+<p>Scenario je sledeći:</p>
+<ul>
+<li>Pretpostavka je da imamo postavljeni <a href="https://debian-openbox.github.io/post/samba/">SAMBA server</a> i na strani klijenta (u našem slučaju Virtuelna mašina pod Debianom 10) instalirani <a href="https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-klijenta-debian-10"><em><strong>cifs-utils</strong></em></a>.</li>
+<li>U <em><strong>VM</strong></em> definisaćemo <em>Cron job</em> kojim će <em>Backup</em> skripta da se periodično izvršava u određeno vreme.</li>
+</ul>
+<p>Da krenemo redom:</p>
+<ol>
+<li>
+<p>Proverimo prvo status Cron servisa pomoću komande:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo systemctl status cron.service
+</code></pre></div><p><img src="/img/crontab/status.png" alt=""></p>
+</li>
+<li>
+<p>Upoznajmo Cron job sintaksu:<br>
+<img src="/img/crontab/crontab.png" alt=""></p>
+<p>Ove zvezdice vam verovatno ništa ne znače, ali hajde da izlistamo postojeće zadatke koje Cron nadgleda i izvršava:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>crontab -l
+</code></pre></div><p><img src="/img/crontab/crontab-l.png" alt=""></p>
+<ul>
+<li>umesto prve zvezdice upisujemo 32, znači 32-gi minut</li>
+<li>umesto druge zvezdice ide 11, odnosno 11-ti sat u danu</li>
+<li>treća zvezdica predstavlja dane u mesecu i ako ostane na tome - znači da se zadatak izvršava svakog dana u mesecu.</li>
+<li>četvrta zvezdica su meseci u godini i ako ne upišemo redni broj meseca (1 - 12) ili (jan, feb, mar, apr,...), dakle ostane zvezdica, zatatak će se izvršavati svakog meseca.</li>
+<li>peta zvezdica su dani u nedelji (mon, tue, wed, thu, fri, sat, sun) ili (0 - 6), gde je nedelja 0 ili 7, a ostali dani 1 - 6 respektivno</li>
+<li><em><strong>/home/peja/Documents/demo_backup.sh</strong></em> je <em>backup</em> skripta sa apsolutnom putanjom</li>
+</ul>
+</li>
+<li>
+<p>Ovo prethodno bi bilo u slučaju kada aktivni korisnik postavlja zadatak.<br>
+Mi ćemo postavit sistemski <em>Cron job</em>, pošto sistem i sam izvršava zakazane radnje nezavisno od korisnika, ali omogućava i ROOT ili SUDO korisniku da formira svoje <em>Cron job</em>-ove.</p>
+</li>
+<li>
+<p>Pripremimo <em>Backup</em> skriptu za kloniranje celog sistema uz izuzetak odabranih foldera:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="cp">#!/bin/bash
+</span><span class="ln">2</span><span class="cp"></span><span class="nv">TMP</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span>
+<span class="ln">3</span>mount -t cifs //192.168.0.18/public/ <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span> -o <span class="nv">username</span><span class="o">=</span>speja,password<span class="o">=</span><span class="s2">&#34;&#34;</span>
+<span class="ln">4</span>tar cpzvf <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>/Buster_Box_v2__<span class="k">$(</span>date +%d-%m-%Y<span class="k">)</span>.tgz --directory<span class="o">=</span>/ --exclude<span class="o">=</span>proc --exclude<span class="o">=</span>tmp --exclude<span class="o">=</span>media --exclude<span class="o">=</span>lost+found --exclude<span class="o">=</span>backup.tgz --exclude<span class="o">=</span>mnt --exclude<span class="o">=</span>sys /
+<span class="ln">5</span>umount <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>
+<span class="ln">6</span>rmdir <span class="nv">$TMP</span>
+</code></pre></div><ul>
+<li><em><strong>//192.168.0.18/public/</strong></em> je adresa SAMBA servera sa nazivom <em>Samba Share</em>-a u kome imamo ovlašćenje da čitamo i upisujemo</li>
+<li><em><strong>speja</strong></em> - <em>username</em> SAMBA korisnika ulogovanog na SAMBA klijentu (VM Dedian 10).</li>
+<li>Postavljeni Samba Share je javni pa lozinka nije predviđena. Da jeste, bila bi upisana umesto navodnika, SAMBA klijent bi bio obavezan da poseduje SAMBA nalog na serveru, uz navedeni <em>username</em> među <em>valid users</em> korisnicima.</li>
+<li>***Buster_Box_v2__$(date +%d-%m-%Y).tgz*** je *Backup* arhiva koju skripta formira, dok su ostatak linije folderi izuzeti od bekapovanja sistema.</li>
+</ul>
+</li>
+<li>
+<p>Prethodnu skriptu pod nazivom koji ne uključuje tačke (.), smestimo u folder <em><strong>/etc/cron.d/</strong></em> i dodelimo joj izvršna ovlaćenja:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo chmod +x /etc/cron.d/naziv-backup-skripte
+</code></pre></div></li>
+<li>
+<p>Otvorimo <em>crontab</em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo nano /etc/crontab
+</code></pre></div><p><img src="/img/crontab/etc-crontab.png" alt=""></p>
+</li>
+<li>
+<p>Izmenimo <em><strong>SHELL=/bin/sh</strong></em> --&gt; <em><strong>SHELL=/bin/bash</strong></em></p>
+</li>
+<li>
+<p>Upišemo na kraju:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>*  *  *  *  *     root    /etc/cron.d/naziv-backup-skripte  
+</code></pre></div><ul>
+<li>zvezdicama definišemo vreme izvršavanja</li>
+<li><em><strong>CTRL+O</strong></em> --&gt; <em><strong>ENTER</strong></em> --&gt; <em><strong>CTRL+X</strong></em>  #upamtimo i zatvorimo <em>Crontab</em></li>
+</ul>
+</li>
+</ol>
+<p>korisni linkovi:<br>
+<a href="https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/">Cron Jobs and Crontab on Linux Explained</a><br>
+<a href="https://ostechnix.com/a-beginners-guide-to-cron-jobs/">A Beginners Guide To Cron Jobs</a><br>
+<a href="https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/">How To Add Jobs To cron Under Linux or UNIX</a></p>
+
 
   </article>
 <aside class="sidebar">
@@ -204,9 +289,6 @@
         <a href="https://debian-openbox.github.io/post/backup-clonzilla/" class="nav-link" title="Debian 10 &#39;Backup&#39;">Debian 10 &#39;Backup&#39;</a>
       </li>
       <li>
-        <a href="https://debian-openbox.github.io/post/crontab/" class="nav-link" title="Debian 10 &#39;Backup&#39; - 2. deo">Debian 10 &#39;Backup&#39; - 2. deo</a>
-      </li>
-      <li>
         <a href="https://debian-openbox.github.io/post/vbox-debian/" class="nav-link" title="Debian 10 u VirtualBox-u">Debian 10 u VirtualBox-u</a>
       </li>
       <li>
@@ -223,6 +305,9 @@
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/placeholder-text/" class="nav-link" title="Placeholder Text">Placeholder Text</a>
+      </li>
+      <li>
+        <a href="https://debian-openbox.github.io/post/rich-content/" class="nav-link" title="Rich Content">Rich Content</a>
       </li>
     </ul>
     <div>
