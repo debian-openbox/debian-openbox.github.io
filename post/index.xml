@@ -6,7 +6,186 @@
     <description>Recent content in Posts on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 09 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Debian 10 &#39;Backup&#39; - 2. deo</title>
+      <link>https://debian-openbox.github.io/post/crontab/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/crontab/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;zakazivanje-backup-a-pomoću-cron-a&#34;&gt;&lt;em&gt;&lt;strong&gt;Zakazivanje &#39;Backup&#39;-a pomoću &#39;Cron&#39;-a&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Cron&lt;/em&gt; je moćna alatka koja pod Linuxom izvršava komande ili skripte u određeno vreme ili u zadatim vremenskim intervalima.&lt;br&gt;
+Izuzetno korisna za zakazano pokretanje  &lt;em&gt;Backup&lt;/em&gt; skripti (što ćemo u drugom postu i demonstrirati)&lt;br&gt;
+Prvo da razjasnimo termine:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Cron&lt;/strong&gt;&lt;/em&gt;: To je ime alata.Sam naziv dolazi od grčkog  &lt;a href=&#34;https://en.wikipedia.org/wiki/Chronos&#34;&gt;Χρόνος&lt;/a&gt; što znači vreme. Cron je &lt;a href=&#34;https://en.wikipedia.org/wiki/Daemon_(computing)&#34;&gt;&lt;em&gt;daemon&lt;/em&gt;&lt;/a&gt;  koji se startuje sa butovanjem sistema.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Crontab&lt;/strong&gt;&lt;/em&gt; je kovanica (CRON + TABle), a u stvari je fajl koji sadrži raspored  zadataka koje Cron treba da  izvrši u određeno vreme.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Cron job ili Cron schedule&lt;/strong&gt;&lt;/em&gt; je specijalni set izvršnih instrukcija kojima se određuju dan, vreme i komande za izvršavanje. Ukratko Crontan sadrži spisak &lt;em&gt;Cron job&lt;/em&gt;-ova.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Scenario je sledeći:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pretpostavka je da imamo postavljeni &lt;a href=&#34;https://debian-openbox.github.io/post/samba/&#34;&gt;SAMBA server&lt;/a&gt; i na strani klijenta (u našem slučaju Virtuelna mašina pod Debianom 10) instalirani &lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-klijenta-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;cifs-utils&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;U &lt;em&gt;&lt;strong&gt;VM&lt;/strong&gt;&lt;/em&gt; definisaćemo &lt;em&gt;Cron job&lt;/em&gt; kojim će &lt;em&gt;Backup&lt;/em&gt; skripta da se periodično izvršava u određeno vreme.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Da krenemo redom:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo prvo status Cron servisa pomoću komande:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl status cron.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/status.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upoznajmo Cron job sintaksu:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/crontab.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ove zvezdice vam verovatno ništa ne znače, ali hajde da izlistamo postojeće zadatke koje Cron nadgleda i izvršava:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;crontab -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/crontab-l.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;umesto prve zvezdice upisujemo 32, znači 32-gi minut&lt;/li&gt;
+&lt;li&gt;umesto druge zvezdice ide 11, odnosno 11-ti sat u danu&lt;/li&gt;
+&lt;li&gt;treća zvezdica predstavlja dane u mesecu i ako ostane na tome - znači da se zadatak izvršava svakog dana u mesecu.&lt;/li&gt;
+&lt;li&gt;četvrta zvezdica su meseci u godini i ako ne upišemo redni broj meseca (1 - 12) ili (jan, feb, mar, apr,...), dakle ostane zvezdica, zatatak će se izvršavati svakog meseca.&lt;/li&gt;
+&lt;li&gt;peta zvezdica su dani u nedelji (mon, tue, wed, thu, fri, sat, sun) ili (0 - 6), gde je nedelja 0 ili 7, a ostali dani 1 - 6 respektivno&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;/home/peja/Documents/demo_backup.sh&lt;/strong&gt;&lt;/em&gt; je &lt;em&gt;backup&lt;/em&gt; skripta sa apsolutnom putanjom&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ovo prethodno bi bilo u slučaju kada aktivni korisnik postavlja zadatak.&lt;br&gt;
+Mi ćemo postavit sistemski &lt;em&gt;Cron job&lt;/em&gt;, pošto sistem i sam izvršava zakazane radnje nezavisno od korisnika, ali omogućava i ROOT ili SUDO korisniku da formira svoje &lt;em&gt;Cron job&lt;/em&gt;-ove.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pripremimo &lt;em&gt;Backup&lt;/em&gt; skriptu za kloniranje celog sistema uz izuzetak odabranih foldera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TMP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;mount -t cifs //192.168.0.18/public/ &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -o &lt;span class=&#34;nv&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;speja,password&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;tar cpzvf &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;/Buster_Box_v2__&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%d-%m-%Y&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;.tgz --directory&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/ --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;proc --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;tmp --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;media --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lost+found --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;backup.tgz --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mnt --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sys /
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;umount &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;rmdir &lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;//192.168.0.18/public/&lt;/strong&gt;&lt;/em&gt; je adresa SAMBA servera sa nazivom &lt;em&gt;Samba Share&lt;/em&gt;-a u kome imamo ovlašćenje da čitamo i upisujemo&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;speja&lt;/strong&gt;&lt;/em&gt; - &lt;em&gt;username&lt;/em&gt; SAMBA korisnika ulogovanog na SAMBA klijentu (VM Dedian 10).&lt;/li&gt;
+&lt;li&gt;Postavljeni Samba Share je javni pa lozinka nije predviđena. Da jeste, bila bi upisana umesto navodnika, SAMBA klijent bi bio obavezan da poseduje SAMBA nalog na serveru, uz navedeni &lt;em&gt;username&lt;/em&gt; među &lt;em&gt;valid users&lt;/em&gt; korisnicima.&lt;/li&gt;
+&lt;li&gt;***Buster_Box_v2__$(date +%d-%m-%Y).tgz*** je *Backup* arhiva koju skripta formira, dok su ostatak linije folderi izuzeti od bekapovanja sistema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Prethodnu skriptu pod nazivom koji ne uključuje tačke (.), smestimo u folder &lt;em&gt;&lt;strong&gt;/etc/cron.d/&lt;/strong&gt;&lt;/em&gt; i dodelimo joj izvršna ovlaćenja:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo chmod +x /etc/cron.d/naziv-backup-skripte
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Otvorimo &lt;em&gt;crontab&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/crontab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/etc-crontab.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izmenimo &lt;em&gt;&lt;strong&gt;SHELL=/bin/sh&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;SHELL=/bin/bash&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upišemo na kraju:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;*  *  *  *  *     root    /etc/cron.d/naziv-backup-skripte  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;zvezdicama definišemo vreme izvršavanja&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;CTRL+O&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;ENTER&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;CTRL+X&lt;/strong&gt;&lt;/em&gt;  #upamtimo i zatvorimo &lt;em&gt;Crontab&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U zakazano vreme, trebalo bi da se obavi &lt;em&gt;Backup&lt;/em&gt; celog sistema, dakle da se u folderu &lt;em&gt;&lt;strong&gt;public&lt;/strong&gt;&lt;/em&gt; (Samba Share), formira &lt;em&gt;Backup&lt;/em&gt; komprimovani fajl u formatu&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Buster_Box_v2__dd-mm-yyyy.tgz&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/Buster_Box_v2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;restore-pomoću-live-medija&#34;&gt;&lt;strong&gt;Restore pomoću &lt;em&gt;Live&lt;/em&gt; medija&lt;/strong&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Pre oporavka sistema VM-e, izbrišimo nekoliko foldera da bi smo kasnije dokazali &lt;em&gt;Restore&lt;/em&gt; njihovim postojanjem&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/brisemo.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Daunlodujmo neki &lt;em&gt;Live&lt;/em&gt; Linux, na primer Debian:&lt;br&gt;
+&lt;a href=&#34;https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.8.0-live+nonfree/amd64/iso-hybrid/debian-live-10.8.0-amd64-lxde+nonfree.iso&#34;&gt;debian-live-10.8.0-amd64-lxde+nonfree.iso&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U podešavanjima VM Debiana 10 čekiramo &amp;quot;Live CD/DVD&amp;quot; i izaberemo Live Debian iso fajl, kao što smo uradili sa &lt;a href=&#34;https://debian-openbox.github.io/post/backup-clonzilla/#backup&#34;&gt;Clonzillom&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Startujemo VM&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dobićemo ovako nešto:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Otvorimo Fajl menadžer PCManFM:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/pcmanfm.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit --&amp;gt; Preferences --&amp;gt; Layout --&amp;gt; Devices (čekiramo)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Naša VM particija koju oporavljamo (Restore):&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;/media/user/bo9e33a2-6317-4294-9832-b1b78289ae72&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/restore.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Otvorimo LXTerminal:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;START --&amp;gt; System Tools --&amp;gt; LXTerminal&lt;/strong&gt;&lt;/em&gt; i upišimo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt; sudo mousepad /usr/local/bin/restore-script
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy/Paste&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TMP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;mount -t cifs //192.168.0.18/private/Backups &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -o &lt;span class=&#34;nv&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;*********,password&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;************
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;tar xvpfz &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;/Buster_Box_v2__13-03-2021.tgz -C /media/user/bo9e33a2-6317-4294-9832-b1b78289ae72
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;umount &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;rmdir &lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Ako smo u Backup skripti stavili naziv fajla: Buster_Box_v2__$(date +%d-%m-%Y).tgz&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# U restore scripti = Buster_Box_v2__13-03-2021.tgz&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# datum kad je Backup napravljen 13-03-2021&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dodelimo izvršna ovlašćenja scripti&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo chmod +x /usr/local/bin/restore-script
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I startujmo skriptu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /usr/local/bin
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo ./restore-script
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;sudo poweroff
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Uklonimo &lt;em&gt;&lt;strong&gt;debian-live-10.8.0-amd64-lxde+nonfree.iso&lt;/strong&gt;&lt;/em&gt; iz virtuelnog optičkog drajva u VirtualBox menadžeru:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Settings --&amp;gt; Storage --&amp;gt; remove disk from virtual drive&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/remove-disk.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Startujemo VM&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/start.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izbrisani folderi su tu:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/provera.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;p&gt;korisni linkovi:&lt;br&gt;
+&lt;a href=&#34;https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/&#34;&gt;Cron Jobs and Crontab on Linux Explained&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://ostechnix.com/a-beginners-guide-to-cron-jobs/&#34;&gt;A Beginners Guide To Cron Jobs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/&#34;&gt;How To Add Jobs To cron Under Linux or UNIX&lt;/a&gt;&lt;/p&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>Debian 10 &#39;Backup&#39;</title>
       <link>https://debian-openbox.github.io/post/backup-clonzilla/</link>
@@ -131,150 +310,6 @@ Naši izbrisani folderi su ponovo tu&lt;br&gt;
 &lt;img src=&#34;https://debian-openbox.github.io/img/backup-clonzilla/restore3.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Mission Accomplished (misija ispunjena)&lt;/li&gt;
 &lt;/ol&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Debian 10 &#39;Backup&#39; - 2. deo</title>
-      <link>https://debian-openbox.github.io/post/crontab/</link>
-      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://debian-openbox.github.io/post/crontab/</guid>
-      <description>
-        
-          &lt;hr&gt;
-&lt;h2 id=&#34;zakazivanje-backup-a-pomoću-cron-a&#34;&gt;&lt;em&gt;&lt;strong&gt;Zakazivanje &#39;Backup&#39;-a pomoću &#39;Cron&#39;-a&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;em&gt;Cron&lt;/em&gt; je moćna alatka koja pod Linuxom izvršava komande ili skripte u određeno vreme ili u zadatim vremenskim intervalima.&lt;br&gt;
-Izuzetno korisna za zakazano pokretanje  &lt;em&gt;Backup&lt;/em&gt; skripti (što ćemo u drugom postu i demonstrirati)&lt;br&gt;
-Prvo da razjasnimo termine:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;Cron&lt;/strong&gt;&lt;/em&gt;: To je ime alata.Sam naziv dolazi od grčkog  &lt;a href=&#34;https://en.wikipedia.org/wiki/Chronos&#34;&gt;Χρόνος&lt;/a&gt; što znači vreme. Cron je &lt;a href=&#34;https://en.wikipedia.org/wiki/Daemon_(computing)&#34;&gt;&lt;em&gt;daemon&lt;/em&gt;&lt;/a&gt;  koji se startuje sa butovanjem sistema.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;Crontab&lt;/strong&gt;&lt;/em&gt; je kovanica (CRON + TABle), a u stvari je fajl koji sadrži raspored  zadataka koje Cron treba da  izvrši u određeno vreme.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;Cron job ili Cron schedule&lt;/strong&gt;&lt;/em&gt; je specijalni set izvršnih instrukcija kojima se određuju dan, vreme i komande za izvršavanje. Ukratko Crontan sadrži spisak &lt;em&gt;Cron job&lt;/em&gt;-ova.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Scenario je sledeći:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pretpostavka je da imamo postavljeni &lt;a href=&#34;https://debian-openbox.github.io/post/samba/&#34;&gt;SAMBA server&lt;/a&gt; i na strani klijenta (u našem slučaju Virtuelna mašina pod Debianom 10) instalirani &lt;a href=&#34;https://debian-openbox.github.io/post/samba/#pode%C5%A1avanje-klijenta-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;cifs-utils&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;U &lt;em&gt;&lt;strong&gt;VM&lt;/strong&gt;&lt;/em&gt; definisaćemo &lt;em&gt;Cron job&lt;/em&gt; kojim će &lt;em&gt;Backup&lt;/em&gt; skripta da se periodično izvršava u određeno vreme.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Da krenemo redom:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Proverimo prvo status Cron servisa pomoću komande:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl status cron.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/status.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Upoznajmo Cron job sintaksu:&lt;br&gt;
-&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/crontab.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Ove zvezdice vam verovatno ništa ne znače, ali hajde da izlistamo postojeće zadatke koje Cron nadgleda i izvršava:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;crontab -l
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/crontab-l.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;umesto prve zvezdice upisujemo 32, znači 32-gi minut&lt;/li&gt;
-&lt;li&gt;umesto druge zvezdice ide 11, odnosno 11-ti sat u danu&lt;/li&gt;
-&lt;li&gt;treća zvezdica predstavlja dane u mesecu i ako ostane na tome - znači da se zadatak izvršava svakog dana u mesecu.&lt;/li&gt;
-&lt;li&gt;četvrta zvezdica su meseci u godini i ako ne upišemo redni broj meseca (1 - 12) ili (jan, feb, mar, apr,...), dakle ostane zvezdica, zatatak će se izvršavati svakog meseca.&lt;/li&gt;
-&lt;li&gt;peta zvezdica su dani u nedelji (mon, tue, wed, thu, fri, sat, sun) ili (0 - 6), gde je nedelja 0 ili 7, a ostali dani 1 - 6 respektivno&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;/home/peja/Documents/demo_backup.sh&lt;/strong&gt;&lt;/em&gt; je &lt;em&gt;backup&lt;/em&gt; skripta sa apsolutnom putanjom&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Ovo prethodno bi bilo u slučaju kada aktivni korisnik postavlja zadatak.&lt;br&gt;
-Mi ćemo postavit sistemski &lt;em&gt;Cron job&lt;/em&gt;, pošto sistem i sam izvršava zakazane radnje nezavisno od korisnika, ali omogućava i ROOT ili SUDO korisniku da formira svoje &lt;em&gt;Cron job&lt;/em&gt;-ove.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Pripremimo &lt;em&gt;Backup&lt;/em&gt; skriptu za kloniranje celog sistema uz izuzetak odabranih foldera:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TMP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;mount -t cifs //192.168.0.18/public/ &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -o &lt;span class=&#34;nv&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;speja,password&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;tar cpzvf &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;/Buster_Box_v2__&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%d-%m-%Y&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;.tgz --directory&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/ --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;proc --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;tmp --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;media --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;lost+found --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;backup.tgz --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mnt --exclude&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sys /
-&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;umount &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;rmdir &lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;//192.168.0.18/public/&lt;/strong&gt;&lt;/em&gt; je adresa SAMBA servera sa nazivom &lt;em&gt;Samba Share&lt;/em&gt;-a u kome imamo ovlašćenje da čitamo i upisujemo&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;speja&lt;/strong&gt;&lt;/em&gt; - &lt;em&gt;username&lt;/em&gt; SAMBA korisnika ulogovanog na SAMBA klijentu (VM Dedian 10).&lt;/li&gt;
-&lt;li&gt;Postavljeni Samba Share je javni pa lozinka nije predviđena. Da jeste, bila bi upisana umesto navodnika, SAMBA klijent bi bio obavezan da poseduje SAMBA nalog na serveru, uz navedeni &lt;em&gt;username&lt;/em&gt; među &lt;em&gt;valid users&lt;/em&gt; korisnicima.&lt;/li&gt;
-&lt;li&gt;***Buster_Box_v2__$(date +%d-%m-%Y).tgz*** je *Backup* arhiva koju skripta formira, dok su ostatak linije folderi izuzeti od bekapovanja sistema.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Prethodnu skriptu pod nazivom koji ne uključuje tačke (.), smestimo u folder &lt;em&gt;&lt;strong&gt;/etc/cron.d/&lt;/strong&gt;&lt;/em&gt; i dodelimo joj izvršna ovlaćenja:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo chmod +x /etc/cron.d/naziv-backup-skripte
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Otvorimo &lt;em&gt;crontab&lt;/em&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/crontab
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/etc-crontab.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Izmenimo &lt;em&gt;&lt;strong&gt;SHELL=/bin/sh&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;SHELL=/bin/bash&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Upišemo na kraju:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;*  *  *  *  *     root    /etc/cron.d/naziv-backup-skripte  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;zvezdicama definišemo vreme izvršavanja&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;strong&gt;CTRL+O&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;ENTER&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;CTRL+X&lt;/strong&gt;&lt;/em&gt;  #upamtimo i zatvorimo &lt;em&gt;Crontab&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;U zakazano vreme, trebalo bi da se obavi &lt;em&gt;Backup&lt;/em&gt; celog sistema, dakle da se u folderu &lt;em&gt;&lt;strong&gt;public&lt;/strong&gt;&lt;/em&gt; (Samba Share), formira &lt;em&gt;Backup&lt;/em&gt; komprimovani fajl u formatu&lt;br&gt;
-&lt;em&gt;&lt;strong&gt;Buster_Box_v2__dd-mm-yyyy.tgz&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
-&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/Buster_Box_v2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;restore-pomoću-live-medija&#34;&gt;&lt;strong&gt;Restore pomoću &lt;em&gt;Live&lt;/em&gt; medija&lt;/strong&gt;&lt;/h3&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Najpre daunlodujmo neki &lt;em&gt;Live&lt;/em&gt; Linux, na primer Debian:&lt;br&gt;
-&lt;a href=&#34;https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.8.0-live+nonfree/amd64/iso-hybrid/debian-live-10.8.0-amd64-lxde+nonfree.iso&#34;&gt;debian-live-10.8.0-amd64-lxde+nonfree.iso&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;U podešavanjima VM Debiana 10 čekiramo &amp;quot;Live CD/DVD&amp;quot; i izaberemo Live Debian iso fajl, kao što smo uradili sa &lt;a href=&#34;https://debian-openbox.github.io/post/backup-clonzilla/#backup&#34;&gt;Clonzillom&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Startujemo VM&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Dobićemo ovako nešto:&lt;br&gt;
-&lt;img src=&#34;https://debian-openbox.github.io/img/crontab/live-debian1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Otvorimo LXTerminal: START --&amp;gt; System Tools --&amp;gt; LXTerminal&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt; sudo xedit /usr/local/bin/restore-script
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Copy/Paste&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TMP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;mount -t cifs //192.168.0.18/private/Backups &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; -o &lt;span class=&#34;nv&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;*********,password&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;************
-&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;tar xvpfz &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;/Buster_Box_v2__13-03-2021.tgz -C /
-&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;umount &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;rmdir &lt;span class=&#34;nv&#34;&gt;$TMP&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Ako smo u Backup skripti stavili naziv fajla: Buster_Box_v2__$(date +%d-%m-%Y).tgz&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# U restore scripti = Buster_Box_v2__13-03-2021.tgz&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# datum kad je Backup napravljen 13-03-2021&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Dodelimo izvršna ovlašćenja scripti&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo chmod +x /usr/local/bin/restore-script
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;korisni linkovi:&lt;br&gt;
-&lt;a href=&#34;https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/&#34;&gt;Cron Jobs and Crontab on Linux Explained&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://ostechnix.com/a-beginners-guide-to-cron-jobs/&#34;&gt;A Beginners Guide To Cron Jobs&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/&#34;&gt;How To Add Jobs To cron Under Linux or UNIX&lt;/a&gt;&lt;/p&gt;
 
         
       </description>

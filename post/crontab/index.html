@@ -141,7 +141,7 @@
   <use xlink:href="#calendar"></use>
 </svg>
     <span class="post_date">
-      09 Feb 21 00:00 CET</span>
+      10 Feb 21 00:00 CET</span>
       <a href='https://debian-openbox.github.io/tags/emoji' title="emoji" class="post_tag button button_translucent">emoji
       </a>
 </div>
@@ -260,7 +260,11 @@ Mi ćemo postavit sistemski <em>Cron job</em>, pošto sistem i sam izvršava zak
 <hr>
 <ol>
 <li>
-<p>Najpre daunlodujmo neki <em>Live</em> Linux, na primer Debian:<br>
+<p>Pre oporavka sistema VM-e, izbrišimo nekoliko foldera da bi smo kasnije dokazali <em>Restore</em> njihovim postojanjem<br>
+<img src="/img/crontab/brisemo.png" alt=""></p>
+</li>
+<li>
+<p>Daunlodujmo neki <em>Live</em> Linux, na primer Debian:<br>
 <a href="https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.8.0-live+nonfree/amd64/iso-hybrid/debian-live-10.8.0-amd64-lxde+nonfree.iso">debian-live-10.8.0-amd64-lxde+nonfree.iso</a></p>
 </li>
 <li>
@@ -277,17 +281,28 @@ Mi ćemo postavit sistemski <em>Cron job</em>, pošto sistem i sam izvršava zak
 <img src="/img/crontab/live-debian1.png" alt=""></p>
 </li>
 <li>
-<p>Otvorimo LXTerminal: START --&gt; System Tools --&gt; LXTerminal</p>
+<p>Otvorimo Fajl menadžer PCManFM:<br>
+<img src="/img/crontab/pcmanfm.png" alt=""></p>
 </li>
 <li>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span> sudo xedit /usr/local/bin/restore-script
+<p>Edit --&gt; Preferences --&gt; Layout --&gt; Devices (čekiramo)</p>
+</li>
+<li>
+<p>Naša VM particija koju oporavljamo (Restore):<br>
+<em><strong>/media/user/bo9e33a2-6317-4294-9832-b1b78289ae72</strong></em><br>
+<img src="/img/crontab/restore.png" alt=""></p>
+</li>
+<li>
+<p>Otvorimo LXTerminal:<br>
+<em><strong>START --&gt; System Tools --&gt; LXTerminal</strong></em> i upišimo:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span> sudo mousepad /usr/local/bin/restore-script
 </code></pre></div></li>
 <li>
 <p>Copy/Paste</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="cp">#!/bin/bash
 </span><span class="ln">2</span><span class="cp"></span><span class="nv">TMP</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span>
 <span class="ln">3</span>mount -t cifs //192.168.0.18/private/Backups <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span> -o <span class="nv">username</span><span class="o">=</span>*********,password<span class="o">=</span>************
-<span class="ln">4</span>tar xvpfz <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>/Buster_Box_v2__13-03-2021.tgz -C /
+<span class="ln">4</span>tar xvpfz <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>/Buster_Box_v2__13-03-2021.tgz -C /media/user/bo9e33a2-6317-4294-9832-b1b78289ae72
 <span class="ln">5</span>umount <span class="s2">&#34;</span><span class="nv">$TMP</span><span class="s2">&#34;</span>
 <span class="ln">6</span>rmdir <span class="nv">$TMP</span>
 <span class="ln">7</span><span class="c1"># Ako smo u Backup skripti stavili naziv fajla: Buster_Box_v2__$(date +%d-%m-%Y).tgz</span>
@@ -298,7 +313,27 @@ Mi ćemo postavit sistemski <em>Cron job</em>, pošto sistem i sam izvršava zak
 <p>Dodelimo izvršna ovlašćenja scripti</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo chmod +x /usr/local/bin/restore-script
 </code></pre></div></li>
+<li>
+<p>I startujmo skriptu:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="nb">cd</span> /usr/local/bin
+<span class="ln">2</span>sudo ./restore-script
+<span class="ln">3</span>sudo poweroff
+</code></pre></div></li>
+<li>
+<p>Uklonimo <em><strong>debian-live-10.8.0-amd64-lxde+nonfree.iso</strong></em> iz virtuelnog optičkog drajva u VirtualBox menadžeru:<br>
+<em><strong>Settings --&gt; Storage --&gt; remove disk from virtual drive</strong></em><br>
+<img src="/img/crontab/remove-disk.png" alt=""></p>
+</li>
+<li>
+<p>Startujemo VM<br>
+<img src="/img/crontab/start.png" alt=""></p>
+</li>
+<li>
+<p>Izbrisani folderi su tu:<br>
+<img src="/img/crontab/provera.png" alt=""></p>
+</li>
 </ol>
+<p>​</p>
 <p>korisni linkovi:<br>
 <a href="https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/">Cron Jobs and Crontab on Linux Explained</a><br>
 <a href="https://ostechnix.com/a-beginners-guide-to-cron-jobs/">A Beginners Guide To Cron Jobs</a><br>
