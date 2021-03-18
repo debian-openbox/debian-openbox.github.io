@@ -6,7 +6,265 @@
     <description>Recent content in Posts on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSH - autentifikacija razmenom ključeva</title>
+      <link>https://debian-openbox.github.io/post/ssh-2/</link>
+      <pubDate>Wed, 17 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/ssh-2/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;ssh-autentifikacija-razmenom-ključeva&#34;&gt;&lt;em&gt;&lt;strong&gt;SSH autentifikacija razmenom ključeva&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;vrste-ssh-autentifikacije&#34;&gt;&lt;em&gt;&lt;strong&gt;Vrste SSH autentifikacije&lt;/strong&gt;&lt;/em&gt;:&lt;/h4&gt;
+&lt;p&gt;U SSH protokolu postoje 2 načina konektovanja:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;korišćenjem lozinke (&lt;em&gt;password authentication&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;korišćenjem seta ključeva (&lt;em&gt;set of SSH keys&lt;/em&gt;)&lt;br&gt;
+Korišćenjem para ključeva vrši se automatska autentifikacija, bez potrebe za ukucavanjem passworda&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;a-namepar_kljucevaa&#34;&gt;&lt;a name=&#34;par_kljuceva&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;kreiranje-ssh-para-ključeva-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Kreiranje SSH para ključeva u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Prvo proverimo da ne postoji već konfigurisan par ključeva u &lt;em&gt;&lt;strong&gt;.ssh&lt;/strong&gt;&lt;/em&gt; folderu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /home/peja/.ssh
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ls -la
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh-2/provera.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Da bi generisali SSH ključeve koristićemo komandu &lt;em&gt;&lt;strong&gt;ssh-keygen&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
+Ona je po &lt;em&gt;default&lt;/em&gt;-u već instalirana na Debianu 10.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ssh-keygen -t rsa -b &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -C email@example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;-t&lt;/strong&gt;&lt;/em&gt; – označava tip enkripcije (u ovom slučaju &lt;em&gt;RSA&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;-b&lt;/strong&gt;&lt;/em&gt; – označava broj bitova enkripcije (u ovom slučaju 4096)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;-C&lt;/strong&gt;&lt;/em&gt; – komentar (u ovom slučaju e-mail adresa)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh-2/ssh-keygen.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Pri generisanju ključeva treba da odgovorimo na neka pitanja:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;Enter file in which to save the key (/home/user/.ssh/id_rsa):
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ostavimo &lt;em&gt;default&lt;/em&gt; - ENTER&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;Enter passphrase (empty for no passphrase)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Izaberimo jaku lozinku, jer ako dođe do hakerskog napada, &lt;em&gt;&lt;strong&gt;passphrase&lt;/strong&gt;&lt;/em&gt; je drugi nivo zaštite.&lt;/p&gt;
+&lt;p&gt;Unesimo &lt;em&gt;&lt;strong&gt;passphrase&lt;/strong&gt;&lt;/em&gt; još jednom i SSH ključevi će biti generisani&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kao rezultat generisana su 2 fajla&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ssh-2/ls-la.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;id_rsa&lt;/strong&gt;&lt;/em&gt;: ovo je privatni ključ (&lt;em&gt;PRIVATE key&lt;/em&gt;) koji će se koristiti na serverskoj strani za identifikaciju dolazećih klijentskih zahteva.&lt;br&gt;
+Ovaj ključ naravno ne treba deliti ni sa kim.&lt;br&gt;
+Takođe se koristi od strane klijenta za verifikaciju identiteta servera.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;id_rsa.pub&lt;/strong&gt;&lt;/em&gt;: “pub” ekstenzija znači “public” ili javno.&lt;br&gt;
+Ovo je javni ključ (&lt;em&gt;PUBLIC key&lt;/em&gt;) koji će koristiti klijenti da se konektuju na server.&lt;br&gt;
+Ovaj ključ treba podeliti sa klijentima.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;a-namekopiranje_kljucevaa&#34;&gt;&lt;a name=&#34;kopiranje_kljuceva&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;kopiranje-ssh-javnih-ključeva-public-key--klijentima&#34;&gt;&lt;em&gt;&lt;strong&gt;Kopiranje SSH javnih ključeva (public key)  klijentima&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;Ima više načina kako klijentu dostaviti javni ključ.&lt;br&gt;
+Da se ne bi rasplinjavali koristićemo komandu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cat ~/.ssh/id_rsa.pub &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; ssh remoteuser@remoteserver &lt;span class=&#34;s2&#34;&gt;&amp;#34;mkdir -p ~/.ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; ~/.ssh/authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;remoteuser&lt;/strong&gt;&lt;/em&gt; u stvari &lt;em&gt;username&lt;/em&gt; klijentske mašine, u našem slučaju &lt;em&gt;&lt;strong&gt;speja&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;remoteserver&lt;/strong&gt;&lt;/em&gt; ip adresa klijentske mašine, u našem slučaju &lt;em&gt;&lt;strong&gt;192.168.0.15&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+Dakle ovako:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cat ~/.ssh/id_rsa.pub &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; ssh speja@192.168.0.15 &lt;span class=&#34;s2&#34;&gt;&amp;#34;mkdir -p ~/.ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; ~/.ssh/authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Startovanjem ove komande iskače prozor za unos lozinke na Serveru (&lt;em&gt;&lt;strong&gt;passphrase on the server&lt;/strong&gt;&lt;/em&gt;), naravno ukoliko smo uopšte predvideli ovu opciju.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh-2/unlock-private-key.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Unesemo passphrase i kliknemo na unlock.&lt;br&gt;
+Ovom komandom sadržaj javnog ključa šaljemo SSH protokolom udaljenom korisniku&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Komanda prvo utvrđuje da li postoji &lt;em&gt;&lt;strong&gt;.ssh&lt;/strong&gt;&lt;/em&gt; folder na klijentskoj mašini.Sadržaj se dodaje uz postojeći sadržaj (ako postoji) u fajl &lt;em&gt;&lt;strong&gt;authorized_keys&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ssh-2/authorized-keys.png&#34; alt=&#34;sadržaj fajla authorized_keys na kljentskoj mašini&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;a-namekonektovanje-sa-klijentaa&#34;&gt;&lt;a name=&#34;konektovanje-sa-klijenta&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;konektovanje-na--ssh-server-sa-klijentske-mašine&#34;&gt;&lt;em&gt;&lt;strong&gt;Konektovanje na  SSH Server sa klijentske mašine&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;Konektujmo se na SSH Server sa klijenta:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# sintaksa je: ssh user@server_ip&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ssh peja@192.168.0.18
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>SSH - Secure Shell</title>
+      <link>https://debian-openbox.github.io/post/ssh/</link>
+      <pubDate>Tue, 16 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/ssh/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;ssh-server-pod-debianom-10&#34;&gt;&lt;em&gt;&lt;strong&gt;SSH Server pod Debianom 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;SSH što je skraćenica za &lt;em&gt;Secure Shell&lt;/em&gt; je mrežni protokol za povezivanje za udaljenim mašinama unutar lokalne mreže ili preko interneta.&lt;br&gt;
+SSH arhitektura predviđa Server koji koriste klijenti da bi se konektovali na udaljenu mašinu.&lt;br&gt;
+Da bi se ova povezivanja uspešno ostvarivala potrebno je konfigurisati i SSH Server ali i klijente.&lt;br&gt;
+U prvom delu posvetićemo pažnju postavljanju SSH Servera pod Debianom 10.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Da bi proverili da li user ima sudo prava korišćenja koristimo sledeću komandu &lt;em&gt;sudo -l&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/sudo-l.png&#34; alt=&#34;user ima sva administratorska prava&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Po &lt;em&gt;default&lt;/em&gt;-u trebalo bi da ssh &lt;em&gt;utility&lt;/em&gt; bude instaliran na Debian-u 10, ali ipak proverimo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ssh -V
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/ssh-V.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ovo ne znači da je SSH server instaliran, već da smo u mogućnosti da se konektujemo na udaljenu mašinu kao &lt;em&gt;&lt;strong&gt;klijent&lt;/strong&gt;&lt;/em&gt; koristeći SSH protokol (tu je uključena &lt;em&gt;&lt;strong&gt;scp&lt;/strong&gt;&lt;/em&gt; konekcija kao i &lt;em&gt;&lt;strong&gt;sftp&lt;/strong&gt;&lt;/em&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;a-nameopenssha&#34;&gt;&lt;a name=&#34;openssh&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;instalianje-openssh-servera-na-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Instalianje OpenSSH Servera na Debian 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Prvo ažuriramo sistem a zatim instaliramo openssh-server:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get update
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt-get install openssh-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo novoinstalirani servis:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl status sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/status-sshd.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Po default-u SSH server radi na portu 22, a da bi to proverili kucamo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;netstat -tulpn &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/provera22.png&#34; alt=&#34;SSH Server je instaliran i radi na Debian-u 10&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Uobičajeni &lt;em&gt;Firewall&lt;/em&gt; u Debianu i njegovim derivatima je &lt;a href=&#34;https://debian-openbox.github.io/post/samba/#napomena&#34;&gt;&lt;em&gt;&lt;strong&gt;ufw&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;:&lt;br&gt;
+Ako ga koristimo, potrebno je da SSH saobraćaj uključimo u podešavanja &lt;em&gt;Firewall&lt;/em&gt;-a:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo ufw allow ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/ufw.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo da li je uključivanje SSH servera omogućeno pri butovanju:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl list-unit-files &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep enabled &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/ssh-boot.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ako je odgovor &lt;em&gt;&lt;strong&gt;ne&lt;/strong&gt;&lt;/em&gt;, startujemo sledeću komandu i proverimo ponovo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;a-namekonf-ssh-serva&#34;&gt;&lt;a name=&#34;konf-ssh-serv&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;konfigurisanje-ssh-servera-u-debian-u&#34;&gt;&lt;em&gt;&lt;strong&gt;Konfigurisanje SSH servera u Debian-u&lt;/strong&gt;&lt;/em&gt;&lt;/h4&gt;
+&lt;hr&gt;
+&lt;p&gt;Pre nego što dozvolimo pristup klijentima kroz naš SSH sistem, potrebno je da imamo set sigurnosnih podešavanja da bi izbegli napade hakera.&lt;br&gt;
+Napadi hakera su prilično uobičajeni, ali se mogu izbeći promenom &lt;em&gt;default&lt;/em&gt;-nih podešavanja.&lt;br&gt;
+SSH konfiguracioni fajl je smešten u &lt;em&gt;&lt;strong&gt;/etc/ssh/&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /etc/ssh/
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ls -la
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/etc-ssh.png&#34; alt=&#34;Ovde ima dosta konfiguracionih fajlova ,ali ova dva su najvažnija:&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;ssh_config&lt;/strong&gt;&lt;/em&gt; definiše SSH pravila za klijente. To znači da se ova pravila primenjuju svaki put kada se uspostavlja SSH konekcija ka udaljenoj mašini (remote hosts) ili kada dolazi do transfera fajlova između mašina (between hosts)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;sshd_config&lt;/strong&gt;&lt;/em&gt; Definiše SSH pravila za SSH server. To znači na primer definisanje dostupnog SSH porta ili uskraćivanje određenim korisnicima komunikacije sa serverom&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Ovde ćemo da izmenimo deo serverskih podešavanja u cilju povećanja bezbednosti našeg SSH servera.&lt;br&gt;
+Editujemo konfiguracioni fajl &lt;em&gt;&lt;strong&gt;sshd_config&lt;/strong&gt;&lt;/em&gt;, pronađimo liniju gde je &lt;em&gt;&lt;strong&gt;#Port 22&lt;/strong&gt;&lt;/em&gt; i izmenimo &lt;em&gt;&lt;strong&gt;22&lt;/strong&gt;&lt;/em&gt; u na primer &lt;em&gt;&lt;strong&gt;2222&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/sshd-config.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;a-nameonemogucavanjea&#34;&gt;&lt;a name=&#34;onemogucavanje&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;h4 id=&#34;onemogućivanje-root-login-a-na-ssh-server&#34;&gt;&lt;em&gt;&lt;strong&gt;Onemogućivanje Root Login-a na SSH server&lt;/strong&gt;&lt;/em&gt;&lt;/h4&gt;
+&lt;p&gt;Po default-u &lt;em&gt;&lt;strong&gt;root login&lt;/strong&gt;&lt;/em&gt; je omogućen na SSH serveru.&lt;br&gt;
+Očigledna je moguća katastrofa ako se hakeri uloguju kao root na SSH server.&lt;br&gt;
+Ako je priliom instalacije Debiana 10 isključen root nalog (prvi user ima root ovlašćenja), i dalje se može konfigurisati SSH server da ne dozvoljava root login, u slučaju da nekad odlučimo da vratimo root login.&lt;br&gt;
+Za sprečavanje &lt;em&gt;&lt;strong&gt;root login&lt;/strong&gt;&lt;/em&gt;-a  samo treba promeniti liniju:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;#PermitRootLogin prohibit-password&lt;/strong&gt;&lt;/em&gt; --&amp;gt; &lt;em&gt;&lt;strong&gt;PermitRootLogin no&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Restartujmo SSH server da bi ažurirali izmene i proverimo status:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl restart sshd
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo systemctl status sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/status-sshd1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Takođe , ako smo promenili default port (sa &lt;em&gt;&lt;strong&gt;22&lt;/strong&gt;&lt;/em&gt; na &lt;em&gt;&lt;strong&gt;2222&lt;/strong&gt;&lt;/em&gt;), proverimo još jednom:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;netstat -tulpn &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;m&#34;&gt;2222&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/2222.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;konektujemo-se-na-svoj-ssh-server&#34;&gt;Konektujemo se na svoj SSH server:&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Da bi se konektovali na svoj SSH server koristi se sledeća sintaksa:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ssh -p &amp;lt;port&amp;gt; &amp;lt;username&amp;gt;@&amp;lt;ip_address&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako se konektujemo preko LAN mreže, moramo da budemo sigurni u lokalnu IP adresu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo ifconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/inet.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dakle konektujemo se na svoj SSH server (localhost):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ssh -p &lt;span class=&#34;m&#34;&gt;2222&lt;/span&gt; peja@127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/localhost.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Diskonektujemo se sa svog SSH servera sa &lt;em&gt;&lt;strong&gt;CTRL+D&lt;/strong&gt;&lt;/em&gt; ili &lt;em&gt;&lt;strong&gt;logout&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/logout.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Server je i dalje aktivan:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/sshd-aktivan.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako želimo da ga deaktiviramo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl stop sshd
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo systemctl status sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/sshd-stop.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Nakon ovoga SSH Server više neće biti dostupan:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/connection-refused.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>Debian 10 &#39;Backup&#39; - 2. deo</title>
       <link>https://debian-openbox.github.io/post/crontab/</link>
@@ -762,7 +1020,7 @@ unose se &lt;em&gt;username&lt;/em&gt; i &lt;em&gt;password&lt;/em&gt; registrov
 &lt;img src=&#34;https://debian-openbox.github.io/img/samba/findmnt.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h6 id=&#34;napomena&#34;&gt;NAPOMENA:&lt;/h6&gt;
+&lt;h6 id=&#34;-napomena&#34;&gt;#### NAPOMENA:&lt;/h6&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;ufw&lt;/strong&gt;&lt;/mark&gt; (&lt;em&gt;Uncomplicated Firewall&lt;/em&gt;) i njegova GUI verzija &lt;mark style=&#34;background-color: lightblue&#34;&gt;&lt;strong&gt;gufw&lt;/strong&gt;&lt;/mark&gt; su uobičajeni Firewall za Debian i njegove derivate.&lt;/p&gt;
 &lt;ul&gt;
