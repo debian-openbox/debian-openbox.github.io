@@ -6,7 +6,81 @@
     <description>Recent content on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 17 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Statička ip adresa</title>
+      <link>https://debian-openbox.github.io/post/static-ip/</link>
+      <pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/static-ip/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;konfigurisanje-statičke-ip-adrese-u-debianu-1011&#34;&gt;&lt;em&gt;&lt;strong&gt;Konfigurisanje statičke ip adrese u Debianu 10/11&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica)&lt;br&gt;
+Pretpostavka je da je za upravljanje mrežama instaliran &lt;em&gt;&lt;strong&gt;wicd&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
+Za slučaj (mnogo češći) da imate instaliran &lt;em&gt;&lt;strong&gt;NeworkManager&lt;/strong&gt;&lt;/em&gt; pogledajte &lt;a href=&#34;https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster&#34;&gt;ovde&lt;/a&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Instalirajmo &lt;em&gt;&lt;strong&gt;resolvconf&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;wicd-curses&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install resolvconf wicd-curses
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izlistajmo dostupne mrežne interfejse:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ifconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/ip-interfejsi.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Dakle, naš mrežni adapter ima oznaku &lt;em&gt;&lt;strong&gt;eno1&lt;/strong&gt;&lt;/em&gt;, a &lt;em&gt;&lt;strong&gt;netmask&lt;/strong&gt;&lt;/em&gt; nam je &lt;em&gt;&lt;strong&gt;255.255.255.0&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za &lt;em&gt;&lt;strong&gt;Gateway&lt;/strong&gt;&lt;/em&gt; ukucajmo sledeću komandu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;route -n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/gateway.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za adrese &lt;em&gt;&lt;strong&gt;nameserver&lt;/strong&gt;&lt;/em&gt;-a:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cat /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/nameserver.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;konfigurisanje-statičke-ip-adrese--lan-network&#34;&gt;&lt;em&gt;&lt;strong&gt;Konfigurisanje statičke ip adrese : &amp;quot;LAN Network&amp;quot;&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Pogledajmo podatke o konfiguraciji mreže u  &lt;em&gt;&lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;&lt;/em&gt; i obratimo pažnju na uokvireni deo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/network/interfaces
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#ili&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;sudo geany /etc/network/interfaces
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/interfaces.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izbrišimo sve osim sedme i osme linije tako da ostane:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/interfaces1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Uđimo u &lt;em&gt;&lt;strong&gt;root&lt;/strong&gt;&lt;/em&gt; nalog i startujmo &lt;em&gt;wicd-curses&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo su
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;wicd-curses
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/wicd-curses.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Desnim kursorskim tasterom otvorimo prozor za podešavanje žičane mreže i unesimo ranije zapisane parametre:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/wicd-curses1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Klikom na &amp;quot;&lt;em&gt;&lt;strong&gt;s&lt;/strong&gt;&lt;/em&gt;&amp;quot;, vraćamo se na prethodni prozor:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/wicd-curses.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Klikom na &amp;quot;&lt;em&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/em&gt;&amp;quot; , dakle veliko c, ažuriramo uneta podešavanja.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>SSH - autentifikacija razmenom ključeva</title>
       <link>https://debian-openbox.github.io/post/ssh-2/</link>
@@ -105,11 +179,13 @@ Ovom komandom sadržaj javnog ključa šaljemo SSH protokolom udaljenom korisnik
 &lt;/ul&gt;
 &lt;h2 id=&#34;a-namekonektovanje-sa-klijentaa&#34;&gt;&lt;a name=&#34;konektovanje-sa-klijenta&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;konektovanje-na--ssh-server-sa-klijentske-mašine&#34;&gt;&lt;em&gt;&lt;strong&gt;Konektovanje na  SSH Server sa klijentske mašine&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;konektovanje-na--klijentsku-mašinu-sa-ssh-servera&#34;&gt;&lt;em&gt;&lt;strong&gt;Konektovanje na  klijentsku mašinu sa SSH Servera&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;hr&gt;
 &lt;p&gt;Konektujmo se na SSH Server sa klijenta:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# sintaksa je: ssh user@server_ip&lt;/span&gt;
-&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ssh peja@192.168.0.18
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;ssh speja@192.168.0.15
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# ako smo promenili port sa 22 na 2222&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;ssh -p &lt;span class=&#34;m&#34;&gt;2222&lt;/span&gt; speja@192.168.0.15
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
         
       </description>
