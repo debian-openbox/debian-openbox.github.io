@@ -16,11 +16,16 @@
       <description>
         
           &lt;hr&gt;
-&lt;h2 id=&#34;konfigurisanje-statičke-ip-adrese-u-debianu-1011&#34;&gt;&lt;em&gt;&lt;strong&gt;Konfigurisanje statičke ip adrese u Debianu 10/11&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;konfigurisanje-statičke-ip-adrese-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Konfigurisanje statičke ip adrese u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica)&lt;br&gt;
+&lt;p&gt;Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica), mada je procedura ista i za &lt;em&gt;wi-fi&lt;/em&gt;.&lt;br&gt;
 Pretpostavka je da je za upravljanje mrežama instaliran &lt;em&gt;&lt;strong&gt;wicd&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
-Za slučaj (mnogo češći) da imate instaliran &lt;em&gt;&lt;strong&gt;NeworkManager&lt;/strong&gt;&lt;/em&gt; pogledajte &lt;a href=&#34;https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster&#34;&gt;ovde&lt;/a&gt;:&lt;/p&gt;
+&lt;em&gt;&lt;strong&gt;wicd&lt;/strong&gt;&lt;/em&gt; je napušten i neće biti podržan u Debianu već od naredne stabilne verzije &lt;em&gt;&lt;strong&gt;Bullseye&lt;/strong&gt;&lt;/em&gt;-a.&lt;br&gt;
+Zato uputstvo koje sledi važi za &lt;em&gt;&lt;strong&gt;Buster&lt;/strong&gt;&lt;/em&gt;  koji postaje &lt;em&gt;&lt;strong&gt;oldstable&lt;/strong&gt;&lt;/em&gt; sredinom 2021. god.&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Bullseye&lt;/strong&gt;&lt;/em&gt; će koristiti &lt;em&gt;&lt;strong&gt;NeworkManager&lt;/strong&gt;&lt;/em&gt;, a uputstvo pogledajte &lt;a href=&#34;https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster&#34;&gt;ovde&lt;/a&gt;:&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;prikupljanje-parametara&#34;&gt;&lt;em&gt;&lt;strong&gt;prikupljanje parametara&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Instalirajmo &lt;em&gt;&lt;strong&gt;resolvconf&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;wicd-curses&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
@@ -40,7 +45,8 @@ Dakle, naš mrežni adapter ima oznaku &lt;em&gt;&lt;strong&gt;eno1&lt;/strong&g
 &lt;li&gt;
 &lt;p&gt;Za adrese &lt;em&gt;&lt;strong&gt;nameserver&lt;/strong&gt;&lt;/em&gt;-a:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cat /etc/resolv.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/nameserver.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/nameserver.png&#34; alt=&#34;&#34;&gt;
+Ako ne dobijemo adrese &lt;em&gt;&lt;strong&gt;nameserver&lt;/strong&gt;&lt;/em&gt;-a, restartujmo sistem, pa ponovimo postupak.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
@@ -82,7 +88,7 @@ Dakle, naš mrežni adapter ima oznaku &lt;em&gt;&lt;strong&gt;eno1&lt;/strong&g
     </item>
     
     <item>
-      <title>SSH - autentifikacija razmenom ključeva</title>
+      <title>SSH - 2. deo</title>
       <link>https://debian-openbox.github.io/post/ssh-2/</link>
       <pubDate>Wed, 17 Feb 2021 00:00:00 +0000</pubDate>
       
@@ -92,6 +98,11 @@ Dakle, naš mrežni adapter ima oznaku &lt;em&gt;&lt;strong&gt;eno1&lt;/strong&g
           &lt;hr&gt;
 &lt;h2 id=&#34;ssh-autentifikacija-razmenom-ključeva&#34;&gt;&lt;em&gt;&lt;strong&gt;SSH autentifikacija razmenom ključeva&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
 &lt;hr&gt;
+&lt;p&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/ssh-2/#a-namepar_kljucevaa&#34;&gt;Kreiranje para SSH ključeva&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://debian-openbox.github.io/post/ssh-2/#a-namekopiranje_kljucevaa&#34;&gt;Kopiranje SSH javnih ključeva (public key)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://debian-openbox.github.io/post/ssh-2/#a-namekonektovanje-sa-klijentaa&#34;&gt;Konektovanje na klijentsku mašinu&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
 &lt;h4 id=&#34;vrste-ssh-autentifikacije&#34;&gt;&lt;em&gt;&lt;strong&gt;Vrste SSH autentifikacije&lt;/strong&gt;&lt;/em&gt;:&lt;/h4&gt;
 &lt;p&gt;U SSH protokolu postoje 2 načina konektovanja:&lt;/p&gt;
 &lt;ul&gt;
@@ -99,6 +110,7 @@ Dakle, naš mrežni adapter ima oznaku &lt;em&gt;&lt;strong&gt;eno1&lt;/strong&g
 &lt;li&gt;korišćenjem seta ključeva (&lt;em&gt;set of SSH keys&lt;/em&gt;)&lt;br&gt;
 Korišćenjem para ključeva vrši se automatska autentifikacija, bez potrebe za ukucavanjem passworda&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;a-namepar_kljucevaa&#34;&gt;&lt;a name=&#34;par_kljuceva&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;kreiranje-ssh-para-ključeva-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Kreiranje SSH para ključeva u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
@@ -202,13 +214,18 @@ Ovom komandom sadržaj javnog ključa šaljemo SSH protokolom udaljenom korisnik
           &lt;hr&gt;
 &lt;h2 id=&#34;ssh-server-pod-debianom-10&#34;&gt;&lt;em&gt;&lt;strong&gt;SSH Server pod Debianom 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;SSH što je skraćenica za &lt;em&gt;Secure Shell&lt;/em&gt; je mrežni protokol za povezivanje za udaljenim mašinama unutar lokalne mreže ili preko interneta.&lt;br&gt;
+&lt;p&gt;SSH što je skraćenica za &lt;em&gt;Secure Shell&lt;/em&gt;, je mrežni protokol za povezivanje za udaljenim mašinama unutar lokalne mreže ili preko interneta.&lt;br&gt;
 SSH arhitektura predviđa Server koji koriste klijenti da bi se konektovali na udaljenu mašinu.&lt;br&gt;
 Da bi se ova povezivanja uspešno ostvarivala potrebno je konfigurisati i SSH Server ali i klijente.&lt;br&gt;
 U prvom delu posvetićemo pažnju postavljanju SSH Servera pod Debianom 10.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&#34;https://debian-openbox.github.io/post/ssh/#a-nameopenssha&#34;&gt;Instaliranje OpenSSH Servera&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://debian-openbox.github.io/post/ssh/#a-namekonf-ssh-serva&#34;&gt;Konfigurisanje OpenSSH servera&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://debian-openbox.github.io/post/ssh/#a-nameonemogucavanjea&#34;&gt;&lt;em&gt;&lt;strong&gt;Onemogućivanje Root Login-a&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;Da bi proverili da li user ima sudo prava korišćenja koristimo sledeću komandu &lt;em&gt;sudo -l&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;Da bi proverili da li user ima &lt;em&gt;sudo&lt;/em&gt; prava korišćenja koristimo sledeću komandu &lt;em&gt;sudo -l&lt;/em&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo -l
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ssh/sudo-l.png&#34; alt=&#34;user ima sva administratorska prava&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -221,7 +238,7 @@ U prvom delu posvetićemo pažnju postavljanju SSH Servera pod Debianom 10.&lt;/
 &lt;/ol&gt;
 &lt;h2 id=&#34;a-nameopenssha&#34;&gt;&lt;a name=&#34;openssh&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;instalianje-openssh-servera-na-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Instalianje OpenSSH Servera na Debian 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;instaliranje-openssh-servera-na-debian-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Instaliranje OpenSSH Servera na Debian 10&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li&gt;

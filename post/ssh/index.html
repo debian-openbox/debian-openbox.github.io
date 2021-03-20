@@ -175,13 +175,18 @@
     <hr>
 <h2 id="ssh-server-pod-debianom-10"><em><strong>SSH Server pod Debianom 10</strong></em></h2>
 <hr>
-<p>SSH što je skraćenica za <em>Secure Shell</em> je mrežni protokol za povezivanje za udaljenim mašinama unutar lokalne mreže ili preko interneta.<br>
+<p>SSH što je skraćenica za <em>Secure Shell</em>, je mrežni protokol za povezivanje za udaljenim mašinama unutar lokalne mreže ili preko interneta.<br>
 SSH arhitektura predviđa Server koji koriste klijenti da bi se konektovali na udaljenu mašinu.<br>
 Da bi se ova povezivanja uspešno ostvarivala potrebno je konfigurisati i SSH Server ali i klijente.<br>
 U prvom delu posvetićemo pažnju postavljanju SSH Servera pod Debianom 10.</p>
+<hr>
+<p><a href="https://debian-openbox.github.io/post/ssh/#a-nameopenssha">Instaliranje OpenSSH Servera</a><br>
+<a href="https://debian-openbox.github.io/post/ssh/#a-namekonf-ssh-serva">Konfigurisanje OpenSSH servera</a><br>
+<a href="https://debian-openbox.github.io/post/ssh/#a-nameonemogucavanjea"><em><strong>Onemogućivanje Root Login-a</strong></em></a></p>
+<hr>
 <ol>
 <li>
-<p>Da bi proverili da li user ima sudo prava korišćenja koristimo sledeću komandu <em>sudo -l</em>:</p>
+<p>Da bi proverili da li user ima <em>sudo</em> prava korišćenja koristimo sledeću komandu <em>sudo -l</em>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo -l
 </code></pre></div><p><img src="/img/ssh/sudo-l.png" alt="user ima sva administratorska prava"></p>
 </li>
@@ -194,7 +199,7 @@ U prvom delu posvetićemo pažnju postavljanju SSH Servera pod Debianom 10.</p>
 </ol>
 <h2 id="a-nameopenssha"><a name="openssh"></a></h2>
 <hr>
-<h3 id="instalianje-openssh-servera-na-debian-10"><em><strong>Instalianje OpenSSH Servera na Debian 10</strong></em></h3>
+<h3 id="instaliranje-openssh-servera-na-debian-10"><em><strong>Instaliranje OpenSSH Servera na Debian 10</strong></em></h3>
 <hr>
 <ol>
 <li>
@@ -344,7 +349,7 @@ Za sprečavanje <em><strong>root login</strong></em>-a  samo treba promeniti lin
         <a href="https://debian-openbox.github.io/post/static-ip/" class="nav-link" title="Statička ip adresa">Statička ip adresa</a>
       </li>
       <li>
-        <a href="https://debian-openbox.github.io/post/ssh-2/" class="nav-link" title="SSH - autentifikacija razmenom ključeva">SSH - autentifikacija razmenom ključeva</a>
+        <a href="https://debian-openbox.github.io/post/ssh-2/" class="nav-link" title="SSH - 2. deo">SSH - 2. deo</a>
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/crontab/" class="nav-link" title="Debian 10 &#39;Backup&#39; - 2. deo">Debian 10 &#39;Backup&#39; - 2. deo</a>

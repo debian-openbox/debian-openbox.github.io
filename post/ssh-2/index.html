@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en" data-figures="" class="page" data-mode="dim">
   <head>
-<title>SSH - autentifikacija razmenom ključeva | Clarity</title>
+<title>SSH - 2. deo | Clarity</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.81.0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -21,9 +21,9 @@
 <meta name="description" content="SSH autentifikacija razmenom ključeva">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@johndoe">
-<meta name="twitter:title" content="SSH - autentifikacija razmenom ključeva" />
+<meta name="twitter:title" content="SSH - 2. deo" />
 <meta property="og:url" content="https://debian-openbox.github.io/post/ssh-2/" />
-<meta property="og:title" content="SSH - autentifikacija razmenom ključeva" />
+<meta property="og:title" content="SSH - 2. deo" />
 <meta property="og:description" content="SSH autentifikacija razmenom ključeva" />
 <meta property="og:image" content="https://debian-openbox.github.io/images/thumbnail.png" />
 <link rel="apple-touch-icon" sizes="180x180" href='https://debian-openbox.github.io/icons/apple-touch-icon.png'>
@@ -135,7 +135,7 @@
   
 <div class="grid-inverse wrap content">
   <article class="post_content">
-    <h1 class="post_title">SSH - autentifikacija razmenom ključeva</h1><div class="post_meta">
+    <h1 class="post_title">SSH - 2. deo</h1><div class="post_meta">
   
     <svg class="icon">
   <use xlink:href="#calendar"></use>
@@ -149,12 +149,12 @@
     
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=SSH%20-%20autentifikacija%20razmenom%20klju%c4%8deva&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fssh-2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=SSH%20-%202.%20deo&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fssh-2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#twitter"></use>
 </svg>
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fssh-2%2f&t=SSH%20-%20autentifikacija%20razmenom%20klju%c4%8deva" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fssh-2%2f&t=SSH%20-%202.%20deo" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#facebook"></use>
 </svg>
@@ -175,6 +175,11 @@
     <hr>
 <h2 id="ssh-autentifikacija-razmenom-ključeva"><em><strong>SSH autentifikacija razmenom ključeva</strong></em></h2>
 <hr>
+<p><a href="https://debian-openbox.github.io/post/ssh-2/#a-namepar_kljucevaa">Kreiranje para SSH ključeva</a><br>
+<a href="https://debian-openbox.github.io/post/ssh-2/#a-namekopiranje_kljucevaa">Kopiranje SSH javnih ključeva (public key)</a><br>
+<a href="https://debian-openbox.github.io/post/ssh-2/#a-namekonektovanje-sa-klijentaa">Konektovanje na klijentsku mašinu</a></p>
+<hr>
+<blockquote>
 <h4 id="vrste-ssh-autentifikacije"><em><strong>Vrste SSH autentifikacije</strong></em>:</h4>
 <p>U SSH protokolu postoje 2 načina konektovanja:</p>
 <ul>
@@ -182,6 +187,7 @@
 <li>korišćenjem seta ključeva (<em>set of SSH keys</em>)<br>
 Korišćenjem para ključeva vrši se automatska autentifikacija, bez potrebe za ukucavanjem passworda</li>
 </ul>
+</blockquote>
 <h2 id="a-namepar_kljucevaa"><a name="par_kljuceva"></a></h2>
 <hr>
 <h3 id="kreiranje-ssh-para-ključeva-u-debianu-10"><em><strong>Kreiranje SSH para ključeva u Debianu 10</strong></em></h3>

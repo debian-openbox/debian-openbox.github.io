@@ -173,11 +173,16 @@
 
     
     <hr>
-<h2 id="konfigurisanje-statičke-ip-adrese-u-debianu-1011"><em><strong>Konfigurisanje statičke ip adrese u Debianu 10/11</strong></em></h2>
+<h2 id="konfigurisanje-statičke-ip-adrese-u-debianu-10"><em><strong>Konfigurisanje statičke ip adrese u Debianu 10</strong></em></h2>
 <hr>
-<p>Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica)<br>
+<p>Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica), mada je procedura ista i za <em>wi-fi</em>.<br>
 Pretpostavka je da je za upravljanje mrežama instaliran <em><strong>wicd</strong></em>.<br>
-Za slučaj (mnogo češći) da imate instaliran <em><strong>NeworkManager</strong></em> pogledajte <a href="https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster">ovde</a>:</p>
+<em><strong>wicd</strong></em> je napušten i neće biti podržan u Debianu već od naredne stabilne verzije <em><strong>Bullseye</strong></em>-a.<br>
+Zato uputstvo koje sledi važi za <em><strong>Buster</strong></em>  koji postaje <em><strong>oldstable</strong></em> sredinom 2021. god.<br>
+<em><strong>Bullseye</strong></em> će koristiti <em><strong>NeworkManager</strong></em>, a uputstvo pogledajte <a href="https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster">ovde</a>:</p>
+<hr>
+<h3 id="prikupljanje-parametara"><em><strong>prikupljanje parametara</strong></em></h3>
+<hr>
 <ol>
 <li>
 <p>Instalirajmo <em><strong>resolvconf</strong></em> i <em><strong>wicd-curses</strong></em>:</p>
@@ -197,7 +202,8 @@ Dakle, naš mrežni adapter ima oznaku <em><strong>eno1</strong></em>, a <em><st
 <li>
 <p>Za adrese <em><strong>nameserver</strong></em>-a:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>cat /etc/resolv.conf
-</code></pre></div><p><img src="/img/static-ip/nameserver.png" alt=""></p>
+</code></pre></div><p><img src="/img/static-ip/nameserver.png" alt="">
+Ako ne dobijemo adrese <em><strong>nameserver</strong></em>-a, restartujmo sistem, pa ponovimo postupak.</p>
 </li>
 </ol>
 <hr>
@@ -265,7 +271,7 @@ Dakle, naš mrežni adapter ima oznaku <em><strong>eno1</strong></em>, a <em><st
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
       <li>
-        <a href="https://debian-openbox.github.io/post/ssh-2/" class="nav-link" title="SSH - autentifikacija razmenom ključeva">SSH - autentifikacija razmenom ključeva</a>
+        <a href="https://debian-openbox.github.io/post/ssh-2/" class="nav-link" title="SSH - 2. deo">SSH - 2. deo</a>
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/ssh/" class="nav-link" title="SSH - Secure Shell">SSH - Secure Shell</a>
