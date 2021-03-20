@@ -27,6 +27,12 @@ Zato uputstvo koje sledi važi za &lt;em&gt;&lt;strong&gt;Buster&lt;/strong&gt;&
 &lt;h3 id=&#34;prikupljanje-parametara&#34;&gt;&lt;em&gt;&lt;strong&gt;prikupljanje parametara&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;hr&gt;
 &lt;ol&gt;
+&lt;li&gt;Pogledajmo koje su ip adrese zauzete:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;   sudo apt install nmap  &lt;span class=&#34;c1&#34;&gt;# instalirajmo nmap ako već nismo&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;   sudo nmap -sP 192.168.*.*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/provera_ip.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Instalirajmo &lt;em&gt;&lt;strong&gt;resolvconf&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;wicd-curses&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install resolvconf wicd-curses

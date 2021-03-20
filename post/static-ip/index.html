@@ -184,6 +184,12 @@ Zato uputstvo koje sledi važi za <em><strong>Buster</strong></em>  koji postaje
 <h3 id="prikupljanje-parametara"><em><strong>prikupljanje parametara</strong></em></h3>
 <hr>
 <ol>
+<li>Pogledajmo koje su ip adrese zauzete:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>   sudo apt install nmap  <span class="c1"># instalirajmo nmap ako već nismo</span>
+<span class="ln">2</span>   sudo nmap -sP 192.168.*.*
+</code></pre></div><p><img src="/img/static-ip/provera_ip.png" alt=""></p>
+<ol>
 <li>
 <p>Instalirajmo <em><strong>resolvconf</strong></em> i <em><strong>wicd-curses</strong></em>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install resolvconf wicd-curses
