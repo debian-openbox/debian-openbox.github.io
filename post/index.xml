@@ -87,6 +87,27 @@ Ako ne dobijemo adrese &lt;em&gt;&lt;strong&gt;nameserver&lt;/strong&gt;&lt;/em&
 &lt;li&gt;
 &lt;p&gt;Klikom na &amp;quot;&lt;em&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/em&gt;&amp;quot; , dakle veliko c, ažuriramo uneta podešavanja.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Restartujmo &lt;em&gt;&lt;strong&gt;resolvconf&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;networking&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo systemctl restart networking.service
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo systemctl restart resolvconf.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;rezervisanje-statičke-ip-adrese-na-ruteru&#34;&gt;&lt;em&gt;&lt;strong&gt;Rezervisanje statičke ip adrese na ruteru&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;Lokalnu ip adresu možemo da učinimo trajnom podešavanjem na ruteru.&lt;br&gt;
+Naime, Svaki uređaj u kompjuteru pa i mrežna kartica ima svoju jedinstvenu &amp;quot;MAC&amp;quot; adresu. To je oznaka tipa: xx:xx:xx:xx:xx:xx, gde x može da bilo koje malo i veliko slovo ili broj.&lt;br&gt;
+Postupak je jednostavan. Treba samo &lt;em&gt;&lt;strong&gt;MAC&lt;/strong&gt;&lt;/em&gt; adresu mrežne kartice vezati za željenu lokalnu &lt;em&gt;ip&lt;/em&gt; adresu.&lt;br&gt;
+Mali problem može da predstavlja kako u &lt;em&gt;WEB&lt;/em&gt; interfejsu doći do odgovarajućeg prozora sa ovim podešavanjima (Google Is Your Friend).&lt;br&gt;
+Na mom ruteru (kablovski SBB) do podešavanja se dolazi ovako:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/ruter1.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/ruter2.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/ruter3.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/ruter4.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;U terminalu gore korišćenom komandom dobijamo sve učesnike lokalne mreže sa pripadajućim &lt;em&gt;&lt;strong&gt;MAC&lt;/strong&gt;&lt;/em&gt; adresama njihovih adaptera.&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/preko-rutera.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
         

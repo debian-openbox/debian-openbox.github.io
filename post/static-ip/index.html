@@ -244,6 +244,27 @@ Ako ne dobijemo adrese <em><strong>nameserver</strong></em>-a, restartujmo siste
 <li>
 <p>Klikom na &quot;<em><strong>C</strong></em>&quot; , dakle veliko c, ažuriramo uneta podešavanja.</p>
 </li>
+<li>
+<p>Restartujmo <em><strong>resolvconf</strong></em> i <em><strong>networking</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo systemctl restart networking.service
+<span class="ln">2</span>sudo systemctl restart resolvconf.service
+</code></pre></div></li>
+</ol>
+<hr>
+<h3 id="rezervisanje-statičke-ip-adrese-na-ruteru"><em><strong>Rezervisanje statičke ip adrese na ruteru</strong></em></h3>
+<hr>
+<ol>
+<li>Lokalnu ip adresu možemo da učinimo trajnom podešavanjem na ruteru.<br>
+Naime, Svaki uređaj u kompjuteru pa i mrežna kartica ima svoju jedinstvenu &quot;MAC&quot; adresu. To je oznaka tipa: xx:xx:xx:xx:xx:xx, gde x može da bilo koje malo i veliko slovo ili broj.<br>
+Postupak je jednostavan. Treba samo <em><strong>MAC</strong></em> adresu mrežne kartice vezati za željenu lokalnu <em>ip</em> adresu.<br>
+Mali problem može da predstavlja kako u <em>WEB</em> interfejsu doći do odgovarajućeg prozora sa ovim podešavanjima (Google Is Your Friend).<br>
+Na mom ruteru (kablovski SBB) do podešavanja se dolazi ovako:<br>
+<img src="/img/static-ip/ruter1.png" alt=""><br>
+<img src="/img/static-ip/ruter2.png" alt=""><br>
+<img src="/img/static-ip/ruter3.png" alt=""><br>
+<img src="/img/static-ip/ruter4.png" alt=""></li>
+<li>U terminalu gore korišćenom komandom dobijamo sve učesnike lokalne mreže sa pripadajućim <em><strong>MAC</strong></em> adresama njihovih adaptera.<br>
+<img src="/img/static-ip/preko-rutera.png" alt=""></li>
 </ol>
 
 
