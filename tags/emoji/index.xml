@@ -21,7 +21,7 @@
 &lt;p&gt;Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica), mada je procedura ista i za &lt;em&gt;wi-fi&lt;/em&gt;.&lt;br&gt;
 Pretpostavka je da je za upravljanje mrežama instaliran &lt;em&gt;&lt;strong&gt;wicd&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
 &lt;em&gt;&lt;strong&gt;wicd&lt;/strong&gt;&lt;/em&gt; je napušten i neće biti podržan u Debianu već od naredne stabilne verzije &lt;em&gt;&lt;strong&gt;Bullseye&lt;/strong&gt;&lt;/em&gt;-a.&lt;br&gt;
-Zato uputstvo koje sledi važi za &lt;em&gt;&lt;strong&gt;Buster&lt;/strong&gt;&lt;/em&gt;  koji postaje &lt;em&gt;&lt;strong&gt;oldstable&lt;/strong&gt;&lt;/em&gt; sredinom 2021. god.&lt;br&gt;
+Zato uputstvo koje sledi važi za &lt;em&gt;&lt;strong&gt;Debian Buster&lt;/strong&gt;&lt;/em&gt;  koji postaje &lt;em&gt;&lt;strong&gt;oldstable&lt;/strong&gt;&lt;/em&gt; sredinom 2021. god.&lt;br&gt;
 &lt;em&gt;&lt;strong&gt;Bullseye&lt;/strong&gt;&lt;/em&gt; će koristiti &lt;em&gt;&lt;strong&gt;NeworkManager&lt;/strong&gt;&lt;/em&gt;, a uputstvo pogledajte &lt;a href=&#34;https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster&#34;&gt;ovde&lt;/a&gt;:&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;prikupljanje-parametara&#34;&gt;&lt;em&gt;&lt;strong&gt;prikupljanje parametara&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
@@ -77,7 +77,7 @@ Ako ne dobijemo adrese &lt;em&gt;&lt;strong&gt;nameserver&lt;/strong&gt;&lt;/em&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/wicd-curses.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Desnim kursorskim tasterom otvorimo prozor za podešavanje žičane mreže i unesimo ranije zapisane parametre:&lt;br&gt;
+&lt;p&gt;Desnim kursorskim tasterom otvorimo prozor za podešavanje žičane mreže i unesimo ranije zapisane parametre (adrese za DNS server 1 i 2 su adrese iz tačke 4. &lt;strong&gt;prikupljanja parametara&lt;/strong&gt;):&lt;br&gt;
 &lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/wicd-curses1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -109,6 +109,7 @@ Na mom ruteru (kablovski SBB) do podešavanja se dolazi ovako:&lt;br&gt;
 &lt;li&gt;U terminalu gore korišćenom komandom dobijamo sve učesnike lokalne mreže sa pripadajućim &lt;em&gt;&lt;strong&gt;MAC&lt;/strong&gt;&lt;/em&gt; adresama njihovih adaptera.&lt;br&gt;
 &lt;img src=&#34;https://debian-openbox.github.io/img/static-ip/preko-rutera.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;preporuka: treba dati prednost rezervaciji ip adrese na ruteru u odnosu na podešavanja OS-a, jer može doći do problema sa dodeljivanjem istih nakon uključenja u mrežu novih korisnika.&lt;/p&gt;
 
         
       </description>
@@ -137,6 +138,13 @@ Na mom ruteru (kablovski SBB) do podešavanja se dolazi ovako:&lt;br&gt;
 &lt;li&gt;korišćenjem seta ključeva (&lt;em&gt;set of SSH keys&lt;/em&gt;)&lt;br&gt;
 Korišćenjem para ključeva vrši se automatska autentifikacija, bez potrebe za ukucavanjem passworda&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;h4 id=&#34;kako-radi-razmena-ključeva&#34;&gt;&lt;strong&gt;KAKO RADI RAZMENA KLJUČEVA&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Autentifikacija razmenom ključeva sastoji se u kreiranju para ključeva: javnog (&lt;em&gt;&lt;strong&gt;public key&lt;/strong&gt;&lt;/em&gt;), i privatnog ili tajnog (&lt;em&gt;&lt;strong&gt;private key&lt;/strong&gt;&lt;/em&gt;).&lt;br&gt;
+SSH klijent formira oba ključa, pri čemu &lt;strong&gt;privatni&lt;/strong&gt; ostaje na klijentskoj mašini i ne daje se nikom, a &lt;strong&gt;javni&lt;/strong&gt; se šalje SSH Serveru sa kojim želimo da uspostavimo vezu.&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;SSH Server javni ključ dobijen od klijenta, koristi da kreira poruku koju šalje nazad klijentu a koju ovaj može da pročita jedino uz pomoć privatnog ključa.&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+Klijent zatim formira i šalje poruku Serveru, koju ovaj prihvata kao dokaz legitimnosti i dozvoljava konekciju.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;a-namepar_kljucevaa&#34;&gt;&lt;a name=&#34;par_kljuceva&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;hr&gt;

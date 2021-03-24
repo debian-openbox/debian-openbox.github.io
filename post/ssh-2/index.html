@@ -188,6 +188,13 @@
 Korišćenjem para ključeva vrši se automatska autentifikacija, bez potrebe za ukucavanjem passworda</li>
 </ul>
 </blockquote>
+<blockquote>
+<h4 id="kako-radi-razmena-ključeva"><strong>KAKO RADI RAZMENA KLJUČEVA</strong></h4>
+<p>Autentifikacija razmenom ključeva sastoji se u kreiranju para ključeva: javnog (<em><strong>public key</strong></em>), i privatnog ili tajnog (<em><strong>private key</strong></em>).<br>
+SSH klijent formira oba ključa, pri čemu <strong>privatni</strong> ostaje na klijentskoj mašini i ne daje se nikom, a <strong>javni</strong> se šalje SSH Serveru sa kojim želimo da uspostavimo vezu.<br>
+<em><strong>SSH Server javni ključ dobijen od klijenta, koristi da kreira poruku koju šalje nazad klijentu a koju ovaj može da pročita jedino uz pomoć privatnog ključa.</strong></em><br>
+Klijent zatim formira i šalje poruku Serveru, koju ovaj prihvata kao dokaz legitimnosti i dozvoljava konekciju.</p>
+</blockquote>
 <h2 id="a-namepar_kljucevaa"><a name="par_kljuceva"></a></h2>
 <hr>
 <h3 id="kreiranje-ssh-para-ključeva-u-debianu-10"><em><strong>Kreiranje SSH para ključeva u Debianu 10</strong></em></h3>

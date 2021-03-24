@@ -178,7 +178,7 @@
 <p>Ovde ćemo korak po korak konfigurisati statičku ip adresu za mrežni adapter (LAN kartica), mada je procedura ista i za <em>wi-fi</em>.<br>
 Pretpostavka je da je za upravljanje mrežama instaliran <em><strong>wicd</strong></em>.<br>
 <em><strong>wicd</strong></em> je napušten i neće biti podržan u Debianu već od naredne stabilne verzije <em><strong>Bullseye</strong></em>-a.<br>
-Zato uputstvo koje sledi važi za <em><strong>Buster</strong></em>  koji postaje <em><strong>oldstable</strong></em> sredinom 2021. god.<br>
+Zato uputstvo koje sledi važi za <em><strong>Debian Buster</strong></em>  koji postaje <em><strong>oldstable</strong></em> sredinom 2021. god.<br>
 <em><strong>Bullseye</strong></em> će koristiti <em><strong>NeworkManager</strong></em>, a uputstvo pogledajte <a href="https://linuxconfig.org/how-to-set-a-static-ip-address-on-debian-10-buster">ovde</a>:</p>
 <hr>
 <h3 id="prikupljanje-parametara"><em><strong>prikupljanje parametara</strong></em></h3>
@@ -234,7 +234,7 @@ Ako ne dobijemo adrese <em><strong>nameserver</strong></em>-a, restartujmo siste
 </code></pre></div><p><img src="/img/static-ip/wicd-curses.png" alt=""></p>
 </li>
 <li>
-<p>Desnim kursorskim tasterom otvorimo prozor za podešavanje žičane mreže i unesimo ranije zapisane parametre:<br>
+<p>Desnim kursorskim tasterom otvorimo prozor za podešavanje žičane mreže i unesimo ranije zapisane parametre (adrese za DNS server 1 i 2 su adrese iz tačke 4. <strong>prikupljanja parametara</strong>):<br>
 <img src="/img/static-ip/wicd-curses1.png" alt=""></p>
 </li>
 <li>
@@ -266,6 +266,7 @@ Na mom ruteru (kablovski SBB) do podešavanja se dolazi ovako:<br>
 <li>U terminalu gore korišćenom komandom dobijamo sve učesnike lokalne mreže sa pripadajućim <em><strong>MAC</strong></em> adresama njihovih adaptera.<br>
 <img src="/img/static-ip/preko-rutera.png" alt=""></li>
 </ol>
+<p>preporuka: treba dati prednost rezervaciji ip adrese na ruteru u odnosu na podešavanja OS-a, jer može doći do problema sa dodeljivanjem istih nakon uključenja u mrežu novih korisnika.</p>
 
 
   </article>
