@@ -6,7 +6,134 @@
     <description>Recent content in emoji on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 18 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enkripcija</title>
+      <link>https://debian-openbox.github.io/post/enkripcija/</link>
+      <pubDate>Mon, 05 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/enkripcija/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;enkripcija-u-debianu-10---1deo&#34;&gt;&lt;em&gt;&lt;strong&gt;Enkripcija u Debianu 10 - 1.deo&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;osnovna-enkripcija-fajlova-i-foldera-pomoću-gpg-utillity-ja&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija fajlova i foldera pomoću gpg utillity-ja&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Osnovna &lt;em&gt;&lt;strong&gt;gpg&lt;/strong&gt;&lt;/em&gt; enkripcija:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Koristeći &lt;em&gt;&lt;strong&gt;gpg utillity&lt;/strong&gt;&lt;/em&gt; moguće je izvršiti enkripciju fajla:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;gpg -c &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ova komanda formira istoimeni fajl sa ekstenzijom &lt;em&gt;&lt;strong&gt;gpg&lt;/strong&gt;&lt;/em&gt; nakon što traži da se unese lozinka (&lt;em&gt;Passphrase&lt;/em&gt;), bilo u terminalu ili u prozoru.&lt;br&gt;
+Vodite računa da zapamtite (zapišete) lozinku, jer nema načina da se naknadno dođe do nje.&lt;br&gt;
+Svi pokušaji da se edituje sadržaj novostvorenog gpg fajla biće neuspešni.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Osnovna &lt;em&gt;&lt;strong&gt;gpg&lt;/strong&gt;&lt;/em&gt; dekripcija:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Dekripciju vršimo koristeći gore pomenuti &lt;em&gt;&lt;strong&gt;gpg&lt;/strong&gt;&lt;/em&gt; fajl:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;gpg -d &amp;lt;file&amp;gt;.gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Nakon komande iskače prozor sa zahtevom da se unese lozinka nakon čega je pristup fajlu omogućen.&lt;br&gt;
+Takođe je moguće da se lozinka ne traži uopšte, jer &lt;em&gt;&lt;strong&gt;gpg utillity&lt;/strong&gt;&lt;/em&gt; prilikom upisivanja lozinke (ili otključavanja), umesto korisnika formira set ključeva u &lt;em&gt;home&lt;/em&gt; folderu.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kako bi na ovaj način izvršili enkripciju i dekripciju celog foldera:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Prvo pomoću komande &lt;em&gt;&lt;strong&gt;tar&lt;/strong&gt;&lt;/em&gt; od foldera napravimo jedan fajl a nakon toga lozinkom zaštitimo novoformiranu &lt;em&gt;&lt;strong&gt;tar&lt;/strong&gt;&lt;/em&gt; arhivu gore navedenim postupkom:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;tar -cvf arhiva.tar &amp;lt;folder koji štitimo&amp;gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;gpg -c arhiva.tar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dekripcija ide obrnutim redom.Prvo izvršimo dekripciju &lt;em&gt;&lt;strong&gt;arhiva.tar.gpg&lt;/strong&gt;&lt;/em&gt; fajla, da bi mogli da iz &lt;em&gt;&lt;strong&gt;tar&lt;/strong&gt;&lt;/em&gt; fajla ponovo dobijemo izvorni folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;gpg -d arhiva.tar.gpg
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;tar -xf arhiva.tar &lt;span class=&#34;c1&#34;&gt;#raspakivanje tar arhive moguće je i grafički&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;osnovna-enkripcija-fajlova-i-foldera-pomoću-zip-komande&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija fajlova i foldera pomoću zip komande&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo sa li je instaliran &lt;em&gt;&lt;strong&gt;zip&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;which zip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ako nije:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install zip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;enkripcija fajlova i foldera pomoću &lt;em&gt;&lt;strong&gt;zip&lt;/strong&gt;&lt;/em&gt; komande se vrši dodavanjem opcije &lt;em&gt;&lt;strong&gt;--encrypt&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;zip -r --encrypt secure.zip &amp;lt;folder koji štitimo&amp;gt; &lt;span class=&#34;c1&#34;&gt;#ceo folder&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;zip --encrypt secure.zip &amp;lt;file&amp;gt;...&amp;lt;file10&amp;gt; &lt;span class=&#34;c1&#34;&gt;#samo izabrani fajlovi &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;dekripcija ide komandom &lt;em&gt;&lt;strong&gt;unzip&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;unzip secure.zip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;enkripcija-fajlova-pomoću-privatnog-ključa&#34;&gt;&lt;em&gt;&lt;strong&gt;ENKRIPCIJA FAJLOVA POMOĆU PRIVATNOG KLJUČA&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;encrypt-files-using-private-key&#34;&gt;&lt;em&gt;&lt;strong&gt;(Encrypt Files using private key)&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;p&gt;Formiranje para ključeva za autentifikaciju smo podrobno objasnili na primeru &lt;a href=&#34;https://debian-openbox.github.io/post/ssh-2/&#34;&gt;SSH protokola&lt;/a&gt;.&lt;br&gt;
+Da bi &lt;em&gt;&lt;strong&gt;gpg&lt;/strong&gt;&lt;/em&gt; postupak koristili za enkripciju pomoću privatnog ključa, potrebno je da se doda i opcija &lt;em&gt;&lt;strong&gt;--full-gen-key&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;gpg --full-gen-key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Startovanjem ove komande sledi niz pitanja kojima se definiše procedura:
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/--full-gen-key.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Prvo biramo metodu enkripcije:&lt;br&gt;
+Ostavljamo &lt;em&gt;default&lt;/em&gt; &lt;em&gt;&lt;strong&gt;RSA&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/RSA.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sledi pitanje koliko jaka enkripcija želimo da bude (u opsegu od 1024 do 4096 bita)&lt;br&gt;
+Možemo da ostavimo &lt;em&gt;default&lt;/em&gt; od 3072 - dakle ENTER
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/expire.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sledeće pitanje je koliko dugo želimo da naš ključ važi&lt;br&gt;
+(0 - znači neograničeno) - dakle ENTER  pa &lt;em&gt;&lt;strong&gt;y&lt;/strong&gt;&lt;/em&gt; za potvrdu izbora
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/expire.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ostaje da se upiše ime, email adresa kao i komentar koji opisuje ključ koji formiramo:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/upitnik.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako smo saglasni sa navedenim, klikom na &lt;em&gt;&lt;strong&gt;o&lt;/strong&gt;&lt;/em&gt; dolazimo do prozora gde upisujemo lozinku kojom štitimo ključ od zloupotrebe (krađa):&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/lozinka.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sa ovim je ključ formiran:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/kljuc.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;enkripcija-pomoću-ključa&#34;&gt;&lt;em&gt;&lt;strong&gt;enkripcija pomoću ključa&lt;/strong&gt;&lt;/em&gt;&lt;/h5&gt;
+&lt;hr&gt;
+&lt;p&gt;Komanda kojom bi vršili enkripciju ključem bi išla ovako:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# gpg -e --recipient &amp;lt;email or name&amp;gt; &amp;lt;file koji štitimo&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;gpg -e --recipient pejas@provajder.net ip-calc.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;imgenkripcijazasticenopng&#34;&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/zasticeno.png&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
+&lt;h5 id=&#34;dekripcija-pomoću-ključa&#34;&gt;&lt;em&gt;&lt;strong&gt;dekripcija pomoću ključa&lt;/strong&gt;&lt;/em&gt;&lt;/h5&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# gpg -d &amp;lt;file&amp;gt;.gpg&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;gpg -d ip-calc.sh.gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija/lozinka1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;napomena: ovo je kratak prikaz enkripcije fajlova i foldera sa &lt;a href=&#34;https://devconnected.com/how-to-encrypt-file-on-linux/&#34;&gt;strane&lt;/a&gt;, na kojoj je dat i metod pod grafičkim okruženjem u &lt;a href=&#34;https://en.wikipedia.org/wiki/GNOME_Files&#34;&gt;&lt;em&gt;&lt;strong&gt;nautilusu&lt;/strong&gt;&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>Statička ip adresa</title>
       <link>https://debian-openbox.github.io/post/static-ip/</link>

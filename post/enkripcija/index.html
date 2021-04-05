@@ -1,8 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="en" data-figures="" data-mode="dim">
+<html lang="en" data-figures="" class="page" data-mode="dim">
   <head>
-<title>Series | Clarity</title>
+<title>Enkripcija | Clarity</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.81.0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -14,18 +14,17 @@
   gtag('js', new Date());
   gtag('config', 'XXXXXXXXXX');
 </script>
+  
 <meta property="og:locale" content="en" />
 
-<meta property="og:locale:alternate" content="pt" />
-
 <meta property="og:type" content="article">
-<meta name="description" content="">
+<meta name="description" content="Konfigurisanje statičke ip adrese">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@johndoe">
-<meta name="twitter:title" content="Series" />
-<meta property="og:url" content="https://debian-openbox.github.io/series/" />
-<meta property="og:title" content="Series" />
-<meta property="og:description" content="" />
+<meta name="twitter:title" content="Enkripcija" />
+<meta property="og:url" content="https://debian-openbox.github.io/post/enkripcija/" />
+<meta property="og:title" content="Enkripcija" />
+<meta property="og:description" content="Konfigurisanje statičke ip adrese" />
 <meta property="og:image" content="https://debian-openbox.github.io/images/thumbnail.png" />
 <link rel="apple-touch-icon" sizes="180x180" href='https://debian-openbox.github.io/icons/apple-touch-icon.png'>
 <link rel="icon" type="image/png" sizes="32x32" href='https://debian-openbox.github.io/icons/favicon-32x32.png'>
@@ -34,8 +33,7 @@
 <meta name="msapplication-TileColor" content="#002538">
 <meta name="theme-color" content="#002538">
 
-<link rel="canonical" href="https://debian-openbox.github.io/series/">
-<link rel="alternate" type="application/rss+xml" href="https://debian-openbox.github.io/series/index.xml" title="Clarity" />
+<link rel="canonical" href="https://debian-openbox.github.io/post/enkripcija/">
 
     
 
@@ -134,41 +132,163 @@
 </header>
 
     <main>
-
+  
 <div class="grid-inverse wrap content">
-  <ul class="posts" id="posts">
-      <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://debian-openbox.github.io/series/themes-guide/" title="Themes Guide">Themes Guide</a>
-      </h3>
-      <div class="post_meta">
+  <article class="post_content">
+    <h1 class="post_title">Enkripcija</h1><div class="post_meta">
   
     <svg class="icon">
   <use xlink:href="#calendar"></use>
 </svg>
     <span class="post_date">
-      11 Mar 19 00:00 CET</span>
+      05 Apr 21 00:00 CET</span>
+      <a href='https://debian-openbox.github.io/tags/emoji' title="emoji" class="post_tag button button_translucent">emoji
+      </a>
 </div>
 
-    </div>
-      <div class="excerpt_footer">
-        <div>
-          <p class="pale">
-            
-          </p>
-          <a href="https://debian-openbox.github.io/series/themes-guide/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
+    
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Enkripcija&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fenkripcija%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <use xlink:href="#twitter"></use>
+</svg>
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fenkripcija%2f&t=Enkripcija" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <use xlink:href="#facebook"></use>
+</svg>
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <use xlink:href="#linkedin"></use>
+</svg>
+    </a>
+    <a href="https://debian-openbox.github.io/post/enkripcija/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <use xlink:href="#copy"></use>
+</svg>
+    </a>
+  </div>
 
-    <li>
+    
+    <hr>
+<h2 id="enkripcija-u-debianu-10---1deo"><em><strong>Enkripcija u Debianu 10 - 1.deo</strong></em></h2>
+<hr>
+<h3 id="osnovna-enkripcija-fajlova-i-foldera-pomoću-gpg-utillity-ja"><em><strong>osnovna enkripcija fajlova i foldera pomoću gpg utillity-ja</strong></em></h3>
+<hr>
+<ul>
+<li>
+<p>Osnovna <em><strong>gpg</strong></em> enkripcija:</p>
+<ol>
+<li>Koristeći <em><strong>gpg utillity</strong></em> moguće je izvršiti enkripciju fajla:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>gpg -c &lt;file&gt;
+</code></pre></div><p>Ova komanda formira istoimeni fajl sa ekstenzijom <em><strong>gpg</strong></em> nakon što traži da se unese lozinka (<em>Passphrase</em>), bilo u terminalu ili u prozoru.<br>
+Vodite računa da zapamtite (zapišete) lozinku, jer nema načina da se naknadno dođe do nje.<br>
+Svi pokušaji da se edituje sadržaj novostvorenog gpg fajla biće neuspešni.</p>
+</li>
+<li>
+<p>Osnovna <em><strong>gpg</strong></em> dekripcija:</p>
+<ol>
+<li>
+<p>Dekripciju vršimo koristeći gore pomenuti <em><strong>gpg</strong></em> fajl:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>gpg -d &lt;file&gt;.gpg
+</code></pre></div><p>Nakon komande iskače prozor sa zahtevom da se unese lozinka nakon čega je pristup fajlu omogućen.<br>
+Takođe je moguće da se lozinka ne traži uopšte, jer <em><strong>gpg utillity</strong></em> prilikom upisivanja lozinke (ili otključavanja), umesto korisnika formira set ključeva u <em>home</em> folderu.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Kako bi na ovaj način izvršili enkripciju i dekripciju celog foldera:</p>
+<ol>
+<li>
+<p>Prvo pomoću komande <em><strong>tar</strong></em> od foldera napravimo jedan fajl a nakon toga lozinkom zaštitimo novoformiranu <em><strong>tar</strong></em> arhivu gore navedenim postupkom:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>tar -cvf arhiva.tar &lt;folder koji štitimo&gt;
+<span class="ln">2</span>gpg -c arhiva.tar
+</code></pre></div></li>
+<li>
+<p>Dekripcija ide obrnutim redom.Prvo izvršimo dekripciju <em><strong>arhiva.tar.gpg</strong></em> fajla, da bi mogli da iz <em><strong>tar</strong></em> fajla ponovo dobijemo izvorni folder:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>gpg -d arhiva.tar.gpg
+<span class="ln">2</span>tar -xf arhiva.tar <span class="c1">#raspakivanje tar arhive moguće je i grafički</span>
+</code></pre></div></li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="osnovna-enkripcija-fajlova-i-foldera-pomoću-zip-komande"><em><strong>osnovna enkripcija fajlova i foldera pomoću zip komande</strong></em></h3>
+<hr>
+<ul>
+<li>
+<p>Proverimo sa li je instaliran <em><strong>zip</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>which zip
+</code></pre></div><p>ako nije:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install zip
+</code></pre></div></li>
+<li>
+<p>enkripcija fajlova i foldera pomoću <em><strong>zip</strong></em> komande se vrši dodavanjem opcije <em><strong>--encrypt</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>zip -r --encrypt secure.zip &lt;folder koji štitimo&gt; <span class="c1">#ceo folder</span>
+<span class="ln">2</span>zip --encrypt secure.zip &lt;file&gt;...&lt;file10&gt; <span class="c1">#samo izabrani fajlovi </span>
+</code></pre></div></li>
+<li>
+<p>dekripcija ide komandom <em><strong>unzip</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>unzip secure.zip
+</code></pre></div></li>
+</ul>
+<hr>
+<h3 id="enkripcija-fajlova-pomoću-privatnog-ključa"><em><strong>ENKRIPCIJA FAJLOVA POMOĆU PRIVATNOG KLJUČA</strong></em></h3>
+<h3 id="encrypt-files-using-private-key"><em><strong>(Encrypt Files using private key)</strong></em></h3>
+<hr>
+<p>Formiranje para ključeva za autentifikaciju smo podrobno objasnili na primeru <a href="https://debian-openbox.github.io/post/ssh-2/">SSH protokola</a>.<br>
+Da bi <em><strong>gpg</strong></em> postupak koristili za enkripciju pomoću privatnog ključa, potrebno je da se doda i opcija <em><strong>--full-gen-key</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>gpg --full-gen-key
+</code></pre></div><p>Startovanjem ove komande sledi niz pitanja kojima se definiše procedura:
+<img src="/img/enkripcija/--full-gen-key.png" alt=""></p>
+<ol>
+<li>
+<p>Prvo biramo metodu enkripcije:<br>
+Ostavljamo <em>default</em> <em><strong>RSA</strong></em><br>
+<img src="/img/enkripcija/RSA.png" alt=""></p>
+</li>
+<li>
+<p>Sledi pitanje koliko jaka enkripcija želimo da bude (u opsegu od 1024 do 4096 bita)<br>
+Možemo da ostavimo <em>default</em> od 3072 - dakle ENTER
+<img src="/img/enkripcija/expire.png" alt=""></p>
+</li>
+<li>
+<p>Sledeće pitanje je koliko dugo želimo da naš ključ važi<br>
+(0 - znači neograničeno) - dakle ENTER  pa <em><strong>y</strong></em> za potvrdu izbora
+<img src="/img/enkripcija/expire.png" alt=""></p>
+</li>
+<li>
+<p>Ostaje da se upiše ime, email adresa kao i komentar koji opisuje ključ koji formiramo:<br>
+<img src="/img/enkripcija/upitnik.png" alt=""></p>
+</li>
+<li>
+<p>Ako smo saglasni sa navedenim, klikom na <em><strong>o</strong></em> dolazimo do prozora gde upisujemo lozinku kojom štitimo ključ od zloupotrebe (krađa):<br>
+<img src="/img/enkripcija/lozinka.png" alt=""></p>
+</li>
+<li>
+<p>Sa ovim je ključ formiran:<br>
+<img src="/img/enkripcija/kljuc.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<h5 id="enkripcija-pomoću-ključa"><em><strong>enkripcija pomoću ključa</strong></em></h5>
+<hr>
+<p>Komanda kojom bi vršili enkripciju ključem bi išla ovako:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1"># gpg -e --recipient &lt;email or name&gt; &lt;file koji štitimo&gt;</span>
+<span class="ln">2</span>gpg -e --recipient pejas@provajder.net ip-calc.sh
+</code></pre></div><h2 id="imgenkripcijazasticenopng"><img src="/img/enkripcija/zasticeno.png" alt=""></h2>
+<h5 id="dekripcija-pomoću-ključa"><em><strong>dekripcija pomoću ključa</strong></em></h5>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1"># gpg -d &lt;file&gt;.gpg</span>
+<span class="ln">2</span>gpg -d ip-calc.sh.gpg
+</code></pre></div><p><img src="/img/enkripcija/lozinka1.png" alt=""></p>
+<p>napomena: ovo je kratak prikaz enkripcije fajlova i foldera sa <a href="https://devconnected.com/how-to-encrypt-file-on-linux/">strane</a>, na kojoj je dat i metod pod grafičkim okruženjem u <a href="https://en.wikipedia.org/wiki/GNOME_Files"><em><strong>nautilusu</strong></em></a>.</p>
 
 
-    </li>
-  </ul>
+  </article>
 <aside class="sidebar">
   <section class="sidebar_inner">
     
@@ -179,9 +299,6 @@
       <a href='https://debian-openbox.github.io/about/' class="button mt-1" role="button" title='Read More'>Read More</a>
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
-      <li>
-        <a href="https://debian-openbox.github.io/post/enkripcija/" class="nav-link" title="Enkripcija">Enkripcija</a>
-      </li>
       <li>
         <a href="https://debian-openbox.github.io/post/backup-clonzilla/" class="nav-link" title="Debian 10 &#39;Backup&#39;">Debian 10 &#39;Backup&#39;</a>
       </li>
@@ -200,9 +317,6 @@
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
-      <li>
-        <a href="https://debian-openbox.github.io/post/enkripcija/" class="nav-link" title="Enkripcija">Enkripcija</a>
-      </li>
       <li>
         <a href="https://debian-openbox.github.io/post/static-ip/" class="nav-link" title="Statička ip adresa">Statička ip adresa</a>
       </li>
@@ -223,6 +337,9 @@
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/usersgroups/" class="nav-link" title="Korisnici i Grupe">Korisnici i Grupe</a>
+      </li>
+      <li>
+        <a href="https://debian-openbox.github.io/post/samba/" class="nav-link" title="SAMBA">SAMBA</a>
       </li>
     </ul>
     <div>
@@ -311,9 +428,8 @@
   </section>
 </aside>
 
+  
 </div>
-
-
     </main><svg width="0" height="0" class="hidden">
   <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
     <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
