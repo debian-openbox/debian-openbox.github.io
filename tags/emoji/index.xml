@@ -6,7 +6,123 @@
     <description>Recent content in emoji on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 05 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enkripcija - 2.deo</title>
+      <link>https://debian-openbox.github.io/post/enkripcija_2/</link>
+      <pubDate>Thu, 08 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/enkripcija_2/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;enkripcija-particije-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Enkripcija particije u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Od izuzetnog je značaja kako za kućne korisnike tako i u poslovnom okruženju da postoji  prostor za čuvanje podataka , siguran od hakerskih napada kao i zloupotrebe usled krađe.&lt;br&gt;
+U prvom delu smo videli kako se zaštićuju pojedinačni fajlovi i folderi. Kako bi zaštitili celu particiju?&lt;br&gt;
+Ovde će biti prikazana &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; (&lt;em&gt;Linux Unified Key Setup-on-disk-format&lt;/em&gt;) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;instaliranje-cryptsetup-utility-na-linux-mašini&#34;&gt;Instaliranje &lt;em&gt;&lt;strong&gt;cryptsetup utility&lt;/strong&gt;&lt;/em&gt; na Linux mašini:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install cryptsetup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h5 id=&#34;konfigurisanje-luks-particije&#34;&gt;Konfigurisanje &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; particije:&lt;/h5&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;provera trenutnog stanja:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;fdisk -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/provera.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za demonstraciju iskoristićemo SWAP particiju.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#isključivanje SWAP funkcije:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo swapoff -a  
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#zakomentarišemo SWAP u /etc/fstab fajlu (vazi posle reboot-a):&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;sudo sed -ri &lt;span class=&#34;s1&#34;&gt;&amp;#39;/\sswap\s/s/^#?/#/&amp;#39;&lt;/span&gt; /etc/fstab
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sintaksa je sledeća:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cryptsetup luksFormat --type luks1 /dev/DEVICE  &lt;span class=&#34;c1&#34;&gt;#tip 1 LUKS enkripcije&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;cryptsetup luksFormat --type luks2 /dev/DEVICE  &lt;span class=&#34;c1&#34;&gt;#tip 2 LUKS enkripcije&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;U našem slučaju enkripciju vršimo nad particijom &lt;em&gt;&lt;strong&gt;sda5&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo su  &lt;span class=&#34;c1&#34;&gt;#od sad sve komande unosimo pod ROOT nalogom&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;cryptsetup -y -v --type luks2 luksFormat /dev/sda5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/luksFormat.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;najpre nam se traži potvrda namere unošenjem &lt;em&gt;&lt;strong&gt;YES&lt;/strong&gt;&lt;/em&gt; velikim slovima&lt;/li&gt;
+&lt;li&gt;Unošenje lozinke 2 puta&lt;/li&gt;
+&lt;li&gt;Upozorenje da izabrana particija već ima oznaku SWAP i da će cela biti obrisana&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Definisali smo lozinku za otvaranje particije sda5.&lt;br&gt;
+Zapamtimo je ili zapišimo jer više ne može da se dođe do nje.&lt;br&gt;
+Sledi mapiranje - dodeljivanje imena enkriptovanoj particiji:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#backup2 je naziv koji dodeljujemo ranijoj SWAP particiji&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;cryptsetup luksOpen /dev/sda5 backup2   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/luksOpen.png&#34; alt=&#34;&#34;&gt;
+nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za proveru mapiranja imamo 2 načina:&lt;/p&gt;
+&lt;p&gt;6.1.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;   ls -l /dev/mapper/backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/mapper1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;6.1.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;   cryptsetup -v status backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/mapper2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Možemo da izvršimo &amp;quot;&lt;em&gt;dump LUKS headers&lt;/em&gt;&amp;quot;  sledećom komandom:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cryptsetup luksDump /dev/sda5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/dump.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;formatiranje-linux-luks-particije&#34;&gt;Formatiranje Linux &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; particije:&lt;/h5&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Prvo ispisujemo nule po čitavoj particiji:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt-get install pv  &lt;span class=&#34;c1&#34;&gt;#ako već nije instalirano&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;pv -tpreb /dev/zero &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; dd &lt;span class=&#34;nv&#34;&gt;of&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/mapper/backup2 &lt;span class=&#34;nv&#34;&gt;bs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;128M
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/zero.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sada definišemo fajl sistem, odnosno formatiramo particiju:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;mkfs.ext4 /dev/mapper/backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/mkfs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Mauntujmo novi fajl sistem u folder /backup2 koji ćemo napraviti:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;mkdir /backup2
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;mount /dev/mapper/backup2 /backup2
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;df -H
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /backup2
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;ls -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/mount.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;kako-da-odmauntujemo-i-osiguramo-podatke&#34;&gt;Kako da odmauntujemo i osiguramo podatke?&lt;/h5&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;umount /backup2
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;cryptsetup luksClose backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/umount.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;kako-da-mauntujemo-enkriptovanu-particiju&#34;&gt;Kako da mauntujemo enkriptovanu particiju?&lt;/h5&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cryptsetup luksOpen /dev/sda5 backup2 
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;mount /dev/mapper/backup2 /backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/&#34;&gt;izvor&lt;/a&gt;&lt;/p&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>Enkripcija</title>
       <link>https://debian-openbox.github.io/post/enkripcija/</link>
@@ -16,9 +132,9 @@
       <description>
         
           &lt;hr&gt;
-&lt;h2 id=&#34;enkripcija-u-debianu-10---1deo&#34;&gt;&lt;em&gt;&lt;strong&gt;Enkripcija u Debianu 10 - 1.deo&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;enkripcija-fajlova-i-foldera-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Enkripcija fajlova i foldera u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;osnovna-enkripcija-fajlova-i-foldera-pomoću-gpg-utillity-ja&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija fajlova i foldera pomoću gpg utillity-ja&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;osnovna-enkripcija-pomoću-gpg-utillity-ja&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija pomoću gpg utillity-ja&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -59,7 +175,7 @@ Takođe je moguće da se lozinka ne traži uopšte, jer &lt;em&gt;&lt;strong&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;osnovna-enkripcija-fajlova-i-foldera-pomoću-zip-komande&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija fajlova i foldera pomoću zip komande&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;osnovna-enkripcija-pomoću-zip-komande&#34;&gt;&lt;em&gt;&lt;strong&gt;osnovna enkripcija pomoću zip komande&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -72,6 +188,7 @@ Takođe je moguće da se lozinka ne traži uopšte, jer &lt;em&gt;&lt;strong&gt;
 &lt;p&gt;enkripcija fajlova i foldera pomoću &lt;em&gt;&lt;strong&gt;zip&lt;/strong&gt;&lt;/em&gt; komande se vrši dodavanjem opcije &lt;em&gt;&lt;strong&gt;--encrypt&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;zip -r --encrypt secure.zip &amp;lt;folder koji štitimo&amp;gt; &lt;span class=&#34;c1&#34;&gt;#ceo folder&lt;/span&gt;
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;zip --encrypt secure.zip &amp;lt;file&amp;gt;...&amp;lt;file10&amp;gt; &lt;span class=&#34;c1&#34;&gt;#samo izabrani fajlovi &lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# secure - ime dodeljeno zip arhivi&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;dekripcija ide komandom &lt;em&gt;&lt;strong&gt;unzip&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;

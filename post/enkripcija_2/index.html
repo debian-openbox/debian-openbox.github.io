@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en" data-figures="" class="page" data-mode="dim">
   <head>
-<title>APT - paket menadžer | Clarity</title>
+<title>Enkripcija - 2.deo | Clarity</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.81.0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -18,13 +18,13 @@
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="Guide to emoji usage in Hugo">
+<meta name="description" content="Enkripcija particije u Debianu 10">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@johndoe">
-<meta name="twitter:title" content="APT - paket menadžer" />
-<meta property="og:url" content="https://debian-openbox.github.io/post/apt/" />
-<meta property="og:title" content="APT - paket menadžer" />
-<meta property="og:description" content="Guide to emoji usage in Hugo" />
+<meta name="twitter:title" content="Enkripcija - 2.deo" />
+<meta property="og:url" content="https://debian-openbox.github.io/post/enkripcija_2/" />
+<meta property="og:title" content="Enkripcija - 2.deo" />
+<meta property="og:description" content="Enkripcija particije u Debianu 10" />
 <meta property="og:image" content="https://debian-openbox.github.io/images/thumbnail.png" />
 <link rel="apple-touch-icon" sizes="180x180" href='https://debian-openbox.github.io/icons/apple-touch-icon.png'>
 <link rel="icon" type="image/png" sizes="32x32" href='https://debian-openbox.github.io/icons/favicon-32x32.png'>
@@ -33,7 +33,7 @@
 <meta name="msapplication-TileColor" content="#002538">
 <meta name="theme-color" content="#002538">
 
-<link rel="canonical" href="https://debian-openbox.github.io/post/apt/">
+<link rel="canonical" href="https://debian-openbox.github.io/post/enkripcija_2/">
 
     
 
@@ -135,13 +135,13 @@
   
 <div class="grid-inverse wrap content">
   <article class="post_content">
-    <h1 class="post_title">APT - paket menadžer</h1><div class="post_meta">
+    <h1 class="post_title">Enkripcija - 2.deo</h1><div class="post_meta">
   
     <svg class="icon">
   <use xlink:href="#calendar"></use>
 </svg>
     <span class="post_date">
-      03 Feb 21 00:00 CET</span>
+      08 Apr 21 00:00 CET</span>
       <a href='https://debian-openbox.github.io/tags/emoji' title="emoji" class="post_tag button button_translucent">emoji
       </a>
 </div>
@@ -149,12 +149,12 @@
     
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=APT%20-%20paket%20menad%c5%beer&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fapt%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=Enkripcija%20-%202.deo&url=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fenkripcija_2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#twitter"></use>
 </svg>
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fapt%2f&t=APT%20-%20paket%20menad%c5%beer" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fdebian-openbox.github.io%2fpost%2fenkripcija_2%2f&t=Enkripcija%20-%202.deo" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <use xlink:href="#facebook"></use>
 </svg>
@@ -164,7 +164,7 @@
   <use xlink:href="#linkedin"></use>
 </svg>
     </a>
-    <a href="https://debian-openbox.github.io/post/apt/" title="Copy Link" class="link link_yank">
+    <a href="https://debian-openbox.github.io/post/enkripcija_2/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <use xlink:href="#copy"></use>
 </svg>
@@ -173,169 +173,108 @@
 
     
     <hr>
-<ul>
-<li><a href="https://debian-openbox.github.io/post/apt/#a%C5%BEuriranje-sistema">Ažuriranje sistema preko zvaničnih repozitorijuma</a></li>
-<li><a href="https://debian-openbox.github.io/post/apt/#instaliranje-preko-repozitorijuma">Instaliranje preko zvaničnih repozitorijuma</a></li>
-<li><a href="https://debian-openbox.github.io/post/apt/#tra%C5%BEenje-detalja-o-paketima">Traženje detalja o zavisnostima paketa</a>
-<ul>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightblueapt-searchmark">apt search</a> - pretražuje zadati string</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightblueapt-showmark">apt show</a> - daje sažeti prikaz podataka o paketu</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightblueapt-cache-dependsmark">apt-cache depends</a> - daje listu dipendensija i preporuka</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightblueapt-cache-depends--imark">apt-cache depends -i </a> - daje samo listu važnih dipendensija (<em>important</em>)</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightbluegrep-status-mark">grep-status​ ...</a> - daje dipendensije instaliranih programa</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightbluedpkg-deb-mark">dpkg-deb​ ...</a> - proverava dipendensije <strong>.deb</strong> fajla pre instalacije</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#reverzna-i-rekurzivna-zavisnost-paketa">reverzna i rekurzivna zavisnost</a> - značenje i primeri</li>
-</ul>
-</li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightbluepopis-ru%C4%8Dno-instaliranih-paketamark">popis ručno instaliranih paketa</a></li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightbluezadr%C5%BEavanje-paketa-u-trenutnoj-verzijimark">zadržavanje paketa u trenutnoj verziji</a></li>
-<li><a href="https://debian-openbox.github.io/post/apt/#mark-stylebackground-color-lightbluelista-paketa-kojima-je-zamrznuta-verzijamark">izlistavanje paketa sa &quot;zamrznutom&quot; verzijom</a></li>
-</ul>
+<h2 id="enkripcija-particije-u-debianu-10"><em><strong>Enkripcija particije u Debianu 10</strong></em></h2>
 <hr>
-<h5 id="ažuriranje-sistema"><em><strong>Ažuriranje sistema</strong></em></h5>
+<p>Od izuzetnog je značaja kako za kućne korisnike tako i u poslovnom okruženju da postoji  prostor za čuvanje podataka , siguran od hakerskih napada kao i zloupotrebe usled krađe.<br>
+U prvom delu smo videli kako se zaštićuju pojedinačni fajlovi i folderi. Kako bi zaštitili celu particiju?<br>
+Ovde će biti prikazana <em><strong>LUKS</strong></em> (<em>Linux Unified Key Setup-on-disk-format</em>) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.</p>
 <hr>
-<p><img src="/img/apt/apt-logo.jpg" alt=":left"> <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a>  (Advanced Package Tool) je softver koji služi za instalaciju i uklanjanje programa kod Debiana i njegovih derivata (Ubuntu, Mint, MX Linux, Antix i drugi).</p>
-<p>Prva <a href="https://en.wikipedia.org/wiki/APT_(software)"><em><strong>APT</strong></em> </a> funkcija koju početnici nauče je ažuriranje baze programa i operativnog sisteme:</p>
-<blockquote>
+<h5 id="instaliranje-cryptsetup-utility-na-linux-mašini">Instaliranje <em><strong>cryptsetup utility</strong></em> na Linux mašini:</h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install cryptsetup
+</code></pre></div><hr>
+<h5 id="konfigurisanje-luks-particije">Konfigurisanje <em><strong>LUKS</strong></em> particije:</h5>
+<hr>
 <ol>
-<li>Ažuriranje baze programa, odnosno pretraživanje novih verzija softvera dostupnih za nadogradnju.</li>
-</ol>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt update
-</code></pre></div><ol start="2">
-<li>Ažuriranje trenutno instaliranih <a href="https://www.lifewire.com/guide-to-linux-packages-2202801">paketa</a>:</li>
-</ol>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt-get upgrade
-</code></pre></div><ol start="3">
-<li>Ažuriranje trenutno instaliranih paketa i instaliranje novih paketa u procesu ažuriranja</li>
-</ol>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt upgrade
-</code></pre></div><ol start="4">
-<li>Ažuriranje trenutno instaliranih paketa, instaliranje novih paketa u procesu ažuriranja kao i uklanjanje paketa koji su pri tome &quot;slomljeni&quot;.<br>
-(<em>'Broken packages' are packages that have unsatisfied dependencies</em>)<br>
-U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipendensima</em>:</li>
-</ol>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt-get dist-upgrade
-<span class="ln">2</span>sudo apt full-upgrade
-<span class="ln">3</span><span class="c1"># dovoljna je jedna od ove 2 komande</span>
-</code></pre></div></blockquote>
-<hr>
-<h5 id="instaliranje-preko-repozitorijuma"><em><strong>Instaliranje preko repozitorijuma</strong></em></h5>
-<hr>
-<ul>
-<li>Uvek se preporučuje instaliranje programa preko zvaničnih repozitorijuma i tada ne razmišljamo o dipendensima jer <em>Apt</em> sam povuče šta mu treba:</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install vlc
-</code></pre></div><p>ili u grafičkom okruženju preko <em>Synaptica</em>:<br>
-<img src="/img/apt/apt.png" alt=""></p>
-<hr>
-<h4 id="traženje-detalja-o-paketima"><em><strong>Traženje detalja o paketima</strong></em>:</h4>
-<hr>
-<hr>
-<ul>
 <li>
-<h5 id="mark-stylebackground-color-lightblueapt-searchmark"><mark style="background-color: lightblue"><strong>apt search</strong></mark></h5>
+<p>provera trenutnog stanja:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>fdisk -l
+</code></pre></div><p><img src="/img/enkripcija_2/provera.png" alt=""></p>
 </li>
-</ul>
-<blockquote>
-<p>Komanda <em>apt search</em> traži zadati <em>string</em> u nazivima i opisima paketa (među rezultatima može da bude dosta stavki koje nemaju očigledne veze sa traženim pojmom):</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt search xpdf  <span class="c1"># primer pretraživanja: xpdf</span>
-</code></pre></div></blockquote>
-<hr>
-<ul>
 <li>
-<h5 id="mark-stylebackground-color-lightblueapt-showmark"><mark style="background-color: lightblue"><strong>apt show</strong></mark></h5>
-</li>
-</ul>
-<blockquote>
-<p>Komanda <em>apt show</em> je mnogo korisnija i daje sažeto podatke o paketu:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt show xpdf  <span class="c1"># primer pretraživanja: xpdf</span>
-</code></pre></div><p><img src="/img/apt/apt_show.png" alt=""></p>
-</blockquote>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightblueapt-cache-dependsmark"><mark style="background-color: lightblue"><strong>apt-cache depends</strong></mark></h5>
-</li>
-</ul>
-<blockquote>
-<p>Ova komanda daje sve dipendensije:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-cache depends xpdf
-</code></pre></div><p><img src="/img/apt/apt-cache.png" alt=""></p>
-</blockquote>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightblueapt-cache-depends--imark"><mark style="background-color: lightblue"><strong>apt-cache depends -i</strong></mark></h5>
-</li>
-</ul>
-<blockquote>
-<p>Ova komanda daje sažetu listu dipendensija (<em>important</em>):</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-cache depends -i xpdf
-</code></pre></div><p><img src="/img/apt/apt-cache-v.png" alt=""></p>
-</blockquote>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluegrep-status-mark"><mark style="background-color: lightblue"><strong>grep-status​ ...</strong></mark></h5>
-</li>
-</ul>
-<blockquote>
-<p>Sledeća komanda  daje samo dipendensije sa verzijama <mark style="background-color: #BCC6CC"><strong>instaliranih paketa</strong></mark> i traži prethodno instaliran <mark style="background-color: #BCC6CC"><em><strong>dctrl-tools</strong></em></mark>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install dctrl-tools
-<span class="ln">2</span>grep-status -F package -s Depends wps-office
-</code></pre></div><p><img src="/img/apt/grep-status.png" alt=""></p>
-</blockquote>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluedpkg-deb-mark"><mark style="background-color: lightblue"><strong>dpkg-deb​ ...</strong></mark></h5>
-</li>
-</ul>
-<blockquote>
-<p>Daunlodovali smo instalacioni fajl <mark style="background-color: #BCC6CC">skypeforlinux_8.69.76.76_amd64.deb</mark> koga nema u zvaničnim repozitorijumima, a izvor je relativno validan.Treba samo ispitati dipendensije pre nego što ga instaliramo. Evo kako:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>dpkg-deb -f Downloads/skypeforlinux_8.69.76.76_amd64.deb Depends
-</code></pre></div><p><img src="/img/apt/dpkg-deb.png" alt=""></p>
-</blockquote>
-<hr>
-<h3 id="reverzna-i-rekurzivna-zavisnost-paketa"><em><strong>Reverzna i rekurzivna zavisnost paketa</strong></em>:</h3>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluereverzna-zavisnostmark"><mark style="background-color: lightblue"><strong>reverzna zavisnost</strong></mark></h5>
-</li>
-</ul>
-<p>Tražiti reverznu zavisnost paketa znači tražiti listu paketa koji zavise od zadatog paketa:<br>
-&quot;Pajpom&quot; ispred naziva su označeni oni paketi koji zavise od drugih paketa.Nije potrebno da se instaliraju ali treba da su navedeni u bazi podataka paketa.</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>apt-cache rdepends xpdf
-</code></pre></div><p><img src="/img/apt/reverzna.png" alt=""></p>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluerekurzivna-zavisnostmark"><mark style="background-color: lightblue"><strong>rekurzivna zavisnost</strong></mark></h5>
-<p>Komanda kao što je <mark style="background-color: lightblue">apt-rdepends</mark> pokazuje listu dipendensija za zadati paket, ali i pakete koji su dipendensiji ovim dipendensijima i tako rekurzivno dok se zavisnost ne iscrpi.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-rdepends xpdf <span class="p">|</span> head -15  <span class="c1"># ograničeno na 15 linija s vrha</span>
-</code></pre></div><p><img src="/img/apt/apt-rdepends.png" alt=""></p>
-</li>
-</ul>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluepopis-ručno-instaliranih-paketamark"><mark style="background-color: lightblue"><strong>popis ručno instaliranih paketa</strong></mark></h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark showmanual
-</code></pre></div><p><img src="/img/apt/showmanual.png" alt=""></p>
-</li>
-</ul>
-<hr>
-<ul>
-<li>
-<h5 id="mark-stylebackground-color-lightbluezadržavanje-paketa-u-trenutnoj-verzijimark"><mark style="background-color: lightblue"><strong>zadržavanje paketa u trenutnoj verziji</strong></mark></h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark hold xpdf
+<p>Za demonstraciju iskoristićemo SWAP particiju.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1">#isključivanje SWAP funkcije:</span>
+<span class="ln">2</span>sudo swapoff -a  
+<span class="ln">3</span><span class="c1">#zakomentarišemo SWAP u /etc/fstab fajlu (vazi posle reboot-a):</span>
+<span class="ln">4</span>sudo sed -ri <span class="s1">&#39;/\sswap\s/s/^#?/#/&#39;</span> /etc/fstab
+<span class="ln">5</span>sudo reboot
 </code></pre></div></li>
 <li>
-<h5 id="mark-stylebackground-color-lightbluelista-paketa-kojima-je-zamrznuta-verzijamark"><mark style="background-color: lightblue"><strong>lista paketa kojima je &quot;zamrznuta&quot; verzija</strong></mark></h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-mark showhold
+<p>Sintaksa je sledeća:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>cryptsetup luksFormat --type luks1 /dev/DEVICE  <span class="c1">#tip 1 LUKS enkripcije</span>
+<span class="ln">2</span>cryptsetup luksFormat --type luks2 /dev/DEVICE  <span class="c1">#tip 2 LUKS enkripcije</span>
 </code></pre></div></li>
+<li>
+<p>U našem slučaju enkripciju vršimo nad particijom <em><strong>sda5</strong></em>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo su  <span class="c1">#od sad sve komande unosimo pod ROOT nalogom</span>
+<span class="ln">2</span>cryptsetup -y -v --type luks2 luksFormat /dev/sda5
+</code></pre></div><p><img src="/img/enkripcija_2/luksFormat.png" alt=""></p>
+<ul>
+<li>najpre nam se traži potvrda namere unošenjem <em><strong>YES</strong></em> velikim slovima</li>
+<li>Unošenje lozinke 2 puta</li>
+<li>Upozorenje da izabrana particija već ima oznaku SWAP i da će cela biti obrisana</li>
 </ul>
+</li>
+<li>
+<p>Definisali smo lozinku za otvaranje particije sda5.<br>
+Zapamtimo je ili zapišimo jer više ne može da se dođe do nje.<br>
+Sledi mapiranje - dodeljivanje imena enkriptovanoj particiji:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1">#backup2 je naziv koji dodeljujemo ranijoj SWAP particiji</span>
+<span class="ln">2</span>cryptsetup luksOpen /dev/sda5 backup2   
+</code></pre></div><p><img src="/img/enkripcija_2/luksOpen.png" alt="">
+nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno</p>
+</li>
+<li>
+<p>Za proveru mapiranja imamo 2 načina:</p>
+<p>6.1.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>   ls -l /dev/mapper/backup2
+</code></pre></div><p><img src="/img/enkripcija_2/mapper1.png" alt=""></p>
+<p>6.1.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>   cryptsetup -v status backup2
+</code></pre></div><p><img src="/img/enkripcija_2/mapper2.png" alt=""></p>
+</li>
+<li>
+<p>Možemo da izvršimo &quot;<em>dump LUKS headers</em>&quot;  sledećom komandom:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>cryptsetup luksDump /dev/sda5
+</code></pre></div><p><img src="/img/enkripcija_2/dump.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<h5 id="formatiranje-linux-luks-particije">Formatiranje Linux <em><strong>LUKS</strong></em> particije:</h5>
+<hr>
+<ol>
+<li>
+<p>Prvo ispisujemo nule po čitavoj particiji:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>apt-get install pv  <span class="c1">#ako već nije instalirano</span>
+<span class="ln">2</span>pv -tpreb /dev/zero <span class="p">|</span> dd <span class="nv">of</span><span class="o">=</span>/dev/mapper/backup2 <span class="nv">bs</span><span class="o">=</span>128M
+</code></pre></div><p><img src="/img/enkripcija_2/zero.png" alt=""></p>
+</li>
+<li>
+<p>Sada definišemo fajl sistem, odnosno formatiramo particiju:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>mkfs.ext4 /dev/mapper/backup2
+</code></pre></div><p><img src="/img/enkripcija_2/mkfs.png" alt=""></p>
+</li>
+<li>
+<p>Mauntujmo novi fajl sistem u folder /backup2 koji ćemo napraviti:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>mkdir /backup2
+<span class="ln">2</span>mount /dev/mapper/backup2 /backup2
+<span class="ln">3</span>df -H
+<span class="ln">4</span><span class="nb">cd</span> /backup2
+<span class="ln">5</span>ls -l
+</code></pre></div><p><img src="/img/enkripcija_2/mount.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<h5 id="kako-da-odmauntujemo-i-osiguramo-podatke">Kako da odmauntujemo i osiguramo podatke?</h5>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>umount /backup2
+<span class="ln">2</span>cryptsetup luksClose backup2
+</code></pre></div><p><img src="/img/enkripcija_2/umount.png" alt=""></p>
+<hr>
+<h5 id="kako-da-mauntujemo-enkriptovanu-particiju">Kako da mauntujemo enkriptovanu particiju?</h5>
+<hr>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>cryptsetup luksOpen /dev/sda5 backup2 
+<span class="ln">2</span>mount /dev/mapper/backup2 /backup2
+</code></pre></div><p><a href="https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/">izvor</a></p>
 
 
   </article>
@@ -364,12 +303,12 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
       <li>
         <a href="https://debian-openbox.github.io/post/samba/" class="nav-link" title="SAMBA">SAMBA</a>
       </li>
+      <li>
+        <a href="https://debian-openbox.github.io/post/apt/" class="nav-link" title="APT - paket menadžer">APT - paket menadžer</a>
+      </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
-      <li>
-        <a href="https://debian-openbox.github.io/post/enkripcija_2/" class="nav-link" title="Enkripcija - 2.deo">Enkripcija - 2.deo</a>
-      </li>
       <li>
         <a href="https://debian-openbox.github.io/post/enkripcija/" class="nav-link" title="Enkripcija">Enkripcija</a>
       </li>
@@ -390,6 +329,9 @@ U daljem tekstu pakete od kojih zavise instalirani programi zvaćemo <em>dipende
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/vbox-debian/" class="nav-link" title="Debian 10 u VirtualBox-u">Debian 10 u VirtualBox-u</a>
+      </li>
+      <li>
+        <a href="https://debian-openbox.github.io/post/usersgroups/" class="nav-link" title="Korisnici i Grupe">Korisnici i Grupe</a>
       </li>
     </ul>
     <div>

@@ -18,13 +18,13 @@
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="Konfigurisanje statičke ip adrese">
+<meta name="description" content="Enkripcija fajlova i foldera u Debianu 10">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@johndoe">
 <meta name="twitter:title" content="Enkripcija" />
 <meta property="og:url" content="https://debian-openbox.github.io/post/enkripcija/" />
 <meta property="og:title" content="Enkripcija" />
-<meta property="og:description" content="Konfigurisanje statičke ip adrese" />
+<meta property="og:description" content="Enkripcija fajlova i foldera u Debianu 10" />
 <meta property="og:image" content="https://debian-openbox.github.io/images/thumbnail.png" />
 <link rel="apple-touch-icon" sizes="180x180" href='https://debian-openbox.github.io/icons/apple-touch-icon.png'>
 <link rel="icon" type="image/png" sizes="32x32" href='https://debian-openbox.github.io/icons/favicon-32x32.png'>
@@ -173,9 +173,9 @@
 
     
     <hr>
-<h2 id="enkripcija-u-debianu-10---1deo"><em><strong>Enkripcija u Debianu 10 - 1.deo</strong></em></h2>
+<h2 id="enkripcija-fajlova-i-foldera-u-debianu-10"><em><strong>Enkripcija fajlova i foldera u Debianu 10</strong></em></h2>
 <hr>
-<h3 id="osnovna-enkripcija-fajlova-i-foldera-pomoću-gpg-utillity-ja"><em><strong>osnovna enkripcija fajlova i foldera pomoću gpg utillity-ja</strong></em></h3>
+<h3 id="osnovna-enkripcija-pomoću-gpg-utillity-ja"><em><strong>osnovna enkripcija pomoću gpg utillity-ja</strong></em></h3>
 <hr>
 <ul>
 <li>
@@ -216,7 +216,7 @@ Takođe je moguće da se lozinka ne traži uopšte, jer <em><strong>gpg utillity
 </li>
 </ul>
 <hr>
-<h3 id="osnovna-enkripcija-fajlova-i-foldera-pomoću-zip-komande"><em><strong>osnovna enkripcija fajlova i foldera pomoću zip komande</strong></em></h3>
+<h3 id="osnovna-enkripcija-pomoću-zip-komande"><em><strong>osnovna enkripcija pomoću zip komande</strong></em></h3>
 <hr>
 <ul>
 <li>
@@ -229,6 +229,7 @@ Takođe je moguće da se lozinka ne traži uopšte, jer <em><strong>gpg utillity
 <p>enkripcija fajlova i foldera pomoću <em><strong>zip</strong></em> komande se vrši dodavanjem opcije <em><strong>--encrypt</strong></em>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>zip -r --encrypt secure.zip &lt;folder koji štitimo&gt; <span class="c1">#ceo folder</span>
 <span class="ln">2</span>zip --encrypt secure.zip &lt;file&gt;...&lt;file10&gt; <span class="c1">#samo izabrani fajlovi </span>
+<span class="ln">3</span><span class="c1"># secure - ime dodeljeno zip arhivi</span>
 </code></pre></div></li>
 <li>
 <p>dekripcija ide komandom <em><strong>unzip</strong></em>:</p>
@@ -318,6 +319,9 @@ Možemo da ostavimo <em>default</em> od 3072 - dakle ENTER
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
       <li>
+        <a href="https://debian-openbox.github.io/post/enkripcija_2/" class="nav-link" title="Enkripcija - 2.deo">Enkripcija - 2.deo</a>
+      </li>
+      <li>
         <a href="https://debian-openbox.github.io/post/static-ip/" class="nav-link" title="Statička ip adresa">Statička ip adresa</a>
       </li>
       <li>
@@ -337,9 +341,6 @@ Možemo da ostavimo <em>default</em> od 3072 - dakle ENTER
       </li>
       <li>
         <a href="https://debian-openbox.github.io/post/usersgroups/" class="nav-link" title="Korisnici i Grupe">Korisnici i Grupe</a>
-      </li>
-      <li>
-        <a href="https://debian-openbox.github.io/post/samba/" class="nav-link" title="SAMBA">SAMBA</a>
       </li>
     </ul>
     <div>
@@ -374,7 +375,7 @@ Možemo da ostavimo <em>default</em> od 3072 - dakle ENTER
       <nav class="tags_nav">
         <a href='https://debian-openbox.github.io/tags/emoji/' class="post_tag button button_translucent" title="emoji">
           EMOJI
-          <span class="button_tally">11</span>
+          <span class="button_tally">12</span>
         </a>
         
         <a href='https://debian-openbox.github.io/tags/markdown/' class="post_tag button button_translucent" title="markdown">
