@@ -177,7 +177,9 @@
 <hr>
 <p>Od izuzetnog je značaja kako za kućne korisnike tako i u poslovnom okruženju da postoji  prostor za čuvanje podataka , siguran od hakerskih napada kao i zloupotrebe usled krađe.<br>
 U prvom delu smo videli kako se zaštićuju pojedinačni fajlovi i folderi. Kako bi zaštitili celu particiju?<br>
-Ovde će biti prikazana <em><strong>LUKS</strong></em> (<em>Linux Unified Key Setup-on-disk-format</em>) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.</p>
+Ovde će biti prikazana <em><strong>LUKS</strong></em> (<em>Linux Unified Key Setup-on-disk-format</em>) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.<br>
+Za ovaj postupak pretpostavlja se da imamo Administratorska ili <em>SUDO</em> ovlašćenja.<br>
+Sadržaj particije nad kojom vršimo enkripciju treba bekapovati jer postupak podrazumeva brisanje svih podataka.</p>
 <hr>
 <h5 id="instaliranje-cryptsetup-utility-na-linux-mašini">Instaliranje <em><strong>cryptsetup utility</strong></em> na Linux mašini:</h5>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo apt install cryptsetup
@@ -194,7 +196,7 @@ Ovde će biti prikazana <em><strong>LUKS</strong></em> (<em>Linux Unified Key Se
 <p>Za demonstraciju iskoristićemo SWAP particiju.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1">#isključivanje SWAP funkcije:</span>
 <span class="ln">2</span>sudo swapoff -a  
-<span class="ln">3</span><span class="c1">#zakomentarišemo SWAP u /etc/fstab fajlu (vazi posle reboot-a):</span>
+<span class="ln">3</span><span class="c1">#zakomentarišemo SWAP u /etc/fstab fajlu (važi posle reboot-a):</span>
 <span class="ln">4</span>sudo sed -ri <span class="s1">&#39;/\sswap\s/s/^#?/#/&#39;</span> /etc/fstab
 <span class="ln">5</span>sudo reboot
 </code></pre></div></li>
@@ -218,7 +220,7 @@ Ovde će biti prikazana <em><strong>LUKS</strong></em> (<em>Linux Unified Key Se
 <p>Definisali smo lozinku za otvaranje particije sda5.<br>
 Zapamtimo je ili zapišimo jer više ne može da se dođe do nje.<br>
 Sledi mapiranje - dodeljivanje imena enkriptovanoj particiji:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1">#backup2 je naziv koji dodeljujemo ranijoj SWAP particiji</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="c1">#backup2 je naziv dodeljen particiji nad kojom vršimo enkripciju</span>
 <span class="ln">2</span>cryptsetup luksOpen /dev/sda5 backup2   
 </code></pre></div><p><img src="/img/enkripcija_2/luksOpen.png" alt="">
 nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno</p>
@@ -274,7 +276,51 @@ nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno</p>
 <hr>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>cryptsetup luksOpen /dev/sda5 backup2 
 <span class="ln">2</span>mount /dev/mapper/backup2 /backup2
-</code></pre></div><p><a href="https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/">izvor</a></p>
+</code></pre></div><blockquote>
+<p>Hajde da pojednostavimo komande za mauntovanje (uključenje) i unmauntovanje (isključenje) pristupa sadržaju particije <em><strong>sda5</strong></em>:</p>
+</blockquote>
+<ol>
+<li>
+<p>Pojednostavimo prvo unos komandi pomoću <em><strong>alias</strong></em>-a</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>sudo nano ~/.bashrc
+<span class="ln">2</span><span class="c1">#unesimo na kraju sledeću liniju:</span>
+<span class="ln">3</span>makealias<span class="o">()</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;alias </span><span class="nv">$1</span><span class="s2">&#34;</span><span class="o">=</span><span class="s2">&#34;&#39;</span><span class="si">${</span><span class="p">@:</span><span class="nv">2</span><span class="si">}</span><span class="s2">&#39;&#34;</span> &gt;&gt; ~/.bashrc<span class="p">;</span> <span class="o">}</span>
+</code></pre></div><p>Ovakvo podešavanje omogućava pravljenje aliasa sa <em><strong>sudo</strong></em> komandama, i korišćenje operatora kao što su <em><strong>&amp;&amp;</strong></em> , <em><strong>||</strong></em> i <em><strong>;</strong></em> ako ih zatvorimo u navodnike<br>
+<img src="/img/enkripcija_2/bashrc.png" alt="upamtimo i zatvorimo: CTRL+O --> ENTER --> CTRL+X"></p>
+</li>
+<li>
+<p>Podešavanje se aktivira sa restartovanjem terminala ili ako odmah ako unesemo:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="nb">source</span> ~/.bashrc
+</code></pre></div></li>
+<li>
+<p>Napravimo komandu koja će zameniti obe gore navedene za mauntovanje enkriptovane particije:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>makealias otkljucaj sudo cryptsetup luksOpen /dev/sda5 backup <span class="s1">&#39;&amp;&amp;&#39;</span> sudo mount /dev/mapper/backup2 /backup2
+</code></pre></div><p><img src="/img/enkripcija_2/otkljucaj.png" alt=""></p>
+</li>
+<li>
+<p>Isto to uradimo za unmauntovanje:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>makealias zakljucaj sudo umount /backup2 <span class="s1">&#39;&amp;&amp;&#39;</span> sudo cryptsetup luksClose backup2
+</code></pre></div><p><img src="/img/enkripcija_2/zakljucaj.png" alt=""></p>
+</li>
+<li>
+<p>Aliasi <em><strong>otkljucaj</strong></em> i <em><strong>zakljucaj</strong></em>  su trajno postavljeni i važiće i posle restarta sistema zahvaljujući podešavanju iz tačke 1:<br>
+<img src="/img/enkripcija_2/bashrc1.png" alt=""></p>
+</li>
+<li>
+<p>Proverimo kako ovo radi:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>lsblk -f  <span class="c1">#provera da li je particija sda5 mauntovana (otključana)</span>
+<span class="ln">2</span><span class="c1">#dobijamo odgovor da nije</span>
+<span class="ln">3</span>otkljucaj
+<span class="ln">4</span><span class="c1">#sledi unos lozinke</span>
+<span class="ln">5</span>lsblk -f <span class="c1">#nova provera da li je otkljucavanje uspešno</span>
+<span class="ln">6</span><span class="c1">#sada se pojavljuje naša particija na zadatom &#34;mount point-u&#34; /backup2</span>
+<span class="ln">7</span>zakljucaj  <span class="c1">#unmauntujemo particiju</span>
+<span class="ln">8</span>lsblk -f  <span class="c1">#nova provera</span>
+<span class="ln">9</span><span class="c1">#vratili smo se na početak i naši podaci su zaštićeni</span>
+</code></pre></div><p><img src="/img/enkripcija_2/provera1.png" alt="">
+<a href="https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/">izvor</a></p>
+</li>
+</ol>
 
 
   </article>

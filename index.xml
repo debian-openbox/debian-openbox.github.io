@@ -20,7 +20,9 @@
 &lt;hr&gt;
 &lt;p&gt;Od izuzetnog je značaja kako za kućne korisnike tako i u poslovnom okruženju da postoji  prostor za čuvanje podataka , siguran od hakerskih napada kao i zloupotrebe usled krađe.&lt;br&gt;
 U prvom delu smo videli kako se zaštićuju pojedinačni fajlovi i folderi. Kako bi zaštitili celu particiju?&lt;br&gt;
-Ovde će biti prikazana &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; (&lt;em&gt;Linux Unified Key Setup-on-disk-format&lt;/em&gt;) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.&lt;/p&gt;
+Ovde će biti prikazana &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; (&lt;em&gt;Linux Unified Key Setup-on-disk-format&lt;/em&gt;) metoda koja je široko korišćena za enkripciju PC-ja i laptopova.&lt;br&gt;
+Za ovaj postupak pretpostavlja se da imamo Administratorska ili &lt;em&gt;SUDO&lt;/em&gt; ovlašćenja.&lt;br&gt;
+Sadržaj particije nad kojom vršimo enkripciju treba bekapovati jer postupak podrazumeva brisanje svih podataka.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h5 id=&#34;instaliranje-cryptsetup-utility-na-linux-mašini&#34;&gt;Instaliranje &lt;em&gt;&lt;strong&gt;cryptsetup utility&lt;/strong&gt;&lt;/em&gt; na Linux mašini:&lt;/h5&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install cryptsetup
@@ -37,7 +39,7 @@ Ovde će biti prikazana &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; (
 &lt;p&gt;Za demonstraciju iskoristićemo SWAP particiju.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#isključivanje SWAP funkcije:&lt;/span&gt;
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo swapoff -a  
-&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#zakomentarišemo SWAP u /etc/fstab fajlu (vazi posle reboot-a):&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#zakomentarišemo SWAP u /etc/fstab fajlu (važi posle reboot-a):&lt;/span&gt;
 &lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;sudo sed -ri &lt;span class=&#34;s1&#34;&gt;&amp;#39;/\sswap\s/s/^#?/#/&amp;#39;&lt;/span&gt; /etc/fstab
 &lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;sudo reboot
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
@@ -61,7 +63,7 @@ Ovde će biti prikazana &lt;em&gt;&lt;strong&gt;LUKS&lt;/strong&gt;&lt;/em&gt; (
 &lt;p&gt;Definisali smo lozinku za otvaranje particije sda5.&lt;br&gt;
 Zapamtimo je ili zapišimo jer više ne može da se dođe do nje.&lt;br&gt;
 Sledi mapiranje - dodeljivanje imena enkriptovanoj particiji:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#backup2 je naziv koji dodeljujemo ranijoj SWAP particiji&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#backup2 je naziv dodeljen particiji nad kojom vršimo enkripciju&lt;/span&gt;
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;cryptsetup luksOpen /dev/sda5 backup2   
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/luksOpen.png&#34; alt=&#34;&#34;&gt;
 nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno&lt;/p&gt;
@@ -117,7 +119,51 @@ nakon unošenja lozinke iz prethodne tačke mapiranje je prihvaćeno&lt;/p&gt;
 &lt;hr&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;cryptsetup luksOpen /dev/sda5 backup2 
 &lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;mount /dev/mapper/backup2 /backup2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/&#34;&gt;izvor&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Hajde da pojednostavimo komande za mauntovanje (uključenje) i unmauntovanje (isključenje) pristupa sadržaju particije &lt;em&gt;&lt;strong&gt;sda5&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Pojednostavimo prvo unos komandi pomoću &lt;em&gt;&lt;strong&gt;alias&lt;/strong&gt;&lt;/em&gt;-a&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano ~/.bashrc
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#unesimo na kraju sledeću liniju:&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;makealias&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;alias &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#39;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;@:&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ovakvo podešavanje omogućava pravljenje aliasa sa &lt;em&gt;&lt;strong&gt;sudo&lt;/strong&gt;&lt;/em&gt; komandama, i korišćenje operatora kao što su &lt;em&gt;&lt;strong&gt;&amp;amp;&amp;amp;&lt;/strong&gt;&lt;/em&gt; , &lt;em&gt;&lt;strong&gt;||&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;;&lt;/strong&gt;&lt;/em&gt; ako ih zatvorimo u navodnike&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/bashrc.png&#34; alt=&#34;upamtimo i zatvorimo: CTRL+O --&gt; ENTER --&gt; CTRL+X&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Podešavanje se aktivira sa restartovanjem terminala ili ako odmah ako unesemo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Napravimo komandu koja će zameniti obe gore navedene za mauntovanje enkriptovane particije:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;makealias otkljucaj sudo cryptsetup luksOpen /dev/sda5 backup &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;amp;&amp;amp;&amp;#39;&lt;/span&gt; sudo mount /dev/mapper/backup2 /backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/otkljucaj.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Isto to uradimo za unmauntovanje:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;makealias zakljucaj sudo umount /backup2 &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;amp;&amp;amp;&amp;#39;&lt;/span&gt; sudo cryptsetup luksClose backup2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/zakljucaj.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Aliasi &lt;em&gt;&lt;strong&gt;otkljucaj&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;zakljucaj&lt;/strong&gt;&lt;/em&gt;  su trajno postavljeni i važiće i posle restarta sistema zahvaljujući podešavanju iz tačke 1:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/bashrc1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo kako ovo radi:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;lsblk -f  &lt;span class=&#34;c1&#34;&gt;#provera da li je particija sda5 mauntovana (otključana)&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#dobijamo odgovor da nije&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;otkljucaj
+&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#sledi unos lozinke&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;lsblk -f &lt;span class=&#34;c1&#34;&gt;#nova provera da li je otkljucavanje uspešno&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#sada se pojavljuje naša particija na zadatom &amp;#34;mount point-u&amp;#34; /backup2&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;zakljucaj  &lt;span class=&#34;c1&#34;&gt;#unmauntujemo particiju&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;lsblk -f  &lt;span class=&#34;c1&#34;&gt;#nova provera&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#vratili smo se na početak i naši podaci su zaštićeni&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_2/provera1.png&#34; alt=&#34;&#34;&gt;
+&lt;a href=&#34;https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/&#34;&gt;izvor&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 
         
       </description>
