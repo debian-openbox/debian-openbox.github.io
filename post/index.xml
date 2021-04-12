@@ -6,7 +6,147 @@
     <description>Recent content in Posts on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 08 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enkripcija - 3.deo</title>
+      <link>https://debian-openbox.github.io/post/enkripcija_3/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/enkripcija_3/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;enkripcija-usb-a-u-debianu-10&#34;&gt;&lt;em&gt;&lt;strong&gt;Enkripcija USB-a u Debianu 10&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Danas ćemo da obradimo enkripciju &lt;em&gt;&lt;strong&gt;USB flash&lt;/strong&gt;&lt;/em&gt; uređaja (u daljem tekstu USB stikova).&lt;br&gt;
+Da bi bilo što jednostavnije najveći deo posla biće u grafičkom okruženju.&lt;br&gt;
+Potrebno je da prvo izvršimo neke pripreme i provere:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Da li imamo instalirano &lt;em&gt;&lt;strong&gt;gnome-disk-utility&lt;/strong&gt;&lt;/em&gt;, i ako nemamo instalirajmo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;which gnome-disks  &lt;span class=&#34;c1&#34;&gt;#malo nelogično ali tako je&lt;/span&gt;
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt install gnome-disk-utility
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Proverimo koji kernel koristi naš Debian:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;uname -r
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/uname-r.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Naš kernel je 5.10 što je dobro jer je potrebno da bude 5.4 ili noviji da bi imao ugrađenu podršku za &lt;em&gt;&lt;strong&gt;exFAT&lt;/strong&gt;&lt;/em&gt; fajl sistem.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ako nije ispunjen uslov tačke 2, jer Debian Buster ima kernel 4.19, potrebno je da iz &lt;em&gt;&lt;strong&gt;Backport&lt;/strong&gt;&lt;/em&gt; repozitorijuma instaliramo 5.4 ili noviji.&lt;br&gt;
+Evo kako:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo nano /etc/apt/sources.list  &lt;span class=&#34;c1&#34;&gt;#otvaramo source.list&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dodamo u &lt;em&gt;&lt;strong&gt;/etc/apt/sources.list&lt;/strong&gt;&lt;/em&gt;  sledeću liniju:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;deb http://deb.debian.org/debian/ buster-backports non-free contrib main 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/backports.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;apt search linux-image &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep buster-backports
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dobićemo ovako nešto:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/backports2.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Od ponuđenih opcija ciljamo na fajlove &lt;em&gt;&lt;strong&gt;linux-headers&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;linux-image&lt;/strong&gt;&lt;/em&gt; sa istim oznakama (na primer kao označeni na slici)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt-get -t buster-backports install linux-image-5.10.0-0.bpo.4-amd64
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt-get -t buster-backports install linux-headers-5.10.0-0.bpo.4-amd64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo reboot
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;uname -r
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Instalirajmo podršku za &lt;em&gt;&lt;strong&gt;exFAT&lt;/strong&gt;&lt;/em&gt; fajl sistem:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo apt install exfat-fuse exfat-utils
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Startujmo &lt;em&gt;&lt;strong&gt;gnome-disks&lt;/strong&gt;&lt;/em&gt; i u levom stablu selektujmo USB stik koji formatiramo i enkriptujemo:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Klikom na &lt;em&gt;&lt;strong&gt;Additional partition options&lt;/strong&gt;&lt;/em&gt; pojavljuje se padajući meni na kome kliknemo &lt;em&gt;&lt;strong&gt;Format Partition...&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pojavljuje se prozor &lt;em&gt;&lt;strong&gt;Format Volume&lt;/strong&gt;&lt;/em&gt; u kome popunjavamo&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Volume Name&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za &lt;em&gt;&lt;strong&gt;type&lt;/strong&gt;&lt;/em&gt; izaberemo &lt;em&gt;&lt;strong&gt;other&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Next&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izaberemo &lt;em&gt;&lt;strong&gt;exFAT&lt;/strong&gt;&lt;/em&gt; i čekiramo &lt;em&gt;&lt;strong&gt;Password protect volume (LUKS)&lt;/strong&gt;&lt;/em&gt;  pa &lt;em&gt;&lt;strong&gt;Next&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Izaberemo lozinku pa &lt;em&gt;&lt;strong&gt;Next&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upozorenje da sledi gubitak svih podataka:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Format&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Grafički prikaz našeg stika ima izgled pravougaonika podeljenog na 2 polovine:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kad je selektovana donja polovina, klikom na prvo od 2 dugmeta, mauntujemo i unmauntujemo stik:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kad je selektovana gornja polovina, klikom na prvo od 2 dugmeta, uključujemo i isključujemo enkripciju, pri čemu za isključenje treba uneti lozinku:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/disks8.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Za manipulaciju USB stikovima izuzetno koristan program je &lt;em&gt;&lt;strong&gt;udiskie&lt;/strong&gt;&lt;/em&gt;, koji treba instalirati ako već nije instaliran:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;which udiskie
+&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;sudo apt install udiskie
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;udiskie&lt;/strong&gt;&lt;/em&gt; treba uneti u &lt;em&gt;&lt;strong&gt;autostart.sh&lt;/strong&gt;&lt;/em&gt; skriptu tako da se startuje sa logovanjem i ostaje da radi u pozadini:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;sudo geany /home/peja/.config/openbox/autostart.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/enkripcija_3/autostart.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Posle restarta sistem rada je sledeći:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ako je Debian podignut sa ubodenim USB stikom, nakon logovanja iskočiće prozor sa zahtevom da se unese lozinka za enkripciju.&lt;/li&gt;
+&lt;li&gt;Ako prilkom logovanja stik nije bio uboden, nakon naknadnog ubadanja pomenuti prozor iskače da traži lozinku.&lt;/li&gt;
+&lt;li&gt;U oba prethodna slučaja, sa unošenjem lozinke USB stik je automatski mauntovan i raspoloživ za transfer podataka.&lt;/li&gt;
+&lt;li&gt;Nakon što smo transfer podataka završili i USB želimo da zaštitimo, uradimo unmauntovanje kao u tački 9, a zatim uključujemo enkripciju kao u tački 10 (Lock selected encrypted partition).&lt;/li&gt;
+&lt;li&gt;Stik je sad zaštićen i može se udaljiti sa računara.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+        
+      </description>
+    </item>
+    
     <item>
       <title>Enkripcija - 2.deo</title>
       <link>https://debian-openbox.github.io/post/enkripcija_2/</link>
