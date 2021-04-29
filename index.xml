@@ -72,10 +72,10 @@ Prvi minus znači da je u pitanju fajl&lt;/p&gt;
 &lt;hr&gt;
 &lt;h4 id=&#34;promena-ovlašćenja&#34;&gt;PROMENA OVLAŠĆENJA&lt;/h4&gt;
 &lt;hr&gt;
-&lt;p&gt;Postavlja se pitanje kako promeniti dozvole korišćenja fajlovima i direktorijumima:
-To radimo komandom chmod što znači change mod (promeniti mod). Dakle:&lt;br&gt;
-&lt;em&gt;&lt;strong&gt;chmod permissions filename&lt;/strong&gt;&lt;/em&gt;
-Ima 2 načina označavanja dozvole: apsolutni (numerički) i simbolički:&lt;/p&gt;
+&lt;p&gt;Postavlja se pitanje kako promeniti dozvole korišćenja fajlovima i direktorijumima:&lt;br&gt;
+To radimo komandom &lt;em&gt;&lt;strong&gt;chmod&lt;/strong&gt;&lt;/em&gt; što znači &lt;em&gt;change mod&lt;/em&gt; (promeniti mod)&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;chmod permissions filename&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ima 2 načina označavanja dozvole: &lt;em&gt;&lt;strong&gt;apsolutni (numerički)&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;simbolički&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -127,9 +127,7 @@ Ima 2 načina označavanja dozvole: apsolutni (numerički) i simbolički:&lt;/p&
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;U suštini treba zapamtiti da je &lt;em&gt;&lt;strong&gt;Read 4, Write 2, Execute 1&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
-Tako da dozvola:&lt;br&gt;
-&lt;em&gt;&lt;strong&gt;Read ima vrednost 4,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Read ima vrednost 4,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;&lt;strong&gt;Read+Write 4+2=6,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;&lt;strong&gt;Read+Write+Execute 4+2+1=7,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;&lt;strong&gt;Read+Execute 4+1=5,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
