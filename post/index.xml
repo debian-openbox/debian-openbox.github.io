@@ -6,13 +6,242 @@
     <description>Recent content in Posts on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2021, Peja &amp; Friends; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://debian-openbox.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Enkripcija - 3.deo</title>
+      <title>Ovlašćenja i vlasništvo</title>
       <link>https://debian-openbox.github.io/post/enkripcija_3/</link>
-      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 29 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://debian-openbox.github.io/post/enkripcija_3/</guid>
+      <description>
+        
+          &lt;hr&gt;
+&lt;h2 id=&#34;ovlašćenja-i-vlasništvo&#34;&gt;&lt;em&gt;&lt;strong&gt;Ovlašćenja i vlasništvo&lt;/strong&gt;&lt;/em&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Obzirom da je Linux višekorisnički (multi-user) OS , potrebno je voditi računa o sigurnosti, očtećenju ili gubitku fajlova. Zato je predviđena autorizacija u 2 nivoa:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Ownership (vlasništvo nad fajlovima)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Permission (dozvole za pristup I promene na fajlovima)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;LINUX POZNAJE 3 TIPA VLASNIKA (&lt;em&gt;OWNERS&lt;/em&gt;):&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;USER&lt;/strong&gt;&lt;/em&gt; (korisnik, osoba koja kreira fajl postaje I njegov vlasnik, dakle može da ovlašćenja dodeli i drugim korisnicima)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;GROUP&lt;/strong&gt;&lt;/em&gt; (grupa može da sadrži više korisnika. Svi korisnici koji pripadaju grupi imaju ista ovlašćenja nad fajlom. Umesto dodeljivanja identičnih ovlašćenja svakom korisniku pojedinačno, prava korišćenja fajla se dodeljuju - grupi)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;OTHER&lt;/strong&gt;&lt;/em&gt; (ostali, dakle osoba koja niti je kreirala fajl niti pripada nekoj grupi koja poseduje fajl. Praktično tu spadaju svi ostali koji dobiju pristup fajlu)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LINUX Sistemom davanja dozvola (&lt;em&gt;&lt;strong&gt;Permission system&lt;/strong&gt;&lt;/em&gt;) pravi razliku u pravima korišćenja fajlova i foldera .&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Svaki fajl i direktorijum u LINUX-u predviđa 3 vrste dozvola (&lt;em&gt;&lt;strong&gt;Read&lt;/strong&gt;&lt;/em&gt;,&lt;em&gt;&lt;strong&gt;Write&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;Execute&lt;/strong&gt;&lt;/em&gt;) za svaki od 3 postojeća tipa vlasnika (&lt;em&gt;&lt;strong&gt;USER&lt;/strong&gt;&lt;/em&gt;,&lt;em&gt;&lt;strong&gt;GROUP&lt;/strong&gt;&lt;/em&gt; i &lt;em&gt;&lt;strong&gt;OTHERS&lt;/strong&gt;&lt;/em&gt;):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Read&lt;/strong&gt;&lt;/em&gt; – ovlašćenje za otvaranje i čitanje fajla. U slučaju direktorijuma to znači dozvola za izlistavanje sadržaja.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Write&lt;/strong&gt;&lt;/em&gt; – ovlašćenje za izmenu sadržaja fajla. Primenjeno na direktorijum to znači mogućnost dodavanja, brisanja i preimenovanja pripadajućih fajlova. Zamislite scenario da nemate Write permission nad direktorijumom, ali imate nad pripadajućim fajlovima: mogli bi da menjate sadržaj fajlova, ali ne i da ih premeštate, brišete i preimenujete.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Execute&lt;/strong&gt;&lt;/em&gt; – U LINUX-u nije moguće startovati program bez dozvole Execute&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Vlasnici (OWNERS) dodeljuju prava korišćenja svakom fajlu i direktorijumu
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/ovlascenja.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ako na primer izlistamo dugu listu Home foldera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;ls –l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Dobićemo nešto kao:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;-rw-rw-r-- 1 peja peja    1 јан 28 16:01 cd
+&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;drw-rw-r-- 2 peja peja 4096 јан 28 15:12 Desktop
+&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;drwxr-xr-x 8 peja peja 4096 јан 29 10:02 Documents
+&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Downloads
+&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Music
+&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Pictures
+&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Public
+&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;lrwxrwxrwx 1 root root   22 јан  1 10:37 Share -&amp;gt; /media/peja/sf_F_DRIVE
+&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;lrwxrwxrwx 1 root root   17 јан  1 10:47 Share1 -&amp;gt; /media/sf_F_DRIVE
+&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Templates
+&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;drwxr-xr-x 2 peja peja 4096 мај 18  2019 Videos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;primetićemo  na početku prve linije oznaku tipa &lt;em&gt;&lt;strong&gt;-rw-rw-r--&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+Prvi minus znači da je u pitanju fajl&lt;/p&gt;
+&lt;p&gt;U drugoj liniji imamo  &lt;em&gt;&lt;strong&gt;drw-rw-r--&lt;/strong&gt;&lt;/em&gt; ; &lt;em&gt;&lt;strong&gt;d&lt;/strong&gt;&lt;/em&gt; znači da je u pitanju direktorijum.&lt;/p&gt;
+&lt;p&gt;Označavanje je jasno:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;r = read permission&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;w = write permission&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;x = execute permission&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/oznake.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/oznake1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;promena-ovlašćenja&#34;&gt;PROMENA OVLAŠĆENJA&lt;/h4&gt;
+&lt;hr&gt;
+&lt;p&gt;Postavlja se pitanje kako promeniti dozvole korišćenja fajlovima i direktorijumima:
+To radimo komandom chmod što znači change mod (promeniti mod). Dakle:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;chmod permissions filename&lt;/strong&gt;&lt;/em&gt;
+Ima 2 načina označavanja dozvole: apsolutni (numerički) i simbolički:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Number&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Permission Type&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Symbol&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;No Permission&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;---&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Execute&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;--x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Write&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;-w-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Execute + Write&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;-wx&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Read&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;r--&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;5&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Read + Execute&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;r-x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;6&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Read +Write&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;rw-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;7&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Read + Write +Execute&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;rwx&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;U suštini treba zapamtiti da je &lt;em&gt;&lt;strong&gt;Read 4, Write 2, Execute 1&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+Tako da dozvola:&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Read ima vrednost 4,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Read+Write 4+2=6,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Read+Write+Execute 4+2+1=7,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Read+Execute 4+1=5,&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;&lt;strong&gt;Write+Execute 2+1=3&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Tako komanda chmod 764 (filename) menja dozvole na sledeći način:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Vlasnik (User) može da čita (Read), menja (Write) i izvršava (Execute) fajl&lt;/li&gt;
+&lt;li&gt;Grupa može da čita i menja&lt;/li&gt;
+&lt;li&gt;Ostali  mogu samo da čitaju&lt;br&gt;
+Simbolički prikaz za prethodno je &lt;em&gt;&lt;strong&gt;-rwxrw-r--&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;simbolički-mod&#34;&gt;Simbolički Mod&lt;/h4&gt;
+&lt;hr&gt;
+&lt;p&gt;U apsolutnim modu, menjamo ovlašćenja za sva 3 vlasnika. U simboličkom modu možemo da promenimo samo za jednog. Za to se koriste matematički simboli.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Operator&lt;/th&gt;
+&lt;th&gt;Opis&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;+&lt;/td&gt;
+&lt;td&gt;Dodaje ovlašćenje za fajl ili direktorijum&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;-&lt;/td&gt;
+&lt;td&gt;Oduzima ovlašćenje&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;=&lt;/td&gt;
+&lt;td&gt;Dodeljuje ovlašćenje i preinačuje radije dodeljena ovlašćenja.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Različiti vlasnici su predstavljeni kao:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;u&lt;/th&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;Korisnik/vlasnik (user/owner)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;g&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Grupa (group)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;o&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Ostali (other)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;a&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Svi (all)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Ovlašćenja nad fajlom &lt;em&gt;&lt;strong&gt;pkg-list&lt;/strong&gt;&lt;/em&gt; definisana numerički &lt;em&gt;&lt;strong&gt;664&lt;/strong&gt;&lt;/em&gt;, menjajmo pomoću simboličkih oznaka &lt;em&gt;&lt;strong&gt;rwx&lt;/strong&gt;&lt;/em&gt;.&lt;br&gt;
+Prikažimo trenutna ovlašćenja:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/ls-l.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Dajmo sva ovlašćenja (rwx) &#39;ostalima&#39; - &amp;quot;&lt;em&gt;others&lt;/em&gt;&amp;quot;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/ls-l1.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Dajmo grupi ovlašćenje za izvršavanje:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/ls-l2.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Oduzmimo &#39;useru&#39; ovlašćenje za čitanje fajla:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/ls-l3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;promena-vlasništva&#34;&gt;Promena vlasništva&lt;/h4&gt;
+&lt;hr&gt;
+&lt;p&gt;Za promenu vlasništva nad fajlovima I direktorijumima, može se koristiti sledeća komanda:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;chown user filename
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ako želimo istovremenu promenu vlasništva i  korisnika (user) i grupe (group) nad fajlom ili direktorijumom koristi se komanda:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;chown user:group filename
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;Pogledajmo na primeru promenu vlasništva nad fajlom pkg-list:&lt;/p&gt;
+&lt;p&gt;trenutno stanje:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/chown.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Dakle vlasnik fajla je &lt;em&gt;&lt;strong&gt;root&lt;/strong&gt;&lt;/em&gt; a grupa &lt;em&gt;&lt;strong&gt;cdrom&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+Promenimo da vlasnik fajla bude &lt;em&gt;&lt;strong&gt;peja&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/chown1.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Promenimo da &lt;em&gt;&lt;strong&gt;root&lt;/strong&gt;&lt;/em&gt; bude vlasnik fajla i kao user i kao grupa:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/chown2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h6 id=&#34;za-slučaj-promene-vlasništva-samo-grupe-ide-komanda&#34;&gt;Za slučaj promene vlasništva samo grupe, ide komanda:&lt;/h6&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;chgrp group_name filename
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Trenutno stanje:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/chgrp.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
+Promenimo da grupa-vlasnik bude &lt;em&gt;&lt;strong&gt;peja&lt;/strong&gt;&lt;/em&gt;:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/chgrp1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h6 id=&#34;voditi-računa&#34;&gt;voditi računa:&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;Fajl  &lt;em&gt;&lt;strong&gt;/etc/group&lt;/strong&gt;&lt;/em&gt; sadrži sve grupe definisane u sistemu&lt;/li&gt;
+&lt;li&gt;Komanda &amp;quot;groups&amp;quot; može se koristiti  bi se izlistale sve grupe kojima pripada user:&lt;br&gt;
+&lt;img src=&#34;https://debian-openbox.github.io/img/ovlascenja/groups.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Ne mogu dve različite grupe da budu vlasnici istog fajla.&lt;/li&gt;
+&lt;li&gt;Jedna grupa ne može da bude podgrupa druge.&lt;/li&gt;
+&lt;li&gt;U kontekstu direktorijuma,oznaka &lt;em&gt;&lt;strong&gt;x&lt;/strong&gt;&lt;/em&gt; (izvršenje - &lt;em&gt;execution&lt;/em&gt;) znači da je dozvoljen &amp;quot;ulaz&amp;quot; u direktorijum i omogućen pristup poddirektorijumima&lt;/li&gt;
+&lt;/ul&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Enkripcija - 3.deo</title>
+      <link>https://debian-openbox.github.io/post/ovlascenja/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debian-openbox.github.io/post/ovlascenja/</guid>
       <description>
         
           &lt;hr&gt;
